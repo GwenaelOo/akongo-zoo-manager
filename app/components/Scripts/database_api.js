@@ -1,10 +1,13 @@
+var config = require("../../config/config");
+
+
 module.exports = {
 
     //
     // Ces fonction prend un objet Specie comprenant les données d'une espèce et l'ajoute en base
     //
 
-    addNewSpecieToDatabase: function (specieData) {
+    addNewSpecieToDatabaseOLD: function (specieData) {
         const urlWithKey = 'http://localhost:8080/species/Beauval/';
         fetch(urlWithKey, {
             method: 'POST',
@@ -20,7 +23,18 @@ module.exports = {
             throw new Error('Request failed!');
         }, networkError => console.log(networkError.message)
             );
+    },
+
+    addNewSpecieToDatabase: function (specieData) {
+
+        config.sayHello(specieData);
+
+
+
     }
+
+
+
 };
 
 
