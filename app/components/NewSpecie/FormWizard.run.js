@@ -1,3 +1,6 @@
+// Ajout des méthodes de de l'api
+var api = require("../Scripts/database_api.js");
+
 export default () => {
     if (!$.fn.validate || !$.fn.steps) return;
 
@@ -75,25 +78,9 @@ export default () => {
 
             console.log(newSpecie)
 
-            function sendNewSpecie() {
-                const urlWithKey = 'http://localhost:8080/species/Beauval/' ;
-                fetch(urlWithKey, {
-                    method: 'POST',
-                    headers: {
-                        "Content-type": "application/json"
-                    },
-                    body: JSON.stringify({ newSpecie })
-                }).then(response => {
-                    if (response.ok) {
-                        swal("Good job!", "L'espèce " + newSpecieName + " a été ajoutée à votre Zoo", "success")
-                        return response.json();
-                    }
-                    throw new Error('Request failed!');
-                }, networkError => console.log(networkError.message)
-                );
-            };
+            api.addNewSpecieToDatabase(newSpecie);
 
-            sendNewSpecie();
+         
 
         }
     });
