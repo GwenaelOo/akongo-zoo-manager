@@ -80,6 +80,9 @@ export default () => {
 
             api.addNewSpecieToDatabase(newSpecie);
 
+            let data = api.readSpecieFromDatabase();
+
+            console.log(data);
          
 
         }

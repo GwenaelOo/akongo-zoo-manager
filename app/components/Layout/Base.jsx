@@ -9,7 +9,6 @@ import Footer from './Footer'
 
 class Base extends React.Component {
 
-    
 
     render() {
 
