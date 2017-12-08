@@ -5,7 +5,11 @@ import Sidebar from './Sidebar'
 import Offsidebar from './Offsidebar'
 import Footer from './Footer'
 
+
+
 class Base extends React.Component {
+
+    
 
     render() {
 

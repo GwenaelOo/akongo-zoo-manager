@@ -8,6 +8,7 @@ import TextInput from '../Dashboard/FormComponents/TextInput';
 import IUCNSelector from '../Dashboard/FormComponents/IUCNSelector';
 import FormUpload from '../Forms/FormUpload';
 
+
 class NewSpecie extends React.Component {
     constructor(props) {
         super(props);
@@ -83,6 +84,7 @@ class NewSpecie extends React.Component {
 
     componentDidMount() {
         FormWizardRun();
+        
     }
     render() {
         return (
@@ -223,16 +225,3 @@ class NewSpecie extends React.Component {
 }
 
 export default NewSpecie;
-  <div className="row">
-                                    <div className="col-md-12">
-                                        <TextInput id="SpecieProfilePicture" label="Origine Géographique" name="SpecieProfilePicture" placeholder="" />
-
-                                    </div>
-                                    <div className="col-md-12">
-                                        <TextInput id="SpeciePict1" label="Millieu" name="SpeciePict1" placeholder="" />
-                                    </div>
-
-                                    <div className="col-md-12">
-                                        <TextInput id="SpeciePict2" label="Alimentation" name="SpeciePict1" placeholder="" />
-                                    </div>
-                                </div>

@@ -22,10 +22,20 @@ import Routes from './Routes';
 import './styles/bootstrap.scss';
 import './styles/app.scss'
 
+// Configuration de l'app 
+
+var config = require("./config/config");
+
 // Init translation system
 initTranslation();
 // Init css loader (for themes)
 initLoadThemes();
+
+// Init dataBase
+config.initDatabase();
+
+// Init Auth 
+
 
 // Disable warning "Synchronous XMLHttpRequest on the main thread is deprecated.."
 $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
@@ -33,6 +43,7 @@ $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
 });
 
 ReactDOM.render((
+    
     // specify basename below if running
     // in a subdirectory or set as "/" if app runs in root
     <BrowserRouter basename={WP_BASE_HREF}>
