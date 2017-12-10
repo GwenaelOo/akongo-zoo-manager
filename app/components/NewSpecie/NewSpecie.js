@@ -7,6 +7,10 @@ import FormExtendedRun from '../Dashboard/FormExtended.run';
 import TextInput from '../Dashboard/FormComponents/TextInput';
 import IUCNSelector from '../Dashboard/FormComponents/IUCNSelector';
 import FormUpload from '../Forms/FormUpload';
+import DropzoneProfilePicture from '../Photosupload/DropzoneProfilePicture';
+
+
+import './dropzonePhotos.css'
 
 
 class NewSpecie extends React.Component {
@@ -190,19 +194,40 @@ class NewSpecie extends React.Component {
                             </h4>
                             <fieldset>
                                 <p className="lead text-center">Elles seront disponible pour vos visiteurs</p>
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <TextInput id="SpecieProfilePicture" label="Photo de profile" name="SpecieProfilePicture" placeholder="" />
-
-                                    </div>
-                                    <div className="col-md-12">
-                                        <TextInput id="SpeciePict1" label="Millieu" name="SpeciePict1" placeholder="" />
+                            
+                                <div className = "row" >
+                                    <div className = "col-md-1" >
                                     </div>
 
-                                    <div className="col-md-12">
-                                        <TextInput id="SpeciePict2" label="Alimentation" name="SpeciePict2" placeholder="" />
+                                         <div className = "col-md-4" >
+                                         <DropzoneProfilePicture />
+                                          </div> 
+
+                                    <div className = "col-md-1" >
+                                    </div>
+
+                                    <div className = "col-md-4">
+                                        <div className = "row">
+                                            <div className = "col-md-6">
+                                                <DropzoneProfilePicture / >
+                                            </div>
+                                            <div className="col-md-6">
+                                                <DropzoneProfilePicture />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <DropzoneProfilePicture />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <DropzoneProfilePicture />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                     <div className = "col-md-1" >
                                     </div>
                                 </div>
+                
+
                             </fieldset>
                             <h4>Validation
                                <br />

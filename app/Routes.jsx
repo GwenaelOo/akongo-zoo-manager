@@ -7,6 +7,7 @@ import BasePage from './components/Layout/BasePage';
 import BaseHorizontal from './components/Layout/BaseHorizontal';
 
 import NewSpecie from './components/NewSpecie/NewSpecie';
+import NewSpeciePage from './components/NewSpeciePage/NewSpeciePage';
 import SpeciesListView from './components/SpeciesList/SpeciesListView';
 
 
@@ -66,12 +67,12 @@ const Routes = ({ location }) => {
                     <div>
                         <Switch location={location}>
 
-
                             {/*SpecieListView*/}
                             <Route path="/SpeciesList" component={SpeciesListView} />
 
                             {/*SpecieTest*/}
                             <Route path="/NewSpecie" component={NewSpecie} />
+                            <Route path="/NewSpeciePage" component={NewSpeciePage} />
                             
                             <Redirect to="/SpeciesList"/>
                         </Switch>

@@ -106,10 +106,11 @@ class Sidebar extends React.Component {
                                             </Link>
                                         </li>
                                         <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
-                                            <Link to="NewSpecie" title="NewSpecie">
+                                            <Link to="NewSpeciePage" title="NewSpeciePage">
                                                 <span>Ajouter une espèce</span>
                                             </Link>
                                         </li>
+
                                     </ul>
                                 </Collapse>
                             </li>
