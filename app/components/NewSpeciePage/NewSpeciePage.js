@@ -23,6 +23,7 @@ class NewSpeciePage extends React.Component {
             SpecieDescription: '',
             SpecieGestation: '',
             SpecieWeight: '',
+            SpecieLifeExpectancy: '',
             SpeciePhotoProfil: '',
             SpeciePhoto1: '',
             SpeciePhoto2: '',
@@ -38,6 +39,7 @@ class NewSpeciePage extends React.Component {
         this.handleReturnedUrl = this.handleReturnedUrl.bind(this);
     }
 
+  
     handleChange(event) {
 
         let name = event.target.name
@@ -60,13 +62,11 @@ class NewSpeciePage extends React.Component {
             SpeciePhoto2: this.state.SpeciePhoto2,
             SpeciePhoto3: this.state.SpeciePhoto3,
             SpeciePhoto4: this.state.SpeciePhoto4,
+
         }
-
-       // api.addNewSpecieToDatabase(specieData);
-
     }
 
-   
+
     changeName(newName) {
         this.setState({
             name: newName
@@ -85,9 +85,31 @@ class NewSpeciePage extends React.Component {
 
         console.log(this.state.SpeciePhotoProfil)
 
-    
-        
-        
+    }
+
+    handleClick(){
+
+           let specieData = {
+               SpecieName: this.state.SpecieName,
+               SpecieLatinName: this.state.SpecieLatinName,
+               SpecieEnglishName: this.state.SpecieEnglishName,
+               SpecieClass: this.state.SpecieClass,
+               SpecieOrder: this.state.SpecieOrder,
+               SpecieFamilly: this.state.SpecieFamilly,
+               SpecieIUCNClassification: this.state.SpecieIUCNClassification,
+               SpecieDescription: this.state.SpecieDescription,
+               SpecieGestation: this.state.SpecieGestation,
+               SpecieWeight: this.state.SpecieWeight,
+               SpecieLifeExpectancy: this.state.SpecieLifeExpectancy,
+               SpeciePhotoProfil: this.state.SpeciePhotoProfil,
+               SpeciePhoto1: this.state.SpeciePhoto1,
+               SpeciePhoto2: this.state.SpeciePhoto2,
+               SpeciePhoto3: this.state.SpeciePhoto3,
+               SpeciePhoto4: this.state.SpeciePhoto4,
+           }
+
+           console.log(specieData)
+        api.addNewSpecieToDatabase(specieData);
     }
 
     render() {
@@ -285,6 +307,14 @@ class NewSpeciePage extends React.Component {
                         <Button type="submit" bsStyle="default">Valider la fiche</Button>
                     </form>
                 </Panel>
+
+                <Panel>
+
+                <button type="submit" onClick={() => { this.handleClick() }}>Submit</button>
+
+
+                </Panel>
+
                 { /* END panel */}
             </ContentWrapper>
         );

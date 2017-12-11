@@ -14,15 +14,15 @@ module.exports = {
             },
         );
 
-        //swal({
-        //    title: "Good job!",
-        //    text: "L'espèce " + specieData.SpecieName + " a été ajoutée à votre Zoo",
-        //    type: "success",
-        //    showCancelButton: false
-        //}, function () {
+        swal({
+            title: "Good job!",
+            text: "L'espèce " + specieData.SpecieName + " a été ajoutée à votre Zoo",
+            type: "success",
+            showCancelButton: false
+        }, function () {
             // Redirect the user
-        //   window.location.href = 'http://localhost:3000/SpeciesList';
-        //}) 
+           window.location.href = 'http://localhost:3000/SpeciesList';
+        }) 
 
 
     },
