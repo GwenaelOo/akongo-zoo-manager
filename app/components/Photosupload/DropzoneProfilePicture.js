@@ -3,12 +3,15 @@ import React, { Component } from 'react';
 import axios from 'axios'
 
 class DropzoneProfilePicture extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
+        
         this.state = {
             files: [],
-            background: 'http://res.cloudinary.com/akongo/image/upload/v1512762269/test/mmpjwr0yxwuwx7soyzq6.png'
+            background: 'http://res.cloudinary.com/akongo/image/upload/v1512762269/test/mmpjwr0yxwuwx7soyzq6.png',
+            returnedURL: ''
         }
+       
     }
 
     onDrop(files) {
@@ -32,16 +35,17 @@ class DropzoneProfilePicture extends React.Component {
             }).then(response => {
                 const data = response.data;
                 const fileURL = data.secure_url // You should store this URL for future references in your app
-                console.log(data.url);
+
                 this.setState({
-                    background: data.url
+                    background: data.url,
+                    returnedUrl : data.url
                 });
             })
         });
         // Once all the files are uploaded 
         axios.all(uploaders).then(() => {
-            this.setState({
-            });
+    
+            this.props.methodToReturnUrl(this.state.returnedUrl, this.props.id);
         });
     }
 
@@ -51,16 +55,17 @@ class DropzoneProfilePicture extends React.Component {
             'background-image': 'url(' + this.state.background + ')',
             'height': '200px',
             'width': '200px',
-            'background-size': '200px 150px',
+            'background-size': '200px 200px',
             'border-radius': '10px',
             'margin': '10px 10px 10px 10px'
         }
+        
 
 
         return (
             <section>
                 <div className="dropzone">
-                    <Dropzone onDrop={this.onDrop.bind(this)} style={style} >
+                    <Dropzone onDrop={this.onDrop.bind(this)} style={style}>
                     </Dropzone>
                 </div>
               

@@ -7,7 +7,7 @@ import TextInput from '../Dashboard/FormComponents/TextInput';
 import IUCNSelector from '../Dashboard/FormComponents/IUCNSelector';
 import DropzoneProfilePicture from '../Photosupload/DropzoneProfilePicture';
 
-
+let api = require("../Scripts/database_api.js");
 
 class NewSpeciePage extends React.Component {
     constructor(props) {
@@ -23,43 +23,81 @@ class NewSpeciePage extends React.Component {
             SpecieDescription: '',
             SpecieGestation: '',
             SpecieWeight: '',
-            SpecieLifeExpectancy: '',
-         };
+            SpeciePhotoProfil: '',
+            SpeciePhoto1: '',
+            SpeciePhoto2: '',
+            SpeciePhoto3: '',
+            SpeciePhoto4: '',
+        };
+
+       
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+       // this.handleSubmit = this.handleSubmit.bind(this);
+        this.changeName = this.changeName.bind(this);
+        this.handleReturnedUrl = this.handleReturnedUrl.bind(this);
     }
 
     handleChange(event) {
 
         let name = event.target.name
-
         this.setState({ [name]: event.target.value });
+
+        let specieData = {
+            SpecieName: this.state.SpecieName,
+            SpecieLatinName: this.state.SpecieLatinName,
+            SpecieEnglishName: this.state.SpecieEnglishName,
+            SpecieClass: this.state.SpecieClass,
+            SpecieOrder: this.state.SpecieOrder,
+            SpecieFamilly: this.state.SpecieFamilly,
+            SpecieIUCNClassification: this.state.SpecieIUCNClassification,
+            SpecieDescription: this.state.SpecieDescription,
+            SpecieGestation: this.state.SpecieGestation,
+            SpecieWeight: this.state.SpecieWeight,
+            SpecieLifeExpectancy: this.state.SpecieLifeExpectancy,
+            SpeciePhotoProfil: this.state.SpeciePhotoProfil,
+            SpeciePhoto1: this.state.SpeciePhoto1,
+            SpeciePhoto2: this.state.SpeciePhoto2,
+            SpeciePhoto3: this.state.SpeciePhoto3,
+            SpeciePhoto4: this.state.SpeciePhoto4,
+        }
+
+       // api.addNewSpecieToDatabase(specieData);
+
     }
 
-    handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
+   
+    changeName(newName) {
+        this.setState({
+            name: newName
+        });
     }
 
+    handleReturnedUrl(returnedUrl, photoId) {
+
+        console.log(returnedUrl)
+        console.log(photoId)
+        let photoName = ('Specie' + photoId)
+        console.log(photoName)
+        this.setState({
+            [photoName]: returnedUrl
+        });
+
+        console.log(this.state.SpeciePhotoProfil)
+
+    
+        
+        
+    }
 
     render() {
 
-        let specieData = {
-              SpecieName: this.state.SpecieName,
-                  SpecieLatinName: this.state.SpecieLatinName,
-                  SpecieEnglishName: this.state.SpecieEnglishName,
-                  SpecieClass: this.state.SpecieClass,
-                  SpecieOrder: this.state.SpecieOrder,
-                  SpecieFamilly: this.state.SpecieFamilly,
-                  SpecieIUCNClassification: this.state.SpecieIUCNClassification,
-                  SpecieDescription: this.state.SpecieDescription,
-                  SpecieGestation: this.state.SpecieGestation,
-                  SpecieWeight: this.state.SpecieWeight,
-                  SpecieLifeExpectancy: this.state.SpecieLifeExpectancy,
-        }
-
-        console.log(specieData)
+        
+        console.log(this.state.SpeciePhotoProfil)
+        console.log(this.state.SpeciePhoto1)
+        console.log(this.state.SpeciePhoto2)
+        console.log(this.state.SpeciePhoto3)
+        console.log(this.state.SpeciePhoto4)
 
         const innerIcon = <em className="fa fa-check"></em>;
         const innerButton = <Button>Before</Button>;
@@ -81,7 +119,7 @@ class NewSpeciePage extends React.Component {
                
                 { /* START panel */}
                 <Panel header="Form elements">
-                    <form method="get" action="/" className="form-horizontal">
+                    <form className="form-horizontal" onSubmit={this.handleSubmit}>
                         <fieldset>
                             <legend> Informations générales</legend>
                        
@@ -148,7 +186,7 @@ class NewSpeciePage extends React.Component {
                                 <div className="col-md-4">
                                     <div>
                                         <label htmlFor="userName">Classification IUCN</label>
-                                        <FormControl componentClass="select" value={this.state.SpecieIUCNClassification} required="required" className="form-control" value={this.state.SpecieIUCNClassification} onChange={this.handleChange}>
+                                        <FormControl componentClass="select" className="form-control" value={this.state.SpecieIUCNClassification} onChange={this.handleChange}>
                                             <option></option>
                                             <option>Préoccupation mineure (LC)</option>
                                             <option>Espèce quasi menacée (NT)</option>
@@ -214,7 +252,7 @@ class NewSpeciePage extends React.Component {
                                     </div>
 
                                     <div className="col-md-4" >
-                                        <DropzoneProfilePicture />
+                                        <DropzoneProfilePicture specieName={this.state.SpecieName} id="PhotoProfil" methodToReturnUrl={this.handleReturnedUrl} />
                                     </div>
 
                                     <div className="col-md-1" >
@@ -223,25 +261,28 @@ class NewSpeciePage extends React.Component {
                                     <div className="col-md-4">
                                         <div className="row">
                                             <div className="col-md-6">
-                                                <DropzoneProfilePicture />
+                                                <DropzoneProfilePicture specieName={this.state.SpecieName} id="Photo1" methodToReturnUrl={this.handleReturnedUrl} />
                                             </div>
                                             <div className="col-md-6">
-                                                <DropzoneProfilePicture />
+                                                <DropzoneProfilePicture specieName={this.state.SpecieName} id="Photo2" methodToReturnUrl={this.handleReturnedUrl} />
                                             </div>
                                             <div className="col-md-6">
-                                                <DropzoneProfilePicture />
+                                                <DropzoneProfilePicture specieName={this.state.SpecieName} id="Photo3" methodToReturnUrl={this.handleReturnedUrl} />
                                             </div>
                                             <div className="col-md-6">
-                                                <DropzoneProfilePicture />
+                                                <DropzoneProfilePicture specieName={this.state.SpecieName} id="Photo4" methodToReturnUrl={this.handleReturnedUrl} />
                                             </div>
                                         </div>
                                     </div>
 
                                     <div className="col-md-1" >
+                                        <input type="submit" value="Submit" />
                                     </div>
                                 </div>            
                             </FormGroup>
                         </fieldset>
+                        
+                        <Button type="submit" bsStyle="default">Valider la fiche</Button>
                     </form>
                 </Panel>
                 { /* END panel */}
