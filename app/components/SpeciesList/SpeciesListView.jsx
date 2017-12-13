@@ -42,7 +42,7 @@ class SpeciesListView extends React.Component {
         ref.once('value').then(function (snapshot) {
             // The Promise was "fulfilled" (it succeeded).
             let data = snapshot.val()
-            
+
             for (var i = 0; i < data.length; i++) {
                 var myObject = data[i];
                 var firstKey = Object.keys(myObject)[0];
@@ -70,7 +70,7 @@ class SpeciesListView extends React.Component {
                 <h3>Mes animaux</h3>
                 {/* START row */}
                 <div className="row">
-                    <SpecieList myList={speciesList} />
+                    <SpecieList myList={this.state.speciesList} />
                 </div>
                 {/* END panel tab */}
             </ContentWrapper>
