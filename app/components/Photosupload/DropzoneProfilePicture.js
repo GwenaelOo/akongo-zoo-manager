@@ -10,15 +10,14 @@ class DropzoneProfilePicture extends React.Component {
             files: [],
             background: 'http://res.cloudinary.com/akongo/image/upload/v1512762269/test/mmpjwr0yxwuwx7soyzq6.png',
             returnedURL: ''
-        }
-       
+        }  
     }
 
     onDrop(files) {
         this.setState({
             files
         });
-
+        
         const uploaders = files.map(file => {
             // Initial FormData
             const formData = new FormData();

@@ -1,202 +1,76 @@
 import React from 'react';
 import ContentWrapper from '../Layout/ContentWrapper';
+import SpecieList from './SpecieList/SpecieList';
+import { Tabs, Tab } from 'react-bootstrap';
+var config = require("../../config/config");
 
-import { Tabs, Tab } from 'react-bootstrap'
+
+let api = require("../Scripts/database_api.js");
+
+const specie = {
+    specieProfilPicture: 'https://s3.amazonaws.com/codecademy-content/programs/react/ravenous/pizza.jpg',
+    name: 'MarginOtto Pizzeria',
+    address: '1010 Paddington Way',
+    city: 'Flavortown',
+    state: 'NY',
+    zipCode: '10101',
+    category: 'Italian',
+    rating: 4.5,
+    reviewCount: 90
+};
+
+let speciesList = [
+    specie, specie, specie, specie, specie, specie, specie, specie
+];
+
 
 class SpeciesListView extends React.Component {
-
-    componentDidMount() {
-      
+    constructor(props) {
+        super(props);
+        this.state = {
+            speciesList: speciesList
+        };
+    
     }
 
+    readSpecieFromDatabase() {
+        // Fonction magique que je ne comprend pas 
+        var self = this;
+        // Selection de la référence de la base de donnée
+        var ref = firebase.database().ref('zooTest/species/');
+        // Type de requete
+        ref.once('value').then(function (snapshot) {
+            // The Promise was "fulfilled" (it succeeded).
+            let data = snapshot.val()
+            
+            for (var i = 0; i < data.length; i++) {
+                var myObject = data[i];
+                var firstKey = Object.keys(myObject)[0];
+                var value = myObject[firstKey];
+
+                console.log(firstKey + ": " + value);
+            }
+            self.setState({
+                speciesList: data
+            });
+        }, function (error) {
+            // The Promise was rejected.
+            console.error(error);
+        });
+
+    }
+
+    componentDidMount() {
+        this.readSpecieFromDatabase();
+    }
     render() {
+            console.log(this.state.speciesList)
         return (
             <ContentWrapper>
                 <h3>Mes animaux</h3>
-                
                 {/* START row */}
                 <div className="row">
-
-
-
-                    <div className="col-lg-4">
-                        {/* START widget */}
-                        <div className="panel widget">
-                            <div style={{ backgroundImage: "url('http://ichef.bbci.co.uk/wwfeatures/wm/live/1280_720/images/live/p0/4h/vz/p04hvzyb.jpg')" }} className="panel-body text-center bg-center">
-                                <div className="row row-table">
-                                    <div className="col-xs-12 text-white">
-                                        <div className="BackgroundHandler">
-                                        </div>
-                                        <h2 className="m0">Gorilla</h2>
-                                        <p className="m0">
-                                            <em className="fa fa-twitter fa-fw"></em>@chris</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="panel-body text-center bg-gray-darker">
-                                <div className="row row-table">
-
-                                    <div className="col-xs-4">
-                                        <a href="#" className="text-white">
-                                            <em className="fa fa-plus fa-2x"></em>
-                                            <br />
-
-                                        </a>
-                                    </div>
-
-                                    <div className="col-xs-4">
-                                        <a href="#" className="text-white">
-                                            <em className="fa fa-eye fa-2x"></em>
-                                            <br />
-
-                                        </a>
-                                    </div>
-                                    <div className="col-xs-4">
-                                        <a href="#" className="text-white">
-                                            <em className="fa fa-pencil-square-o fa-2x"></em>
-                                            <br />
-                                        </a>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>    
-
-
-                    <div className="col-lg-4">
-                        {/* START widget */}
-                        <div className="panel widget">
-                            <div style={{ backgroundImage: "url('http://ichef.bbci.co.uk/wwfeatures/wm/live/1280_720/images/live/p0/4h/vz/p04hvzyb.jpg')" }} className="panel-body text-center bg-center">
-                                <div className="row row-table">
-                                    <div className="col-xs-12 text-white">
-                                        <div className="BackgroundHandler">
-                                        </div>
-                                        <h2 className="m0">Gorilla</h2>
-                                        <p className="m0">
-                                            <em className="fa fa-twitter fa-fw"></em>@chris</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="panel-body text-center bg-gray-darker">
-                                <div className="row row-table">
-
-                                    <div className="col-xs-4">
-                                        <a href="#" className="text-white">
-                                            <em className="fa fa-plus fa-2x"></em>
-                                            <br />
-
-                                        </a>
-                                    </div>
-
-                                    <div className="col-xs-4">
-                                        <a href="#" className="text-white">
-                                            <em className="fa fa-eye fa-2x"></em>
-                                            <br />
-
-                                        </a>
-                                    </div>
-                                    <div className="col-xs-4">
-                                        <a href="#" className="text-white">
-                                            <em className="fa fa-pencil-square-o fa-2x"></em>
-                                            <br />
-                                        </a>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>   
-
-                    <div className="col-lg-4">
-                        {/* START widget */}
-                        <div className="panel widget">
-                            <div style={{ backgroundImage: "url('http://ichef.bbci.co.uk/wwfeatures/wm/live/1280_720/images/live/p0/4h/vz/p04hvzyb.jpg')" }} className="panel-body text-center bg-center">
-                                <div className="row row-table">
-                                    <div className="col-xs-12 text-white">
-                                        <div className="BackgroundHandler">
-                                        </div>
-                                        <h2 className="m0">Gorilla</h2>
-                                        <p className="m0">
-                                            <em className="fa fa-twitter fa-fw"></em>@chris</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="panel-body text-center bg-gray-darker">
-                                <div className="row row-table">
-
-                                    <div className="col-xs-4">
-                                        <a href="#" className="text-white">
-                                            <em className="fa fa-plus fa-2x"></em>
-                                            <br />
-
-                                        </a>
-                                    </div>
-
-                                    <div className="col-xs-4">
-                                        <a href="#" className="text-white">
-                                            <em className="fa fa-eye fa-2x"></em>
-                                            <br />
-
-                                        </a>
-                                    </div>
-                                    <div className="col-xs-4">
-                                        <a href="#" className="text-white">
-                                            <em className="fa fa-pencil-square-o fa-2x"></em>
-                                            <br />
-                                        </a>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>    
-
-                    <div className="col-lg-4">
-                        {/* START widget */}
-                        <div className="panel widget">
-                            <div style={{ backgroundImage: "url('http://ichef.bbci.co.uk/wwfeatures/wm/live/1280_720/images/live/p0/4h/vz/p04hvzyb.jpg')" }} className="panel-body text-center bg-center">
-                                <div className="row row-table">
-                                    <div className="col-xs-12 text-white">
-                                        <div className="BackgroundHandler">
-                                        </div>
-                                        <h2 className="m0">Gorilla</h2>
-                                        <p className="m0">
-                                            <em className="fa fa-twitter fa-fw"></em>@chris</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="panel-body text-center bg-gray-darker">
-                                <div className="row row-table">
-
-                                    <div className="col-xs-4">
-                                        <a href="#" className="text-white">
-                                            <em className="fa fa-plus fa-2x"></em>
-                                            <br />
-
-                                        </a>
-                                    </div>
-
-                                    <div className="col-xs-4">
-                                        <a href="#" className="text-white">
-                                            <em className="fa fa-eye fa-2x"></em>
-                                            <br />
-
-                                        </a>
-                                    </div>
-                                    <div className="col-xs-4">
-                                        <a href="#" className="text-white">
-                                            <em className="fa fa-pencil-square-o fa-2x"></em>
-                                            <br />
-                                        </a>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>     
-
-
+                    <SpecieList myList={speciesList} />
                 </div>
                 {/* END panel tab */}
             </ContentWrapper>

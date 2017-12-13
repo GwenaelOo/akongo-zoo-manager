@@ -38,12 +38,12 @@ config.initDatabase();
 
 
 // Disable warning "Synchronous XMLHttpRequest on the main thread is deprecated.."
-$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+$.ajaxPrefilter(function (options, originalOptions, jqXHR) {
     options.async = true;
 });
 
 ReactDOM.render((
-    
+
     // specify basename below if running
     // in a subdirectory or set as "/" if app runs in root
     <BrowserRouter basename={WP_BASE_HREF}>
