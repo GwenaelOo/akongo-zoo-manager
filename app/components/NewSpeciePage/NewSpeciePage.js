@@ -30,12 +30,7 @@ class NewSpeciePage extends React.Component {
             SpeciePhoto3: '',
             SpeciePhoto4: '',
         };
-
-       
-
         this.handleChange = this.handleChange.bind(this);
-       // this.handleSubmit = this.handleSubmit.bind(this);
-        this.changeName = this.changeName.bind(this);
         this.handleReturnedUrl = this.handleReturnedUrl.bind(this);
     }
 
@@ -62,29 +57,15 @@ class NewSpeciePage extends React.Component {
             SpeciePhoto2: this.state.SpeciePhoto2,
             SpeciePhoto3: this.state.SpeciePhoto3,
             SpeciePhoto4: this.state.SpeciePhoto4,
-
-        }
-    }
-
-
-    changeName(newName) {
-        this.setState({
-            name: newName
-        });
+        }   
     }
 
     handleReturnedUrl(returnedUrl, photoId) {
 
-        console.log(returnedUrl)
-        console.log(photoId)
         let photoName = ('Specie' + photoId)
-        console.log(photoName)
         this.setState({
             [photoName]: returnedUrl
         });
-
-        console.log(this.state.SpeciePhotoProfil)
-
     }
 
     handleClick(){
@@ -107,20 +88,11 @@ class NewSpeciePage extends React.Component {
                SpeciePhoto3: this.state.SpeciePhoto3,
                SpeciePhoto4: this.state.SpeciePhoto4,
            }
-
-           console.log(specieData)
         api.addNewSpecieToDatabase(specieData);
     }
 
     render() {
-
-        
-        console.log(this.state.SpeciePhotoProfil)
-        console.log(this.state.SpeciePhoto1)
-        console.log(this.state.SpeciePhoto2)
-        console.log(this.state.SpeciePhoto3)
-        console.log(this.state.SpeciePhoto4)
-
+      
         const innerIcon = <em className="fa fa-check"></em>;
         const innerButton = <Button>Before</Button>;
         const innerDropdown = (
@@ -136,21 +108,17 @@ class NewSpeciePage extends React.Component {
                 <h3>Form Elements
                                <small>Standard and custom elements for any form</small>
                 </h3>
-                { /* START panel */}
-              
-               
-                { /* START panel */}
+
                 <Panel header="Form elements">
                     <form className="form-horizontal" onSubmit={this.handleSubmit}>
                         <fieldset>
-                            <legend> Informations générales</legend>
-                       
+                            <legend> Informations générales</legend>     
                         <fieldset>
                             <FormGroup>
                                     <label className="col-sm-2 control-label">Nom de l'espèce</label>
                             <Col sm={10}>
-                                        <FormControl type="text" name="SpecieName" placeholder="Ex. Gorilles" value={this.state.SpecieName} onChange={this.handleChange} className="form-control" />
-                                </Col>
+                                    <FormControl type="text" name="SpecieName" placeholder="Ex. Gorilles" value={this.state.SpecieName} onChange={this.handleChange} className="form-control" />
+                            </Col>
                             </FormGroup>
                         </fieldset>
 
@@ -234,10 +202,6 @@ class NewSpeciePage extends React.Component {
 
                         <fieldset>
                             <legend> Informations générales</legend>
-
-
-                         
-
                             <fieldset>
                                 <FormGroup>
                                     <label className="col-sm-2 control-label">Durée de la gestation</label>
@@ -309,13 +273,8 @@ class NewSpeciePage extends React.Component {
                 </Panel>
 
                 <Panel>
-
-                <button type="submit" onClick={() => { this.handleClick() }}>Submit</button>
-
-
+                <button type="submit" onClick={() => { this.handleClick() }}>Valider la fiche espèce</button>
                 </Panel>
-
-                { /* END panel */}
             </ContentWrapper>
         );
     }

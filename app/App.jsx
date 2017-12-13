@@ -22,17 +22,18 @@ import Routes from './Routes';
 import './styles/bootstrap.scss';
 import './styles/app.scss'
 
-// Configuration de l'app 
 
-var config = require("./config/config");
+    // Configuration de l'app 
 
-// Init translation system
-initTranslation();
-// Init css loader (for themes)
-initLoadThemes();
+    var config = require("./config/config");
 
-// Init dataBase
-config.initDatabase();
+    // Init translation system
+    initTranslation();
+    // Init css loader (for themes)
+    initLoadThemes();
+
+    // Init dataBase
+    config.initDatabase();
 
 // Init Auth 
 
