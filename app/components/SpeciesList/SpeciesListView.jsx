@@ -7,28 +7,12 @@ var config = require("../../config/config");
 
 let api = require("../Scripts/database_api.js");
 
-const specie = {
-    specieProfilPicture: 'https://s3.amazonaws.com/codecademy-content/programs/react/ravenous/pizza.jpg',
-    name: 'MarginOtto Pizzeria',
-    address: '1010 Paddington Way',
-    city: 'Flavortown',
-    state: 'NY',
-    zipCode: '10101',
-    category: 'Italian',
-    rating: 4.5,
-    reviewCount: 90
-};
-
-let speciesList = [
-    specie, specie, specie, specie, specie, specie, specie, specie
-];
-
 
 class SpeciesListView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            speciesList: speciesList
+            speciesList: ''
         };
     
     }
@@ -59,10 +43,8 @@ class SpeciesListView extends React.Component {
             // The Promise was rejected.
             console.error(error);
         });
-
     }
-
-    componentDidMount() {
+    componentWillMount() {
         this.readSpecieFromDatabase();
     }
     render() {
@@ -72,7 +54,7 @@ class SpeciesListView extends React.Component {
                 <h3>Mes animaux</h3>
                 {/* START row */}
                 <div className="row">
-                    <SpecieList myList={speciesList} />
+                    <SpecieList speciesList={this.state.speciesList} />
                 </div>
                 {/* END panel tab */}
             </ContentWrapper>
