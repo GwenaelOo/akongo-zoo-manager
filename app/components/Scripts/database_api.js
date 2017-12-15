@@ -9,12 +9,7 @@ module.exports = {
 
     addNewSpecieToDatabase: function (specieData) {
 
-<<<<<<< HEAD
         firebase.database().ref('zooTest/species/').push({
-=======
-        firebase.database().ref('zooTest/species/' + specieData.SpecieName.toUpperCase().replace(/ /g, "")).set({
-            id: specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)), 
->>>>>>> develop
             specieName: specieData.SpecieName,
             SpecieLatinName: specieData.SpecieLatinName,
             SpecieEnglishName: specieData.SpecieEnglishName,

@@ -6,17 +6,6 @@ import { Tabs, Tab } from 'react-bootstrap'
 class SpecieList extends React.Component {
 
     componentDidMount() {
-<<<<<<< HEAD
-
-    }
-
-    render() {
-
-        return (
-            <div>
-                {
-                    this.props.myList.map(function (specie) { return <SpecieWidget specieData={specie} />; })
-=======
     
     }
 
@@ -49,10 +38,8 @@ class SpecieList extends React.Component {
                 }
 
 
-
                 {
                    // this.props.myList.map(function (specie) { return <SpecieWidget specieData={specie} />; })
->>>>>>> develop
                 }
             </div>
 
