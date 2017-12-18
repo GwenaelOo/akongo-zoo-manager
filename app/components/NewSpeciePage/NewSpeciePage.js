@@ -60,6 +60,8 @@ class NewSpeciePage extends React.Component {
             SpeciePhoto3: this.state.SpeciePhoto3,
             SpeciePhoto4: this.state.SpeciePhoto4,
         }   
+
+        console.log(specieData)
     }
 
     handleReturnedUrl(returnedUrl, photoId) {
@@ -71,8 +73,6 @@ class NewSpeciePage extends React.Component {
     }
 
     handleClick(){
-
-        
 
            let specieData = {
                SpecieId: this.state.SpecieId,
@@ -142,14 +142,6 @@ class NewSpeciePage extends React.Component {
         });
     }
 
-    checkIfEditMode(specieId){
-
-       
-            console.log('i am in edit mode with the specie id ' + specieId)
-            //this.readSpecieFromDatabase(specieId)
-            
-      
-    }
 
     componentWillMount(){
 
@@ -169,8 +161,6 @@ class NewSpeciePage extends React.Component {
         );
         const innerRadio = <input type="radio" aria-label="..." />;
         const innerCheckbox = <input type="checkbox" aria-label="..." />;
-
-       
 
         return (
             <ContentWrapper>
@@ -307,7 +297,7 @@ class NewSpeciePage extends React.Component {
                                     </div>
 
                                     <div className="col-md-4" >
-                                        <DropzoneProfilePicture specieName={this.state.SpecieName} id="PhotoProfil" methodToReturnUrl={this.handleReturnedUrl} />
+                                        <DropzoneProfilePicture specieName={this.state.SpecieName} background={this.state.SpeciePhotoProfil} id="PhotoProfil" methodToReturnUrl={this.handleReturnedUrl} />
                                     </div>
 
                                     <div className="col-md-1" >
@@ -316,33 +306,29 @@ class NewSpeciePage extends React.Component {
                                     <div className="col-md-4">
                                         <div className="row">
                                             <div className="col-md-6">
-                                                <DropzoneProfilePicture specieName={this.state.SpecieName} id="Photo1" methodToReturnUrl={this.handleReturnedUrl} />
+                                                <DropzoneProfilePicture specieName={this.state.SpecieName} background={this.state.SpeciePhoto1} id="Photo1" methodToReturnUrl={this.handleReturnedUrl} />
                                             </div>
                                             <div className="col-md-6">
-                                                <DropzoneProfilePicture specieName={this.state.SpecieName} id="Photo2" methodToReturnUrl={this.handleReturnedUrl} />
+                                                <DropzoneProfilePicture specieName={this.state.SpecieName} background={this.state.SpeciePhoto2} id="Photo2" methodToReturnUrl={this.handleReturnedUrl} />
                                             </div>
                                             <div className="col-md-6">
-                                                <DropzoneProfilePicture specieName={this.state.SpecieName} id="Photo3" methodToReturnUrl={this.handleReturnedUrl} />
+                                                <DropzoneProfilePicture specieName={this.state.SpecieName} background={this.state.SpeciePhoto3} id="Photo3" methodToReturnUrl={this.handleReturnedUrl} />
                                             </div>
                                             <div className="col-md-6">
-                                                <DropzoneProfilePicture specieName={this.state.SpecieName} id="Photo4" methodToReturnUrl={this.handleReturnedUrl} />
+                                                <DropzoneProfilePicture specieName={this.state.SpecieName} background={this.state.SpeciePhoto4} id="Photo4" methodToReturnUrl={this.handleReturnedUrl} />
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="col-md-1" >
-                                        <input type="submit" value="Submit" />
-                                    </div>
+                                    
                                 </div>            
                             </FormGroup>
                         </fieldset>
-                        
-                        <Button type="submit" bsStyle="default">Valider la fiche</Button>
                     </form>
                 </Panel>
 
                 <Panel>
-                <button type="submit" onClick={() => { this.handleClick() }}>Valider la fiche espèce</button>
+                    <Button type="submit" bsStyle="default" onClick={() => { this.handleClick() }}>Valider la fiche espèce</Button>
                 </Panel>
             </ContentWrapper>
         );

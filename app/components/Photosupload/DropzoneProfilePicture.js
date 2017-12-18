@@ -8,9 +8,21 @@ class DropzoneProfilePicture extends React.Component {
         
         this.state = {
             files: [],
-            background: 'http://res.cloudinary.com/akongo/image/upload/v1512762269/test/mmpjwr0yxwuwx7soyzq6.png',
+            background: '',
             returnedURL: ''
         }  
+    }
+
+    componentWillReceiveProps(nextProps) {
+        
+        
+        if (nextProps.background !== this.state.background) {
+            this.setState({ background: nextProps.background });
+            }
+        
+        if (nextProps.background === '') {
+            this.setState({ background: 'http://res.cloudinary.com/akongo/image/upload/v1512762269/test/mmpjwr0yxwuwx7soyzq6.png' })
+        }
     }
 
     onDrop(files) {
@@ -48,14 +60,15 @@ class DropzoneProfilePicture extends React.Component {
         });
     }
 
+
     render() {
 
         let style = {
-            'background-image': 'url(' + this.state.background + ')',
+            'backgroundImage': 'url(' + this.state.background + ')',
             'height': '200px',
             'width': '200px',
-            'background-size': '200px 200px',
-            'border-radius': '10px',
+            'backgroundSize': '200px 200px',
+            'borderRadius': '10px',
             'margin': '10px 10px 10px 10px'
         }
         

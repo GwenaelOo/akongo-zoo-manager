@@ -33,14 +33,10 @@ class SpecieList extends React.Component {
         return (
             <div>
 
-                {
+                {  
                     list.map(function (specie) { return <SpecieWidget specieData={specie} />; })
                 }
 
-
-                {
-                   // this.props.myList.map(function (specie) { return <SpecieWidget specieData={specie} />; })
-                }
             </div>
 
         );

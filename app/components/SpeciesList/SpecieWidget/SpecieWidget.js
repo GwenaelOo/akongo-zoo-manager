@@ -42,14 +42,13 @@ class SpecieWidget extends React.Component {
                         <br />
                     </a>
                 </div>
-                <div className="col-xs-4">
+                <div className="col-xs-4" >
                                 <Link to={{
                                     pathname: "NewSpeciePage",
                                     state:{SpecieId: this.props.specieData.SpecieId}}}>
                                     <em className="fa fa-pencil-square-o fa-2x"></em>
-                                </Link>
+                                </Link>    
                         <br />
-                   
                 </div>
             </div>
         </div>
