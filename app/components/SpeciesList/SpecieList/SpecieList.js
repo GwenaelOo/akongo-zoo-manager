@@ -1,6 +1,7 @@
 import React from 'react';
 import SpecieWidget from '../SpecieWidget/SpecieWidget';
 
+
 import { Tabs, Tab } from 'react-bootstrap'
 
 class SpecieList extends React.Component {
@@ -11,25 +12,24 @@ class SpecieList extends React.Component {
 
     render() {
        
-      let species = this.props.speciesList
+      let species = this.props.speciesList;
 
-      const list = []
+      const list = [];
 
       for (let specie in species){
-          console.log(species[specie].specieName)
-
+         
           let specieData = {
-              SpecieName: species[specie].specieName,
+              SpecieName: species[specie].SpecieName,
               SpeciePhotoProfil: species[specie].SpeciePhotoProfil,
               SpecieId: species[specie].SpecieId
           };
 
           list.push(specieData);
-
-          console.log(list)
+       
       }
 
-      
+      console.log(list)
+
         return (
             <div>
 
