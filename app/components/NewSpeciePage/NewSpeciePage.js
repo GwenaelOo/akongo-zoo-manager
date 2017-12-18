@@ -13,6 +13,7 @@ class NewSpeciePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
+            SpecieId: '',
             SpecieName: '',
             SpecieLatinName: '',
             SpecieEnglishName: '',
@@ -29,18 +30,19 @@ class NewSpeciePage extends React.Component {
             SpeciePhoto2: '',
             SpeciePhoto3: '',
             SpeciePhoto4: '',
+            EditMode: false,
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleReturnedUrl = this.handleReturnedUrl.bind(this);
     }
 
-  
     handleChange(event) {
 
         let name = event.target.name
         this.setState({ [name]: event.target.value });
 
         let specieData = {
+            SpecieId: this.state.SpecieId,
             SpecieName: this.state.SpecieName,
             SpecieLatinName: this.state.SpecieLatinName,
             SpecieEnglishName: this.state.SpecieEnglishName,
@@ -70,7 +72,10 @@ class NewSpeciePage extends React.Component {
 
     handleClick(){
 
+        
+
            let specieData = {
+               SpecieId: this.state.SpecieId,
                SpecieName: this.state.SpecieName,
                SpecieLatinName: this.state.SpecieLatinName,
                SpecieEnglishName: this.state.SpecieEnglishName,
@@ -88,7 +93,69 @@ class NewSpeciePage extends React.Component {
                SpeciePhoto3: this.state.SpeciePhoto3,
                SpeciePhoto4: this.state.SpeciePhoto4,
            }
-        api.addNewSpecieToDatabase(specieData);
+
+        console.log('specieId à la création', this.state.specieId)
+
+        if(this.state.EditMode === true ){
+            api.editNewSpecieToDatabase(specieData);
+        }
+        else {
+            api.addNewSpecieToDatabase(specieData);
+        }
+
+        
+    }
+
+    readSpecieFromDatabase(specieId) {
+        // Fonction magique que je ne comprend pas 
+        var self = this;
+        // Selection de la référence de la base de donnée
+        var ref = firebase.database().ref('zooTest/species/' + specieId);
+        // Type de requete
+        ref.once('value').then(function (snapshot) {
+            // The Promise was "fulfilled" (it succeeded).
+            let data = snapshot.val()
+            console.log(data);
+            self.setState({
+                SpecieId: data.SpecieId,
+                SpecieName: data.SpecieName,
+                SpecieLatinName: data.SpecieLatinName,
+                SpecieEnglishName: data.SpecieEnglishName,
+                SpecieClass: data.SpecieClass,
+                SpecieOrder: data.SpecieOrder,
+                SpecieFamilly: data.SpecieFamilly,
+                SpecieIUCNClassification: data.SpecieIUCNClassification,
+                SpecieDescription: data.SpecieDescription,
+                SpecieGestation: data.SpecieGestation,
+                SpecieWeight: data.SpecieWeight,
+                SpecieLifeExpectancy: data.SpecieLifeExpectancy,
+                SpeciePhotoProfil: data.SpeciePhotoProfil,
+                SpeciePhoto1: data.SpeciePhoto1,
+                SpeciePhoto2: data.SpeciePhoto2,
+                SpeciePhoto3: data.SpeciePhoto3,
+                SpeciePhoto4: data.SpeciePhoto4,
+                EditMode: true,
+            });
+        }, function (error) {
+            // The Promise was rejected.
+            console.error(error);
+        });
+    }
+
+    checkIfEditMode(specieId){
+
+       
+            console.log('i am in edit mode with the specie id ' + specieId)
+            //this.readSpecieFromDatabase(specieId)
+            
+      
+    }
+
+    componentWillMount(){
+
+        if (this.props.location.state.SpecieId !== null){
+         this.readSpecieFromDatabase(this.props.location.state.SpecieId);
+       } 
     }
 
     render() {
@@ -102,6 +169,8 @@ class NewSpeciePage extends React.Component {
         );
         const innerRadio = <input type="radio" aria-label="..." />;
         const innerCheckbox = <input type="checkbox" aria-label="..." />;
+
+       
 
         return (
             <ContentWrapper>
