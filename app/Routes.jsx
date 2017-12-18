@@ -6,9 +6,13 @@ import Base from './components/Layout/Base';
 import BasePage from './components/Layout/BasePage';
 import BaseHorizontal from './components/Layout/BaseHorizontal';
 
+import Dashboard from './components/Dashboard/Dashboard';
+
 import NewSpecie from './components/NewSpecie/NewSpecie';
 import NewSpeciePage from './components/NewSpeciePage/NewSpeciePage';
 import SpeciesListView from './components/SpeciesList/SpeciesListView';
+
+
 
 
 // List of routes that uses the page layout
@@ -66,6 +70,9 @@ const Routes = ({ location }) => {
                 <CSSTransition key={currentKey} timeout={timeout} classNames={animationName}>
                     <div>
                         <Switch location={location}>
+
+                            {/*SpecieListView*/}
+                            <Route path="/Dashboard" component={Dashboard} />
 
                             {/*SpecieListView*/}
                             <Route path="/SpeciesList" component={SpeciesListView} />

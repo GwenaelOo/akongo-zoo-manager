@@ -35,13 +35,9 @@ import './styles/app.scss'
     // Init dataBase
     config.initDatabase();
 
-// Init Auth 
+    // Init Auth 
 
 
-// Disable warning "Synchronous XMLHttpRequest on the main thread is deprecated.."
-$.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-    options.async = true;
-});
 
 ReactDOM.render((
 

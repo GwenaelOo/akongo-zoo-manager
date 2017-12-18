@@ -89,9 +89,42 @@ class Sidebar extends React.Component {
                                 </Collapse>
                             </li>
                             { /* END user info */}
-                            { /* Iterates over all sidebar items */}
-                           
-                      
+
+                            { /* Menu Management des epèces*/}
+
+                            <li className="nav-heading ">
+                                <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
+                            </li>
+                            <li className={this.routeActive(['dashboard', 'dashboardv2', 'dashboardv3']) ? 'active' : ''}>
+                                <div className="nav-item" onClick={this.toggleItemCollapse.bind(this, 'dashboard')}>
+                                    <div className="pull-right label label-info">3</div>
+                                    <em className="icon-speedometer"></em>
+                                    <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
+                                </div>
+                                <Collapse in={this.state.collapse.dashboard} timeout={100}>
+                                    <ul id="dashboard" className="nav sidebar-subnav">
+                                        <li className="sidebar-subnav-header">Dashboard</li>
+                                        <li className={this.routeActive('dashboard') ? 'active' : ''}>
+                                            <Link to="dashboard" title="Dashboard v1">
+                                                <span>Dashboard v1</span>
+                                            </Link>
+                                        </li>
+                                        <li className={this.routeActive('dashboardv2') ? 'active' : ''}>
+                                            <Link to="dashboardv2" title="Dashboard v2">
+                                                <span>Dashboard v2</span>
+                                            </Link>
+                                        </li>
+                                        <li className={this.routeActive('dashboardv3') ? 'active' : ''}>
+                                            <Link to="dashboardv3" title="Dashboard v3">
+                                                <span>Dashboard v3</span>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </Collapse>
+                            </li>
+
+                            { /* Menu Management des epèces*/}
+                        
                             <li className={this.routeActive(['SeeSpecies', 'AddSpecies', 'ModifySpecies']) ? 'active' : ''}>
                                 <div className="nav-item" onClick={this.toggleItemCollapse.bind(this, 'myThings')}>
                                     <em className="icon-speedometer"></em>
