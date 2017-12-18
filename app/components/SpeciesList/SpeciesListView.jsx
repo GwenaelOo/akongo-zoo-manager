@@ -2,9 +2,7 @@ import React from 'react';
 import ContentWrapper from '../Layout/ContentWrapper';
 import SpecieList from './SpecieList/SpecieList';
 import { Tabs, Tab } from 'react-bootstrap';
-var config = require("../../config/config");
-
-
+let config = require("../../config/config");
 let api = require("../Scripts/database_api.js");
 
 
@@ -27,15 +25,6 @@ class SpeciesListView extends React.Component {
             // The Promise was "fulfilled" (it succeeded).
             let data = snapshot.val()
 
-            console.log(data);
-
-            for (var i = 0; i < data.length; i++) {
-                var myObject = data[i];
-                var firstKey = Object.keys(myObject)[0];
-                var value = myObject[firstKey];
-
-                console.log(firstKey + ": " + value);
-            }
             self.setState({
                 speciesList: data
             });
@@ -48,7 +37,7 @@ class SpeciesListView extends React.Component {
         this.readSpecieFromDatabase();
     }
     render() {
-            console.log(this.state.speciesList)
+          
         return (
             <ContentWrapper>
                 <h3>Mes animaux</h3>

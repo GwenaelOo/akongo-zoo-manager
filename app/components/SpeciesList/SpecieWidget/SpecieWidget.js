@@ -1,13 +1,16 @@
 import React from 'react';
-
-
+import { Router, Route, Link, History, withRouter } from 'react-router-dom';
 import { Tabs, Tab } from 'react-bootstrap'
 
 class SpecieWidget extends React.Component {
 
-    render() {
 
-        
+    handleEditClic(specieId){
+      
+        // Doit être modifier pour fonctioner avec redux
+    }
+    render() {
+       
         return (
 <div className="col-lg-4">
     {/* START widget */}
@@ -40,11 +43,13 @@ class SpecieWidget extends React.Component {
                     </a>
                 </div>
                 <div className="col-xs-4">
-                    <a href="#" className="text-white">
-                        <em className="fa fa-pencil-square-o fa-2x"></em>
+                                <Link to={{
+                                    pathname: "NewSpeciePage",
+                                    state:{SpecieId: this.props.specieData.SpecieId}}}>
+                                    <em className="fa fa-pencil-square-o fa-2x"></em>
+                                </Link>
                         <br />
-                    </a>
-
+                   
                 </div>
             </div>
         </div>

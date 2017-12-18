@@ -106,7 +106,11 @@ class Sidebar extends React.Component {
                                             </Link>
                                         </li>
                                         <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
-                                            <Link to="NewSpeciePage" title="NewSpeciePage">
+    
+                                            <Link to={{
+                                                pathname: "NewSpeciePage",
+                                                state: { SpecieId: null }
+                                            }}>
                                                 <span>Ajouter une espèce</span>
                                             </Link>
                                         </li>
