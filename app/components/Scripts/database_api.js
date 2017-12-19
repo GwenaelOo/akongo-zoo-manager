@@ -154,7 +154,7 @@ module.exports = {
 
     addNewServiceToDatabase: function (serviceData) {
 
-        firebase.database().ref('zooTest/species/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+        firebase.database().ref('zooTest/services/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
            
             serviceId: serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
             serviceName: serviceData.serviceName,
@@ -174,7 +174,7 @@ module.exports = {
 
         swal({
             title: "Good job!",
-            text: "L'service " + serviceData.serviceName + " a été ajoutée à votre Zoo",
+            text: "Le service " + serviceData.serviceName + " a été ajoutée à votre Zoo",
             type: "success",
             showCancelButton: false
         }, function () {
@@ -219,6 +219,73 @@ module.exports = {
 
     },
     
+
+    addNewAnimationToDatabase: function (animationData) {
+
+        firebase.database().ref('zooTest/animations/' + animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+
+            animationId: animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
+            animationName: animationData.animationName,
+            animationDescription: animationData.animationDescription,
+            animationPhotoProfil: animationData.animationPhotoProfil,
+
+        },
+        );
+
+        firebase.database().ref('zooTest/animations/' + animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+
+            animationId: animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
+            animationName: animationData.animationName,
+            animationPhotoProfil: animationData.animationPhotoProfil,
+        },
+        );
+
+        swal({
+            title: "Good job!",
+            text: "Le animation " + animationData.animationName + " a été ajoutée à votre Zoo",
+            type: "success",
+            showCancelButton: false
+        }, function () {
+            // Redirect the user
+            window.location.href = 'http://localhost:3000/Dashboard';
+        })
+
+
+    },
+
+    editNewAnimationToDatabase: function (animationData) {
+
+        console.log(animationData.animationId)
+
+        firebase.database().ref('zooTest/animations/' + animationData.animationId).update({
+
+            animationId: animationData.animationId,
+            animationName: animationData.animationName,
+            animationDescription: animationData.animationDescription,
+            animationPhotoProfil: animationData.animationPhotoProfil,
+
+        },
+        );
+
+        firebase.database().ref('zooTest/animations/' + animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+            animationSpecie: animationData.animationSpecie,
+            animationName: animationData.animationName,
+            animationPhotoProfil: animationData.animationPhotoProfil,
+        },
+        );
+
+        swal({
+            title: "Good job!",
+            text: "L'espèce " + animationData.animationName + " a été correctement éditée",
+            type: "success",
+            showCancelButton: false
+        }, function () {
+            // Redirect the user
+            window.location.href = 'http://localhost:3000/SpeciesList';
+        })
+
+
+    },
 
 //
 // Ces fonction prend un objet Specie comprenant les données d'une espèce et l'ajoute en base

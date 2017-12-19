@@ -12,8 +12,10 @@ class Sidebar extends React.Component {
         this.state = {
             userBlockCollapse: false,
             collapse: {
-                dashboard: this.routeActive(['dashboard', 'dashboardv2', 'dashboardv3']),
-                myThings: this.routeActive(['seeSpecies', 'addSpecies', 'modifySpecies']),
+                
+                species: this.routeActive(['seeSpecies', 'addSpecies', 'modifySpecies']), 
+                services: this.routeActive(['seeSpecies', 'addSpecies', 'modifySpecies']),
+                animations: this.routeActive(['seeSpecies', 'addSpecies', 'modifySpecies']),  
                 elements: this.routeActive(['buttons', 'notifications', 'sweetalert', 'tour', 'carousel', 'spinners', 'animations', 'dropdown', 'nestable', 'sortable', 'panels', 'portlet', 'grid', 'grid-masonry', 'typography', 'icons-font', 'icons-weather', 'colors']),       
                 pages: false
             }
@@ -113,12 +115,12 @@ class Sidebar extends React.Component {
                             </li>}
                         
                             <li className={this.routeActive(['SeeSpecies', 'AddSpecies', 'ModifySpecies']) ? 'active' : ''}>
-                                <div className="nav-item" onClick={this.toggleItemCollapse.bind(this, 'myThings')}>
+                                <div className="nav-item" onClick={this.toggleItemCollapse.bind(this, 'species')}>
                                     <em className="icon-grid"></em>
                                     <span data-localize="sidebar.nav.DASHBOARD">Gestion des espèces</span>
                                 </div>
-                                <Collapse in={this.state.collapse.myThings} timeout={100}>
-                                    <ul id="myThings" className="nav sidebar-subnav">
+                                <Collapse in={this.state.collapse.species} timeout={100}>
+                                    <ul id="species" className="nav sidebar-subnav">
                                         <li className="sidebar-subnav-header">Gestion des espèces</li>
                                         <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
                                             <Link to="SpeciesList" title="SpeciesListView">
@@ -139,11 +141,11 @@ class Sidebar extends React.Component {
                             </li>
 
                             <li className={this.routeActive(['SeeSpecies', 'AddSpecies', 'ModifySpecies']) ? 'active' : ''}>
-                                <div className="nav-item" onClick={this.toggleItemCollapse.bind(this, 'myThings')}>
+                                <div className="nav-item" onClick={this.toggleItemCollapse.bind(this, 'services')}>
                                     <em className="fa fa-cutlery"></em>
                                     <span data-localize="sidebar.nav.DASHBOARD">Gestion des services</span>
                                 </div>
-                                <Collapse in={this.state.collapse.myThings} timeout={100}>
+                                <Collapse in={this.state.collapse.services} timeout={100}>
                                     <ul id="myThings" className="nav sidebar-subnav">
                                         <li className="sidebar-subnav-header">Gestion des services</li>
                                         <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
@@ -159,27 +161,26 @@ class Sidebar extends React.Component {
                                                 <span>Ajouter un service</span>
                                             </Link>
                                         </li>
-
                                     </ul>
                                 </Collapse>
                             </li>
 
-                            <li className={this.routeActive(['SeeSpecies', 'AddSpecies', 'ModifySpecies']) ? 'active' : ''}>
-                                <div className="nav-item" onClick={this.toggleItemCollapse.bind(this, 'myThings')}>
+                            <li className={this.routeActive(['SeeAnimation']) ? 'active' : ''}>
+                                <div className="nav-item" onClick={this.toggleItemCollapse.bind(this, 'animations')}>
                                     <em className="fa fa-ticket"></em>
-                                    <span data-localize="sidebar.nav.DASHBOARD">Gestion des animations</span>
+                                    <span data-localize="sidebar.nav.ANIMATION">Gestion des animations</span>
                                 </div>
-                                <Collapse in={this.state.collapse.myThings} timeout={100}>
+                                <Collapse in={this.state.collapse.animations} timeout={100}>
                                     <ul id="myThings" className="nav sidebar-subnav">
                                         <li className="sidebar-subnav-header">Gestion des animations</li>
-                                        <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
+                                        <li className={this.routeActive('SpeciesListView') ? 'active' : ''}>
                                             <Link to="SpeciesList" title="SpeciesListView">
                                                 <span>Voir les animations</span>
                                             </Link>
                                         </li>
                                         <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
                                             <Link to={{
-                                                pathname: "NewSpeciePage",
+                                                pathname: "AnimationView",
                                                 state: { SpecieId: null }
                                             }}>
                                                 <span>Ajouter une animations</span>

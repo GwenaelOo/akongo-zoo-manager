@@ -15,6 +15,8 @@ import AnimalView from './components/AnimalView/AnimalView';
 
 import ServiceView from './components/ServiceView/ServiceView';
 
+import AnimationView from './components/AnimationView/AnimationView';
+
 
 
 // List of routes that uses the page layout
@@ -85,6 +87,9 @@ const Routes = ({ location }) => {
 
                             {/*Service*/}
                             <Route path="/ServiceView" component={ServiceView} />
+
+                            {/*Service*/}
+                            <Route path="/AnimationView" component={AnimationView} />
             
 
                             <Redirect to="/Dashboard"/>

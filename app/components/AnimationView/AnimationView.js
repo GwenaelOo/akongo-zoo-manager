@@ -8,20 +8,20 @@ import DropzoneProfilePicture from '../Photosupload/DropzoneProfilePicture';
 
 let api = require("../Scripts/database_api.js");
 
-class ServiceView extends React.Component {
+class AnimationView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            serviceCategoryId: '',
-            serviceCategory: '',
-            serviceId: '',
-            serviceName: '',
-            serviceDescription: '',
-            servicePhotoProfil: '',
-            servicePhoto1: '',
-            servicePhoto2: '',
-            servicePhoto3: '',
-            servicePhoto4: '',
+            animationCategoryId: '',
+            animationCategory: '',
+            animationId: '',
+            animationName: '',
+            animationDescription: '',
+            animationPhotoProfil: '',
+            animationPhoto1: '',
+            animationPhoto2: '',
+            animationPhoto3: '',
+            animationPhoto4: '',
             EditMode: false,
         };
         this.handleChange = this.handleChange.bind(this);
@@ -33,25 +33,25 @@ class ServiceView extends React.Component {
         let name = event.target.name
         this.setState({ [name]: event.target.value });
 
-        let serviceData = {
-            serviceCategoryId: this.state.serviceCategoryId,
-            serviceCategory: this.state.serviceCategory,
-            serviceId: this.state.serviceId,
-            serviceName: this.state.serviceName,
-            serviceDescription: this.state.serviceDescription,
-            servicePhotoProfil: this.state.servicePhotoProfil,
-            servicePhoto1: this.state.servicePhoto1,
-            servicePhoto2: this.state.servicePhoto2,
-            servicePhoto3: this.state.servicePhoto3,
-            servicePhoto4: this.state.servicePhoto4,
+        let animationData = {
+            animationCategoryId: this.state.animationCategoryId,
+            animationCategory: this.state.animationCategory,
+            animationId: this.state.animationId,
+            animationName: this.state.animationName,
+            animationDescription: this.state.animationDescription,
+            animationPhotoProfil: this.state.animationPhotoProfil,
+            animationPhoto1: this.state.animationPhoto1,
+            animationPhoto2: this.state.animationPhoto2,
+            animationPhoto3: this.state.animationPhoto3,
+            animationPhoto4: this.state.animationPhoto4,
         }
 
-        console.log(serviceData)
+        console.log(animationData)
     }
 
     handleReturnedUrl(returnedUrl, photoId) {
 
-        let photoName = ('service' + photoId)
+        let photoName = ('animation' + photoId)
         this.setState({
             [photoName]: returnedUrl
         });
@@ -59,50 +59,50 @@ class ServiceView extends React.Component {
 
     handleClick() {
 
-        let serviceData = {
-            serviceCategoryId: this.state.serviceCategoryId,
-            serviceCategory: this.state.serviceCategory,
-            serviceId: this.state.serviceId,
-            serviceName: this.state.serviceName,
-            serviceDescription: this.state.serviceDescription,
-            servicePhotoProfil: this.state.servicePhotoProfil,
-            servicePhoto1: this.state.servicePhoto1,
-            servicePhoto2: this.state.servicePhoto2,
-            servicePhoto3: this.state.servicePhoto3,
-            servicePhoto4: this.state.servicePhoto4,
+        let animationData = {
+            animationCategoryId: this.state.animationCategoryId,
+            animationCategory: this.state.animationCategory,
+            animationId: this.state.animationId,
+            animationName: this.state.animationName,
+            animationDescription: this.state.animationDescription,
+            animationPhotoProfil: this.state.animationPhotoProfil,
+            animationPhoto1: this.state.animationPhoto1,
+            animationPhoto2: this.state.animationPhoto2,
+            animationPhoto3: this.state.animationPhoto3,
+            animationPhoto4: this.state.animationPhoto4,
         }
 
-        console.log('serviceId à la création', this.state.serviceCategoryId)
+        console.log('animationId à la création', this.state.animationCategoryId)
 
         if (this.state.EditMode === true) {
-            api.editNewServiceToDatabase(serviceData);
+            api.editNewAnimationToDatabase(animationData);
         }
         else {
-            api.addNewServiceToDatabase(serviceData);
+            api.addNewAnimationToDatabase(animationData);
         }
 
 
     }
 
-    readserviceFromDatabase(serviceId) {
+    readAnimationFromDatabase(animationId) {
         // Fonction magique que je ne comprend pas 
         var self = this;
         // Selection de la référence de la base de donnée
-        var ref = firebase.database().ref('zooTest/species/' + this.state.serviceCategoryId + this.state.serviceId);
+        var ref = firebase.database().ref('zooTest/species/' + this.state.animationCategoryId + this.state.animationId);
         // Type de requete
         ref.once('value').then(function (snapshot) {
             // The Promise was "fulfilled" (it succeeded).
             let data = snapshot.val()
             console.log(data);
             self.setState({
-                serviceId: data.serviceId,
-                serviceName: data.serviceName,
-                serviceDescription: data.serviceDescription,
-                servicePhotoProfil: data.servicePhotoProfil,
-                servicePhoto1: data.servicePhoto1,
-                servicePhoto2: data.servicePhoto2,
-                servicePhoto3: data.servicePhoto3,
-                servicePhoto4: data.servicePhoto4,
+                animationId: data.animationId,
+                animationName: data.animationName,
+                animationDescription: data.animationDescription,
+                animationPhotoProfil: data.animationPhotoProfil,
+                animationPhoto1: data.animationPhoto1,
+                animationPhoto2: data.animationPhoto2,
+                animationPhoto3: data.animationPhoto3,
+                animationPhoto4: data.animationPhoto4,
                 EditMode: true,
             });
         }, function (error) {
@@ -117,13 +117,13 @@ class ServiceView extends React.Component {
 
 
     componentWillMount() {
-        if (this.props.location.state.serviceId !== null) {
-            console.log('recuperation du serviceId', this.props.location.state.serviceId)
+        if (this.props.location.state.animationId !== null) {
+            console.log('recuperation du animationId', this.props.location.state.animationId)
             this.setState({
-                serviceCategoryId: this.props.location.state.serviceId
+                animationCategoryId: this.props.location.state.animationId
             })
         } else {
-            console.log('Pas de données, nouveau service')
+            console.log('Pas de données, nouveau animation')
         }
     }
 
@@ -151,15 +151,15 @@ class ServiceView extends React.Component {
                             <legend> Informations générales</legend>
                             <fieldset>
                                 <FormGroup>
-                                    <label className="col-sm-2 control-label">Nom du service</label>
+                                    <label className="col-sm-2 control-label">Nom du animation</label>
                                     <Col sm={10}>
-                                        <FormControl type="text" name="serviceName" placeholder={this.state.serviceName} value={this.state.serviceName} onChange={this.handleChange} className="form-control" />
+                                        <FormControl type="text" name="animationName" placeholder={this.state.animationName} value={this.state.animationName} onChange={this.handleChange} className="form-control" />
                                     </Col>
                                 </FormGroup>
                                 <FormGroup>
                                     <label className="col-sm-2 control-label">Espèce</label>
                                     <Col sm={10}>
-                                        <FormControl type="text" name="serviceCategory" placeholder="Ex. Gorilles" value={this.state.serviceCategory} onChange={this.handleChange} className="form-control" />
+                                        <FormControl type="text" name="animationCategory" placeholder="Ex. Gorilles" value={this.state.animationCategory} onChange={this.handleChange} className="form-control" />
                                     </Col>
                                 </FormGroup>
                             </fieldset>
@@ -174,7 +174,7 @@ class ServiceView extends React.Component {
                                     </div>
 
                                     <div className="col-md-4" >
-                                        <DropzoneProfilePicture serviceName={this.state.serviceName} background={this.state.servicePhotoProfil} id="PhotoProfil" methodToReturnUrl={this.handleReturnedUrl} />
+                                        <DropzoneProfilePicture animationName={this.state.animationName} background={this.state.animationPhotoProfil} id="PhotoProfil" methodToReturnUrl={this.handleReturnedUrl} />
                                     </div>
 
                                     <div className="col-md-1" >
@@ -183,16 +183,16 @@ class ServiceView extends React.Component {
                                     <div className="col-md-4">
                                         <div className="row">
                                             <div className="col-md-6">
-                                                <DropzoneProfilePicture serviceName={this.state.serviceName} background={this.state.servicePhoto1} id="Photo1" methodToReturnUrl={this.handleReturnedUrl} />
+                                                <DropzoneProfilePicture animationName={this.state.animationName} background={this.state.animationPhoto1} id="Photo1" methodToReturnUrl={this.handleReturnedUrl} />
                                             </div>
                                             <div className="col-md-6">
-                                                <DropzoneProfilePicture serviceName={this.state.serviceName} background={this.state.servicePhoto2} id="Photo2" methodToReturnUrl={this.handleReturnedUrl} />
+                                                <DropzoneProfilePicture animationName={this.state.animationName} background={this.state.animationPhoto2} id="Photo2" methodToReturnUrl={this.handleReturnedUrl} />
                                             </div>
                                             <div className="col-md-6">
-                                                <DropzoneProfilePicture serviceName={this.state.serviceName} background={this.state.servicePhoto3} id="Photo3" methodToReturnUrl={this.handleReturnedUrl} />
+                                                <DropzoneProfilePicture animationName={this.state.animationName} background={this.state.animationPhoto3} id="Photo3" methodToReturnUrl={this.handleReturnedUrl} />
                                             </div>
                                             <div className="col-md-6">
-                                                <DropzoneProfilePicture serviceName={this.state.serviceName} background={this.state.servicePhoto4} id="Photo4" methodToReturnUrl={this.handleReturnedUrl} />
+                                                <DropzoneProfilePicture animationName={this.state.animationName} background={this.state.animationPhoto4} id="Photo4" methodToReturnUrl={this.handleReturnedUrl} />
                                             </div>
                                         </div>
                                     </div>
@@ -205,7 +205,7 @@ class ServiceView extends React.Component {
                 </Panel>
 
                 <Panel>
-                    <Button type="submit" bsStyle="default" onClick={() => { this.handleClick() }}>Valider la fiche service</Button>
+                    <Button type="submit" bsStyle="default" onClick={() => { this.handleClick() }}>Valider la fiche animation</Button>
                 </Panel>
             </ContentWrapper>
         );
@@ -213,4 +213,4 @@ class ServiceView extends React.Component {
 
 }
 
-export default ServiceView;
+export default AnimationView;
