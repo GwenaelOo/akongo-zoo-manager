@@ -120,7 +120,7 @@ module.exports = {
 
         console.log(animalData.animalId)
 
-        firebase.database().ref('zooTest/species/' + animalData.animalSpecieId + animalData.animalId).update({
+        firebase.database().ref('zooTest/species/' + animalData.animalSpecieId  + '/' +  animalData.animalId).update({
             animalSpecieId: animalData.animalSpecieId,
             animalSpecie: animalData.animalSpecie,
             animalId: animalData.animalId,
@@ -132,7 +132,7 @@ module.exports = {
         },
         );
 
-        firebase.database().ref('zooTest/animals/' + animalData.animalSpecieId + animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+        firebase.database().ref('zooTest/animals/' + animalData.animalSpecieId + animalData.animalId).update({
             animalSpecie: animalData.animalSpecie,
             animalName: animalData.animalName,
             animalPhotoProfil: animalData.animalPhotoProfil,
@@ -142,6 +142,73 @@ module.exports = {
         swal({
             title: "Good job!",
             text: "L'espèce " + animalData.animalName + " a été correctement éditée",
+            type: "success",
+            showCancelButton: false
+        }, function () {
+            // Redirect the user
+            window.location.href = 'http://localhost:3000/SpeciesList';
+        })
+
+
+    },
+
+    addNewServiceToDatabase: function (serviceData) {
+
+        firebase.database().ref('zooTest/species/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+           
+            serviceId: serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
+            serviceName: serviceData.serviceName,
+            serviceDescription: serviceData.serviceDescription,
+            servicePhotoProfil: serviceData.servicePhotoProfil,
+
+        },
+        );
+
+        firebase.database().ref('zooTest/services/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+         
+            serviceId: serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
+            serviceName: serviceData.serviceName,
+            servicePhotoProfil: serviceData.servicePhotoProfil,
+        },
+        );
+
+        swal({
+            title: "Good job!",
+            text: "L'service " + serviceData.serviceName + " a été ajoutée à votre Zoo",
+            type: "success",
+            showCancelButton: false
+        }, function () {
+            // Redirect the user
+            window.location.href = 'http://localhost:3000/Dashboard';
+        })
+
+
+    },
+
+    editNewServiceToDatabase: function (serviceData) {
+
+        console.log(serviceData.serviceId)
+
+        firebase.database().ref('zooTest/services/' + serviceData.serviceId).update({
+           
+            serviceId: serviceData.serviceId,
+            serviceName: serviceData.serviceName,
+            serviceDescription: serviceData.serviceDescription,
+            servicePhotoProfil: serviceData.servicePhotoProfil,
+
+        },
+        );
+
+        firebase.database().ref('zooTest/services/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+            serviceSpecie: serviceData.serviceSpecie,
+            serviceName: serviceData.serviceName,
+            servicePhotoProfil: serviceData.servicePhotoProfil,
+        },
+        );
+
+        swal({
+            title: "Good job!",
+            text: "L'espèce " + serviceData.serviceName + " a été correctement éditée",
             type: "success",
             showCancelButton: false
         }, function () {

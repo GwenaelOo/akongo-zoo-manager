@@ -92,54 +92,40 @@ class Sidebar extends React.Component {
 
                             { /* Menu Management des epèces*/}
 
+
+
                             <li className="nav-heading ">
-                                <span data-localize="sidebar.heading.HEADER">Main Navigation</span>
-                            </li>
-                            <li className={this.routeActive(['dashboard', 'dashboardv2', 'dashboardv3']) ? 'active' : ''}>
-                                <div className="nav-item" onClick={this.toggleItemCollapse.bind(this, 'dashboard')}>
-                                    <div className="pull-right label label-info">3</div>
-                                    <em className="icon-speedometer"></em>
-                                    <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
-                                </div>
-                                <Collapse in={this.state.collapse.dashboard} timeout={100}>
-                                    <ul id="dashboard" className="nav sidebar-subnav">
-                                        <li className="sidebar-subnav-header">Dashboard</li>
-                                        <li className={this.routeActive('dashboard') ? 'active' : ''}>
-                                            <Link to="dashboard" title="Dashboard v1">
-                                                <span>Dashboard v1</span>
-                                            </Link>
-                                        </li>
-                                        <li className={this.routeActive('dashboardv2') ? 'active' : ''}>
-                                            <Link to="dashboardv2" title="Dashboard v2">
-                                                <span>Dashboard v2</span>
-                                            </Link>
-                                        </li>
-                                        <li className={this.routeActive('dashboardv3') ? 'active' : ''}>
-                                            <Link to="dashboardv3" title="Dashboard v3">
-                                                <span>Dashboard v3</span>
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </Collapse>
+                                <span data-localize="sidebar.heading.HEADER">Menu de navigation</span>
                             </li>
 
-                            { /* Menu Management des epèces*/}
+                            <li className={this.routeActive('dashboard') ? 'active' : ''}>
+                                <Link to="Dashboard" title="Widgets">
+                                    
+                                    <em className="icon-speedometer"></em>
+                                    <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
+                                </Link>
+                            </li>
+                         
+
+                            { /* Menu Management des epèces*/
+                            <li className="nav-heading ">
+                                <span data-localize="sidebar.heading.HEADER">Gestion des données</span>
+                            </li>}
                         
                             <li className={this.routeActive(['SeeSpecies', 'AddSpecies', 'ModifySpecies']) ? 'active' : ''}>
                                 <div className="nav-item" onClick={this.toggleItemCollapse.bind(this, 'myThings')}>
-                                    <em className="icon-speedometer"></em>
-                                    <span data-localize="sidebar.nav.DASHBOARD">Management des especes</span>
+                                    <em className="icon-grid"></em>
+                                    <span data-localize="sidebar.nav.DASHBOARD">Gestion des espèces</span>
                                 </div>
                                 <Collapse in={this.state.collapse.myThings} timeout={100}>
                                     <ul id="myThings" className="nav sidebar-subnav">
-                                        <li className="sidebar-subnav-header">Management des espèces</li>
+                                        <li className="sidebar-subnav-header">Gestion des espèces</li>
                                         <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
                                             <Link to="SpeciesList" title="SpeciesListView">
                                                 <span>Voir toutes les espèces</span>
                                             </Link>
                                         </li>
                                         <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
-    
                                             <Link to={{
                                                 pathname: "NewSpeciePage",
                                                 state: { SpecieId: null }
@@ -148,13 +134,55 @@ class Sidebar extends React.Component {
                                             </Link>
                                         </li>
 
-                                        <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
+                                    </ul>
+                                </Collapse>
+                            </li>
 
+                            <li className={this.routeActive(['SeeSpecies', 'AddSpecies', 'ModifySpecies']) ? 'active' : ''}>
+                                <div className="nav-item" onClick={this.toggleItemCollapse.bind(this, 'myThings')}>
+                                    <em className="fa fa-cutlery"></em>
+                                    <span data-localize="sidebar.nav.DASHBOARD">Gestion des services</span>
+                                </div>
+                                <Collapse in={this.state.collapse.myThings} timeout={100}>
+                                    <ul id="myThings" className="nav sidebar-subnav">
+                                        <li className="sidebar-subnav-header">Gestion des services</li>
+                                        <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
+                                            <Link to="SpeciesList" title="SpeciesListView">
+                                                <span>Voir tous les services</span>
+                                            </Link>
+                                        </li>
+                                        <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
                                             <Link to={{
-                                                pathname: "AnimalView",
-                                                state: { AnimalId: null }
+                                                pathname: "ServiceView",
+                                                state: { serviceId: null }
                                             }}>
-                                                <span>Ajouter un Animal</span>
+                                                <span>Ajouter un service</span>
+                                            </Link>
+                                        </li>
+
+                                    </ul>
+                                </Collapse>
+                            </li>
+
+                            <li className={this.routeActive(['SeeSpecies', 'AddSpecies', 'ModifySpecies']) ? 'active' : ''}>
+                                <div className="nav-item" onClick={this.toggleItemCollapse.bind(this, 'myThings')}>
+                                    <em className="fa fa-ticket"></em>
+                                    <span data-localize="sidebar.nav.DASHBOARD">Gestion des animations</span>
+                                </div>
+                                <Collapse in={this.state.collapse.myThings} timeout={100}>
+                                    <ul id="myThings" className="nav sidebar-subnav">
+                                        <li className="sidebar-subnav-header">Gestion des animations</li>
+                                        <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
+                                            <Link to="SpeciesList" title="SpeciesListView">
+                                                <span>Voir les animations</span>
+                                            </Link>
+                                        </li>
+                                        <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
+                                            <Link to={{
+                                                pathname: "NewSpeciePage",
+                                                state: { SpecieId: null }
+                                            }}>
+                                                <span>Ajouter une animations</span>
                                             </Link>
                                         </li>
 

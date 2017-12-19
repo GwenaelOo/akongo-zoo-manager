@@ -8,11 +8,13 @@ class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
-            speciesAmount: 0
+            speciesAmount: 0,
+            animalsAmount: 0,
+            servicesAmount: 0
         }
     }
 
-    howManySpecieInDatabase() {
+    howManySpeciesInDatabase() {
         // Fonction magique que je ne comprend pas 
         var self = this;
         // Selection de la référence de la base de donnée
@@ -22,12 +24,56 @@ class Dashboard extends React.Component {
             // The Promise was "fulfilled" (it succeeded).
             
             let speciesAmount = Object.keys(snapshot.val()).length;
-            console.log(speciesAmount);
+            console.log('Nombre de d espèces :' + speciesAmount);
 
             self.setState({
                 speciesAmount: speciesAmount
             });
             
+        }, function (error) {
+            // The Promise was rejected.
+            console.error(error);
+        });
+    }
+
+    howManyAnimalsInDatabase() {
+        // Fonction magique que je ne comprend pas 
+        var self = this;
+        // Selection de la référence de la base de donnée
+        var ref = firebase.database().ref('zooTest/animals/');
+        // Type de requete
+        ref.once('value').then(function (snapshot) {
+            // The Promise was "fulfilled" (it succeeded).
+
+            let animalsAmount = Object.keys(snapshot.val()).length;
+            console.log('Nombre de d animaux :' + animalsAmount);
+
+            self.setState({
+                animalsAmount: animalsAmount
+            });
+
+        }, function (error) {
+            // The Promise was rejected.
+            console.error(error);
+        });
+    }
+
+    howManyServicesInDatabase() {
+        // Fonction magique que je ne comprend pas 
+        var self = this;
+        // Selection de la référence de la base de donnée
+        var ref = firebase.database().ref('zooTest/services/');
+        // Type de requete
+        ref.once('value').then(function (snapshot) {
+            // The Promise was "fulfilled" (it succeeded).
+
+            let servicesAmount = Object.keys(snapshot.val()).length;
+            console.log('Nombre de services :' + servicesAmount);
+
+            self.setState({
+                servicesAmount: servicesAmount
+            });
+
         }, function (error) {
             // The Promise was rejected.
             console.error(error);
@@ -45,7 +91,9 @@ class Dashboard extends React.Component {
     }
 
     componentWillMount() {
-        this.howManySpecieInDatabase()
+        this.howManySpeciesInDatabase()
+        this.howManyAnimalsInDatabase()
+        this.howManyServicesInDatabase()
     }
 
     render() {
@@ -81,8 +129,7 @@ class Dashboard extends React.Component {
                                     <em className="fa fa-linux fa-3x"></em>
                                 </Col>
                                 <Col xs={8} className="pv-lg">
-                                    <div className="h2 mt0">700
-                                        <small>GB</small>
+                                    <div className="h2 mt0">{this.state.animalsAmount}
                                     </div>
                                     <div className="text-uppercase">Animaux</div>
                                 </Col>
@@ -94,11 +141,11 @@ class Dashboard extends React.Component {
                         <div className="panel widget bg-green">
                             <Row className="row-table">
                                 <Col xs={4} className="text-center bg-green-dark pv-lg">
-                                    <em className="icon-bubbles fa-3x"></em>
+                                    <em className="fa fa-cutlery fa-3x"></em>
                                 </Col>
                                 <Col xs={8} className="pv-lg">
-                                    <div className="h2 mt0">500</div>
-                                    <div className="text-uppercase">Reviews</div>
+                                    <div className="h2 mt0">{this.state.servicesAmount}</div>
+                                    <div className="text-uppercase">Services</div>
                                 </Col>
                             </Row>
                         </div>
