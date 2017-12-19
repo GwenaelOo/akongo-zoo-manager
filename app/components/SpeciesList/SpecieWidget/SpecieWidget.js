@@ -31,7 +31,11 @@ class SpecieWidget extends React.Component {
 
                 <div className="col-xs-4">
                     <a href="#" className="text-white">
-                        <em className="fa fa-plus fa-2x"></em>
+                        <Link to={{
+                                    pathname: "AnimalView",
+                                    state:{SpecieId: this.props.specieData.SpecieId}}}>
+                                    <em className = "fa fa-plus fa-2x" > </em>
+                                </Link>    
                         <br />
                     </a>
                 </div>

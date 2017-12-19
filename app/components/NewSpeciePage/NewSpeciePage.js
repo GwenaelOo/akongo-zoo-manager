@@ -3,8 +3,8 @@ import ContentWrapper from '../Layout/ContentWrapper';
 import { Grid, Row, Col, Panel, Button, FormControl, FormGroup, InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 
 // Ajout des composants du formulaire
-import TextInput from '../Dashboard/FormComponents/TextInput';
-import IUCNSelector from '../Dashboard/FormComponents/IUCNSelector';
+import TextInput from './Components/TextInput';
+import IUCNSelector from './Components/IUCNSelector';
 import DropzoneProfilePicture from '../Photosupload/DropzoneProfilePicture';
 
 let api = require("../Scripts/database_api.js");

@@ -2,10 +2,10 @@ import React from 'react';
 import ContentWrapper from '../Layout/ContentWrapper';
 import { Grid, Row, Col, Panel, Button, ButtonGroup, ButtonToolbar, SplitButton, DropdownButton, MenuItem, Pagination, Pager } from 'react-bootstrap';
 import FormWizardRun from './FormWizard.run';
-import specie from '../Dashboard/class/class-specie';
+//import specie from '../Dashboard/class/class-specie';
 import FormExtendedRun from '../Dashboard/FormExtended.run';
-import TextInput from '../Dashboard/FormComponents/TextInput';
-import IUCNSelector from '../Dashboard/FormComponents/IUCNSelector';
+//import TextInput from '../Dashboard/FormComponents/TextInput';
+//import IUCNSelector from '../Dashboard/FormComponents/IUCNSelector';
 import FormUpload from '../Forms/FormUpload';
 import DropzoneProfilePicture from '../Photosupload/DropzoneProfilePicture';
 

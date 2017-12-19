@@ -148,6 +148,16 @@ class Sidebar extends React.Component {
                                             </Link>
                                         </li>
 
+                                        <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
+
+                                            <Link to={{
+                                                pathname: "AnimalView",
+                                                state: { AnimalId: null }
+                                            }}>
+                                                <span>Ajouter un Animal</span>
+                                            </Link>
+                                        </li>
+
                                     </ul>
                                 </Collapse>
                             </li>

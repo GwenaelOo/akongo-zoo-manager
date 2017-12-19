@@ -80,6 +80,77 @@ module.exports = {
 
 
     },
+
+    addNewAnimalToDatabase: function (animalData) {
+
+        firebase.database().ref('zooTest/species/' + animalData.animalSpecieId + '/animals/' + animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+            animalSpecieId: animalData.animalSpecieId,
+            animalSpecie: animalData.animalSpecie,
+            animalId: animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
+            animalName: animalData.animalName,
+            animalDescription: animalData.animalDescription,
+            animalLifeExpectancy: animalData.animalLifeExpectancy,
+            animalPhotoProfil: animalData.animalPhotoProfil,
+
+        },
+        );
+
+        firebase.database().ref('zooTest/animals/' + animalData.animalSpecieId + animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+            animalSpecie: animalData.animalSpecie,
+            animalId: animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
+            animalName: animalData.animalName,
+            animalPhotoProfil: animalData.animalPhotoProfil,  
+             },
+        );
+
+        swal({
+            title: "Good job!",
+            text: "L'animal " + animalData.animalName + " a été ajoutée à votre Zoo",
+            type: "success",
+            showCancelButton: false
+        }, function () {
+            // Redirect the user
+            window.location.href = 'http://localhost:3000/Dashboard';
+        })
+
+
+    },
+
+    editNewAnimalToDatabase: function (animalData) {
+
+        console.log(animalData.animalId)
+
+        firebase.database().ref('zooTest/species/' + animalData.animalSpecieId + animalData.animalId).update({
+            animalSpecieId: animalData.animalSpecieId,
+            animalSpecie: animalData.animalSpecie,
+            animalId: animalData.animalId,
+            animalName: animalData.animalName,
+            animalDescription: animalData.animalDescription,
+            animalLifeExpectancy: animalData.animalLifeExpectancy,
+            animalPhotoProfil: animalData.animalPhotoProfil,
+            
+        },
+        );
+
+        firebase.database().ref('zooTest/animals/' + animalData.animalSpecieId + animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+            animalSpecie: animalData.animalSpecie,
+            animalName: animalData.animalName,
+            animalPhotoProfil: animalData.animalPhotoProfil,
+        },
+        );
+
+        swal({
+            title: "Good job!",
+            text: "L'espèce " + animalData.animalName + " a été correctement éditée",
+            type: "success",
+            showCancelButton: false
+        }, function () {
+            // Redirect the user
+            window.location.href = 'http://localhost:3000/SpeciesList';
+        })
+
+
+    },
     
 
 //

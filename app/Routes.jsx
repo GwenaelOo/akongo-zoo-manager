@@ -8,10 +8,10 @@ import BaseHorizontal from './components/Layout/BaseHorizontal';
 
 import Dashboard from './components/Dashboard/Dashboard';
 
-import NewSpecie from './components/NewSpecie/NewSpecie';
 import NewSpeciePage from './components/NewSpeciePage/NewSpeciePage';
 import SpeciesListView from './components/SpeciesList/SpeciesListView';
 
+import AnimalView from './components/AnimalView/AnimalView';
 
 
 
@@ -74,14 +74,15 @@ const Routes = ({ location }) => {
                             {/*SpecieListView*/}
                             <Route path="/Dashboard" component={Dashboard} />
 
-                            {/*SpecieListView*/}
+                            {/*Species*/}
+                            <Route path="/NewSpeciePage" component={NewSpeciePage} />
                             <Route path="/SpeciesList" component={SpeciesListView} />
 
-                            {/*SpecieTest*/}
-                            <Route path="/NewSpecie" component={NewSpecie} />
-                            <Route path="/NewSpeciePage" component={NewSpeciePage} />
-                            
-                            <Redirect to="/SpeciesList"/>
+                            {/*Animal*/}
+                            <Route path="/AnimalView" component={AnimalView} />
+            
+
+                            <Redirect to="/Dashboard"/>
                         </Switch>
                     </div>
                 </CSSTransition>

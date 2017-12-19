@@ -5,6 +5,34 @@ import { Grid, Row, Col, Dropdown, MenuItem } from 'react-bootstrap';
 import DashboardRun from './Dashboard.run';
 
 class Dashboard extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { 
+            speciesAmount: 0
+        }
+    }
+
+    howManySpecieInDatabase() {
+        // Fonction magique que je ne comprend pas 
+        var self = this;
+        // Selection de la référence de la base de donnée
+        var ref = firebase.database().ref('zooTest/species/');
+        // Type de requete
+        ref.once('value').then(function (snapshot) {
+            // The Promise was "fulfilled" (it succeeded).
+            
+            let speciesAmount = Object.keys(snapshot.val()).length;
+            console.log(speciesAmount);
+
+            self.setState({
+                speciesAmount: speciesAmount
+            });
+            
+        }, function (error) {
+            // The Promise was rejected.
+            console.error(error);
+        });
+    }
 
     componentDidMount() {
         DashboardRun(
@@ -16,24 +44,18 @@ class Dashboard extends React.Component {
         $(this.refs.chartSpline).data('plot').shutdown();
     }
 
+    componentWillMount() {
+        this.howManySpecieInDatabase()
+    }
+
     render() {
         return (
             <ContentWrapper>
                 <div className="content-heading">
                     { /* START Language list */}
-                    <div className="pull-right">
-                        <Dropdown id="dropdown-tr" pullRight>
-                            <Dropdown.Toggle>
-                                English
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu className="animated fadeInUpShort">
-                                <MenuItem eventKey="1" data-set-lang="en">English</MenuItem>
-                                <MenuItem eventKey="2" data-set-lang="es">Spanish</MenuItem>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </div>
-                    { /* END Language list */} Dashboard
-                    <small data-localize="dashboard.WELCOME">Welcome to Angle!</small>
+                   
+                    { /* END Language list */} Ecran de contrôle
+                    <small data-localize="dashboard.WELCOME">Bienvenue dans Akongo Zoo Manager</small>
                 </div>
                 { /* START widgets box */}
                 <Row>
@@ -42,10 +64,10 @@ class Dashboard extends React.Component {
                         <div className="panel widget bg-primary">
                             <Row className="row-table">
                                 <Col xs={4} className="text-center bg-primary-dark pv-lg">
-                                    <em className="icon-cloud-upload fa-3x"></em>
+                                    <em className="icon-book-open fa-3x"></em>
                                 </Col>
                                 <Col xs={8} className="pv-lg">
-                                    <div className="h2 mt0">1700</div>
+                                    <div className="h2 mt0">{this.state.speciesAmount}</div>
                                     <div className="text-uppercase">Espèces</div>
                                 </Col>
                             </Row>
@@ -56,13 +78,13 @@ class Dashboard extends React.Component {
                         <div className="panel widget bg-purple">
                             <Row className="row-table">
                                 <Col xs={4} className="text-center bg-purple-dark pv-lg">
-                                    <em className="icon-globe fa-3x"></em>
+                                    <em className="fa fa-linux fa-3x"></em>
                                 </Col>
                                 <Col xs={8} className="pv-lg">
                                     <div className="h2 mt0">700
                                         <small>GB</small>
                                     </div>
-                                    <div className="text-uppercase">Quota</div>
+                                    <div className="text-uppercase">Animaux</div>
                                 </Col>
                             </Row>
                         </div>

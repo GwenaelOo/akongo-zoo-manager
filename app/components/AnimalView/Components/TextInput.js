@@ -10,10 +10,10 @@ class TextInput extends React.Component {
         }
     }
     render() {
-        return ( 
+        return (
             <div>
-            <label htmlFor="userName">{this.props.label}</label>
-            <FormControl id={this.props.id} name={this.props.name} placeholder={this.props.placeholder} value={this.state.value} type="text" className="form-control" />
+                <label htmlFor="userName">{this.props.label}</label>
+                <FormControl id={this.props.id} name={this.props.name} placeholder={this.props.placeholder} value={this.state.value} type="text" className="form-control" />
             </div>
         )
     }
