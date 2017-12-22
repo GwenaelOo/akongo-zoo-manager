@@ -1,14 +1,3 @@
-/*!
- *
- * Angle - Bootstrap Admin App + ReactJS
- *
- * Version: 3.8.1
- * Author: @themicon_co
- * Website: http://themicon.co
- * License: https://wrapbootstrap.com/help/licenses
- *
- */
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -40,6 +29,7 @@ import './styles/app.scss'
 
 
 ReactDOM.render((
+    
 
     // specify basename below if running
     // in a subdirectory or set as "/" if app runs in root

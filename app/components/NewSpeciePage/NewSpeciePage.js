@@ -6,6 +6,8 @@ import { Grid, Row, Col, Panel, Button, FormControl, FormGroup, InputGroup, Drop
 import TextInput from './Components/TextInput';
 import IUCNSelector from './Components/IUCNSelector';
 import DropzoneProfilePicture from '../Photosupload/DropzoneProfilePicture';
+import { Typeahead } from 'react-bootstrap-typeahead';
+import '../CustomComponents/TypeHead/Typehead.scss';
 
 let api = require("../Scripts/database_api.js");
 
@@ -25,12 +27,14 @@ class NewSpeciePage extends React.Component {
             SpecieGestation: '',
             SpecieWeight: '',
             SpecieLifeExpectancy: '',
+            SpecieFood: [''],
             SpeciePhotoProfil: '',
             SpeciePhoto1: '',
             SpeciePhoto2: '',
             SpeciePhoto3: '',
             SpeciePhoto4: '',
             EditMode: false,
+            zooFoodList: ['chargement']
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleReturnedUrl = this.handleReturnedUrl.bind(this);
@@ -48,6 +52,7 @@ class NewSpeciePage extends React.Component {
             SpecieEnglishName: this.state.SpecieEnglishName,
             SpecieClass: this.state.SpecieClass,
             SpecieOrder: this.state.SpecieOrder,
+            SpecieFood: this.state.SpecieFood,
             SpecieFamilly: this.state.SpecieFamilly,
             SpecieIUCNClassification: this.state.SpecieIUCNClassification,
             SpecieDescription: this.state.SpecieDescription,
@@ -61,6 +66,21 @@ class NewSpeciePage extends React.Component {
             SpeciePhoto4: this.state.SpeciePhoto4,
         }   
 
+        console.log(specieData)
+    }
+
+    handleChangeTypehead(selected) {
+
+        let name = selected.target.name
+        this.setState({ [name]: selected.target.value });
+
+        let specieData = {
+           
+            SpecieFood: this.state.SpecieFood,
+            
+        }
+
+        
         console.log(specieData)
     }
 
@@ -87,6 +107,7 @@ class NewSpeciePage extends React.Component {
                SpecieGestation: this.state.SpecieGestation,
                SpecieWeight: this.state.SpecieWeight,
                SpecieLifeExpectancy: this.state.SpecieLifeExpectancy,
+               SpecieFood: this.state.SpecieFood,
                SpeciePhotoProfil: this.state.SpeciePhotoProfil,
                SpeciePhoto1: this.state.SpeciePhoto1,
                SpeciePhoto2: this.state.SpeciePhoto2,
@@ -103,7 +124,8 @@ class NewSpeciePage extends React.Component {
             api.addNewSpecieToDatabase(specieData);
         }
 
-        
+            api.updateFoodDataBase(specieData.SpecieFood);
+
     }
 
     readSpecieFromDatabase(specieId) {
@@ -142,8 +164,37 @@ class NewSpeciePage extends React.Component {
         });
     }
 
+    initFoodList() {
+        // Fonction magique que je ne comprend pas 
+        var self = this;
+        // Selection de la référence de la base de donnée
+
+        let foodList = []
+
+        var query = firebase.database().ref("zooTest/Lists/FoodList").orderByKey();
+        query.once("value")
+            .then(function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    var childData = childSnapshot.val();
+                    foodList.push(childData);
+
+                });
+            }).then(function (snapshot) {
+            
+            self.setState({
+                zooFoodList: foodList,
+               
+            });
+        }, function (error) {
+            // The Promise was rejected.
+            console.error(error);
+        });
+    }
+
 
     componentWillMount(){
+
+        this.initFoodList();
 
         if (this.props.location.state.SpecieId !== null){
          this.readSpecieFromDatabase(this.props.location.state.SpecieId);
@@ -284,6 +335,27 @@ class NewSpeciePage extends React.Component {
                                     <label className="col-sm-2 control-label">Esperance de vie</label>
                                     <Col sm={10}>
                                         <FormControl type="text" name="SpecieLifeExpectancy" placeholder="Ex. 12 ans" className="form-control" value={this.state.SpecieLifeExpectancy} onChange={this.handleChange} />
+                                    </Col>
+                                </FormGroup>
+                            </fieldset>
+
+                            <fieldset>
+                                <FormGroup>
+                                    <label className="col-sm-2 control-label">Nouriture</label>
+                                    <Col sm={10}>
+                                        <Typeahead
+                                            allowNew
+                                            onChange={(selected) => {
+                                                this.setState({ SpecieFood : selected });
+                                            }}
+                                            name="SpecieFood"
+                                            labelKey="SpecieFood"
+                                            multiple  
+                                            options={this.state.zooFoodList}
+                                            Selected={this.state.SpecieFood}
+                                            placeholder="Choose a state..."
+                                            
+                                        />
                                     </Col>
                                 </FormGroup>
                             </fieldset>

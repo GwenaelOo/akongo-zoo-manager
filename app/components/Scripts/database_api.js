@@ -4,13 +4,26 @@ var config = require("../../config/config");
 
 // Init dataBase
 
+function snapshotToArray(snapshot) {
+    var returnArr = [];
+
+    snapshot.forEach(function (childSnapshot) {
+        var item = childSnapshot.val();
+        item.key = childSnapshot.key;
+
+        returnArr.push(item);
+    });
+
+    return returnArr;
+};
+
 
 module.exports = {
 
     addNewSpecieToDatabase: function (specieData) {
 
         firebase.database().ref('zooTest/species/' + specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
-            SpecieId: specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)), 
+            SpecieId: specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
             SpecieName: specieData.SpecieName,
             SpecieLatinName: specieData.SpecieLatinName,
             SpecieEnglishName: specieData.SpecieEnglishName,
@@ -22,14 +35,15 @@ module.exports = {
             SpecieGestation: specieData.SpecieGestation,
             SpecieWeight: specieData.SpecieWeight,
             SpecieLifeExpectancy: specieData.SpecieLifeExpectancy,
+            SpecieFood: specieData.SpecieFood,
             SpeciePhotoProfil: specieData.SpeciePhotoProfil,
             SpeciePhoto1: specieData.SpeciePhoto1,
             SpeciePhoto2: specieData.SpeciePhoto2,
             SpeciePhoto3: specieData.SpeciePhoto3,
             SpeciePhoto4: specieData.SpeciePhoto4,
-            },
+        },
         );
-        
+
         swal({
             title: "Good job!",
             text: "L'espèce " + specieData.SpecieName + " a été ajoutée à votre Zoo",
@@ -37,8 +51,8 @@ module.exports = {
             showCancelButton: false
         }, function () {
             // Redirect the user
-           window.location.href = 'http://localhost:3000/SpeciesList';
-        }) 
+            window.location.href = 'http://localhost:3000/SpeciesList';
+        })
 
 
     },
@@ -99,8 +113,8 @@ module.exports = {
             animalSpecie: animalData.animalSpecie,
             animalId: animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
             animalName: animalData.animalName,
-            animalPhotoProfil: animalData.animalPhotoProfil,  
-             },
+            animalPhotoProfil: animalData.animalPhotoProfil,
+        },
         );
 
         swal({
@@ -120,7 +134,7 @@ module.exports = {
 
         console.log(animalData.animalId)
 
-        firebase.database().ref('zooTest/species/' + animalData.animalSpecieId  + '/' +  animalData.animalId).update({
+        firebase.database().ref('zooTest/species/' + animalData.animalSpecieId + '/' + animalData.animalId).update({
             animalSpecieId: animalData.animalSpecieId,
             animalSpecie: animalData.animalSpecie,
             animalId: animalData.animalId,
@@ -128,7 +142,7 @@ module.exports = {
             animalDescription: animalData.animalDescription,
             animalLifeExpectancy: animalData.animalLifeExpectancy,
             animalPhotoProfil: animalData.animalPhotoProfil,
-            
+
         },
         );
 
@@ -155,7 +169,7 @@ module.exports = {
     addNewServiceToDatabase: function (serviceData) {
 
         firebase.database().ref('zooTest/services/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
-           
+
             serviceId: serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
             serviceName: serviceData.serviceName,
             serviceDescription: serviceData.serviceDescription,
@@ -165,7 +179,7 @@ module.exports = {
         );
 
         firebase.database().ref('zooTest/services/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
-         
+
             serviceId: serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
             serviceName: serviceData.serviceName,
             servicePhotoProfil: serviceData.servicePhotoProfil,
@@ -190,7 +204,7 @@ module.exports = {
         console.log(serviceData.serviceId)
 
         firebase.database().ref('zooTest/services/' + serviceData.serviceId).update({
-           
+
             serviceId: serviceData.serviceId,
             serviceName: serviceData.serviceName,
             serviceDescription: serviceData.serviceDescription,
@@ -218,7 +232,7 @@ module.exports = {
 
 
     },
-    
+
 
     addNewAnimationToDatabase: function (animationData) {
 
@@ -287,16 +301,74 @@ module.exports = {
 
     },
 
-//
-// Ces fonction prend un objet Specie comprenant les données d'une espèce et l'ajoute en base
-//
-    testStateUpdate: function () {
-        let data = 1;
-         
-        this.setState({
-                speciesList: data.data
-            });
+
+    //
+    // Gestion des listes Nouritures 
+    //
+
+
+    updateFoodDataBase: function (foodListSubmited) {
+
+        let newList = []
+
+
+        var query = firebase.database().ref("zooTest/Lists/FoodList").orderByKey();
+        query.once("value")
+            .then(function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    var childData = childSnapshot.val();
+                    newList.push(childData);
+
+                });
+            })
+
+            .then(function () {
+                // Promesse tenue
+
+                foodListSubmited.forEach(FoodItem => {
+                    console.log('Le mot à tester est', FoodItem)
+                    console.log('La liste est', newList)
+
+                    if (FoodItem.customOption === true) {
+                        console.log('c est du custom')
+                        newList.push(FoodItem.SpecieFood)
+                    } else {
+                        if (newList.indexOf(FoodItem) === -1) {
+                            console.log(FoodItem + ' PAS présent dans la liste')
+
+                            newList.push(FoodItem)
+
+                        } else {
+                            console.log(FoodItem + ' Présent dans la liste')
+                        }
+                    }
+
+                })
+            })
+
+            .then(function () {
+                // Promesse tenue
+                console.log('apres traitement', newList)
+                let FoodList = newList
+                firebase.database().ref('zooTest/Lists/').set({
+                    FoodList,
+                })
+            })
     },
 
-    
+
+
+
+    //
+    // Ces fonction prend un objet Specie comprenant les données d'une espèce et l'ajoute en base
+    //
+    testStateUpdate: function () {
+        let data = 1;
+
+        this.setState({
+            speciesList: data.data
+        });
+    },
+
+
 };

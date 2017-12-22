@@ -27,7 +27,8 @@ class DropzoneProfilePicture extends React.Component {
 
     onDrop(files) {
         this.setState({
-            files
+            files,
+            background: 'http://www.akongo.fr/assets/ico/Spin.gif'
         });
         
         const uploaders = files.map(file => {
@@ -59,7 +60,6 @@ class DropzoneProfilePicture extends React.Component {
             this.props.methodToReturnUrl(this.state.returnedUrl, this.props.id);
         });
     }
-
 
     render() {
 
