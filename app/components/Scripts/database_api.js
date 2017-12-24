@@ -73,6 +73,7 @@ module.exports = {
             SpecieDescription: specieData.SpecieDescription,
             SpecieGestation: specieData.SpecieGestation,
             SpecieWeight: specieData.SpecieWeight,
+            SpecieFood: specieData.SpecieFood,
             SpecieLifeExpectancy: specieData.SpecieLifeExpectancy,
             SpeciePhotoProfil: specieData.SpeciePhotoProfil,
             SpeciePhoto1: specieData.SpeciePhoto1,
@@ -328,9 +329,11 @@ module.exports = {
                 foodListSubmited.forEach(FoodItem => {
                     console.log('Le mot à tester est', FoodItem)
                     console.log('La liste est', newList)
-
+                    
+                   
                     if (FoodItem.customOption === true) {
                         console.log('c est du custom')
+
                         newList.push(FoodItem.SpecieFood)
                     } else {
                         if (newList.indexOf(FoodItem) === -1) {

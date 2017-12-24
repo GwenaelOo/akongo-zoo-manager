@@ -6,6 +6,14 @@ import Base from './components/Layout/Base';
 import BasePage from './components/Layout/BasePage';
 import BaseHorizontal from './components/Layout/BaseHorizontal';
 
+import Login from './components/Pages/Login';
+import Register from './components/Pages/Register';
+import Recover from './components/Pages/Recover';
+import Lock from './components/Pages/Lock';
+import NotFound from './components/Pages/NotFound';
+import Error500 from './components/Pages/Error500';
+import Maintenance from './components/Pages/Maintenance';
+
 import Dashboard from './components/Dashboard/Dashboard';
 
 import NewSpeciePage from './components/NewSpeciePage/NewSpeciePage';
@@ -92,7 +100,7 @@ const Routes = ({ location }) => {
                             <Route path="/AnimationView" component={AnimationView} />
             
 
-                            <Redirect to="/Dashboard"/>
+                            <Redirect to="/login"/>
                         </Switch>
                     </div>
                 </CSSTransition>

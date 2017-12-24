@@ -115,8 +115,6 @@ class NewSpeciePage extends React.Component {
                SpeciePhoto4: this.state.SpeciePhoto4,
            }
 
-        console.log('specieId à la création', this.state.specieId)
-
         if(this.state.EditMode === true ){
             api.editNewSpecieToDatabase(specieData);
         }
@@ -137,6 +135,7 @@ class NewSpeciePage extends React.Component {
         ref.once('value').then(function (snapshot) {
             // The Promise was "fulfilled" (it succeeded).
             let data = snapshot.val()
+            console.log(data.SpecieFood)
             console.log(data);
             self.setState({
                 SpecieId: data.SpecieId,
@@ -150,6 +149,7 @@ class NewSpeciePage extends React.Component {
                 SpecieDescription: data.SpecieDescription,
                 SpecieGestation: data.SpecieGestation,
                 SpecieWeight: data.SpecieWeight,
+                SpecieFood: data.SpecieFood,
                 SpecieLifeExpectancy: data.SpecieLifeExpectancy,
                 SpeciePhotoProfil: data.SpeciePhotoProfil,
                 SpeciePhoto1: data.SpeciePhoto1,
@@ -158,9 +158,17 @@ class NewSpeciePage extends React.Component {
                 SpeciePhoto4: data.SpeciePhoto4,
                 EditMode: true,
             });
-        }, function (error) {
-            // The Promise was rejected.
-            console.error(error);
+        }).then(function(){
+            let foodList =[]
+            console.log('data', data.SpecieFood)
+            data.SpecieFood.forEach(function (childSnapshot) {
+                var childData = childSnapshot.val();
+                foodList.push(childData);
+                self.setState({
+                    SpecieFood: foodList,
+                });
+
+            });
         });
     }
 
