@@ -3,10 +3,28 @@ import { Grid, Row, Col, Panel, Button } from 'react-bootstrap';
 import { Router, Route, Link, History } from 'react-router-dom';
 
 class Login extends React.Component {
-
+    constructor(props) {
+        super(props);
+    this.state =({
+        url: 'http://www.akongo.fr/assets/background/Background-'
+    })
+    }
+    componentWillMount(){
+        let imageNumber = Math.floor(Math.random() * 3) + 1,
+        newUrl = this.state.url + imageNumber + '.jpg'
+        this.setState({
+            url: newUrl
+        })
+    }
     render() {
         return (
-            <div style={{ backgroundImage: `url(${this.props.specieData.SpeciePhotoProfil})` }} >
+            <div style={{
+                'padding-top': '-100px',
+                'height': '745px',
+                'margin-top': '-40px',
+                'backgroundImage': `url(${this.state.url})`
+            }}>
+            
             <div className="block-center mt-xl wd-xl">
                 { /* START panel */}
                 <div className="panel panel-dark panel-flat">
