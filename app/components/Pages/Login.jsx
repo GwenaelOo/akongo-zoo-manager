@@ -1,20 +1,76 @@
 import React from 'react';
 import { Grid, Row, Col, Panel, Button } from 'react-bootstrap';
-import { Router, Route, Link, History } from 'react-router-dom';
+import { Router, Route, Link, History, Redirect, } from 'react-router-dom';
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
     this.state =({
-        url: 'http://www.akongo.fr/assets/background/Background-'
-    })
+        url: 'http://www.akongo.fr/assets/background/Background-',
+        email: 'test',
+        password: ''
+    });
+        this.handleInputChange = this.handleInputChange.bind(this);   
+        this.handleClick = this.handleClick.bind(this);
     }
-    componentWillMount(){
+    
+    handleInputChange(event) {
+        let name = event.target.name
+        this.setState({ [name]: event.target.value });
+        console.log(this.state.email, this.state.password)   
+    }
+
+    handleClick(){
+        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(function (error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ...
+        });
+
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                console.log('logged')
+                // User is signed in.
+                var displayName = user.displayName;
+                var email = user.email;
+                var emailVerified = user.emailVerified;
+                var photoURL = user.photoURL;
+                var isAnonymous = user.isAnonymous;
+                var uid = user.uid;
+                var providerData = user.providerData;
+                console.log(email, uid)
+            
+                window.location.href = 'http://localhost:3000/Dashboard';
+            } else {
+                // User is signed out.
+                // ...
+            }
+        });
+       
+    }
+
+    generateRandomBackground(){
         let imageNumber = Math.floor(Math.random() * 3) + 1,
-        newUrl = this.state.url + imageNumber + '.jpg'
+            newUrl = this.state.url + imageNumber + '.jpg'
         this.setState({
             url: newUrl
         })
+
+    }
+
+    signout(){
+        firebase.auth().signOut().then(function () {
+            console.log('Signed Out');
+        }, function (error) {
+            console.error('Sign Out Error', error);
+        });
+    }
+
+    componentWillMount(){
+        this.signout()
+        this.generateRandomBackground();
+       
     }
     render() {
         return (
@@ -35,13 +91,13 @@ class Login extends React.Component {
                     </div>
                     <div className="panel-body">
                         <p className="text-center pv">SIGN IN TO CONTINUE.</p>
-                        <form role="form" data-parsley-validate="" noValidate className="mb-lg">
+                                <form role="form" data-parsley-validate="" noValidate className="mb-lg">
                             <div className="form-group has-feedback">
-                                <input id="exampleInputEmail1" type="email" placeholder="Enter email" autoComplete="off" required="required" className="form-control" />
+                                    <input id="exampleInputEmail1" type="email" placeholder="Enter email" autoComplete="off" required="required" name="email" className="form-control" value={this.state.email} onChange={this.handleInputChange} />
                                 <span className="fa fa-envelope form-control-feedback text-muted"></span>
                             </div>
                             <div className="form-group has-feedback">
-                                <input id="exampleInputPassword1" type="password" placeholder="Password" required="required" className="form-control" />
+                                    <input id="exampleInputPassword1" type="password" placeholder="Password" required="required" name="password" className="form-control" value={this.state.password} onChange={this.handleInputChange} />
                                 <span className="fa fa-lock form-control-feedback text-muted"></span>
                             </div>
                             <div className="clearfix">
@@ -53,9 +109,9 @@ class Login extends React.Component {
                                 <div className="pull-right">
                                     <Link to="recover" className="text-muted">Forgot your password?</Link>
                                 </div>
-                            </div>
-                            <button type="submit" className="btn btn-block btn-primary mt-lg">Login</button>
+                            </div>   
                         </form>
+                            <button onClick={this.handleClick} className="btn btn-block btn-primary mt-lg">Login</button>
                     </div>
                 </div>
                 { /* END panel */}
