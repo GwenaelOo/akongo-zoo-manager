@@ -14,9 +14,7 @@ class Base extends React.Component {
             url: 'http://www.akongo.fr/assets/background/Background-',
             email: 'test',
             password: ''
-        });
-
-    
+        });    
     }
 
     getId(){
@@ -34,16 +32,16 @@ class Base extends React.Component {
                 console.log(email, uid)
 
             } else {
-                // User is signed out.
-                // ...
+                if (window.location !== 'http://localhost:3000/login'){
+                window.location.href = 'http://localhost:3000/login';
+                 }
             }
         });
     }
     componentWillMount(){
         this.getId()
     }
-        
-  
+     
     render() {
 
         return (
