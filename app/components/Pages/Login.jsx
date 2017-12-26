@@ -7,7 +7,7 @@ class Login extends React.Component {
         super(props);
     this.state =({
         url: 'http://www.akongo.fr/assets/background/Background-',
-        email: 'test',
+        email: 'gwenael.leroutier@gmail.com',
         password: ''
     });
         this.handleInputChange = this.handleInputChange.bind(this);   

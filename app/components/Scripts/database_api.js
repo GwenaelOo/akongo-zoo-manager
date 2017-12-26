@@ -17,12 +17,16 @@ function snapshotToArray(snapshot) {
     return returnArr;
 };
 
+// init zoo Id
+
+let userData = JSON.parse(localStorage.getItem('user'))
+console.log('initialisation de l api', userData.zooName)
 
 module.exports = {
 
     addNewSpecieToDatabase: function (specieData) {
 
-        firebase.database().ref('zooTest/species/' + specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+        firebase.database().ref( userData.zooName + '/species/' + specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
             SpecieId: specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
             SpecieName: specieData.SpecieName,
             SpecieLatinName: specieData.SpecieLatinName,

@@ -13,33 +13,66 @@ class Base extends React.Component {
         this.state = ({
             url: 'http://www.akongo.fr/assets/background/Background-',
             email: 'test',
-            password: ''
-        });    
+            password: '',
+            userUid:''
+        });   
+        this.getUserInfos = this.getUserInfos.bind(this);  
+        this.initUser = this.initUser.bind(this);
     }
 
-    getId(){
-        firebase.auth().onAuthStateChanged(function (user) {
-            if (user) {
-                console.log('logged')
-                // User is signed in.
-                var displayName = user.displayName;
-                var email = user.email;
-                var emailVerified = user.emailVerified;
-                var photoURL = user.photoURL;
-                var isAnonymous = user.isAnonymous;
-                var uid = user.uid;
-                var providerData = user.providerData;
-                console.log(email, uid)
+    getUserInfos(userId) {
+    
+        var self = this;  
+        var ref = firebase.database().ref('users/' + userId);
+        ref.once('value').then(function (snapshot) {
+            let userInfos = snapshot.val();
+            console.log('Zoo du user logué : ' + userInfos.zooName);
 
-            } else {
-                if (window.location !== 'http://localhost:3000/login'){
-                window.location.href = 'http://localhost:3000/login';
-                 }
-            }
+           // self.setState({
+           //     speciesAmount: speciesAmount
+           // });
+
+        }, function (error) {
+            console.error(error);
         });
     }
+
+    readFromlocal(){
+        let userData = localStorage.getItem('user')
+        console.log('nom du zoo lu en local' + userData.userZoo)
+    }
+    
+    initUser(){
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                console.log(user.uid, 'logged')
+
+                var self = this;
+                var ref = firebase.database().ref('users/' + user.uid);
+                ref.once('value').then(function (snapshot) {
+                    let userInfos = snapshot.val();
+                    console.log('Zoo du user logué : ' + userInfos.zooName);
+
+                    let dataToStore = {
+                        userId: user.uid,
+                        zooName: userInfos.zooName
+                    }
+
+                    localStorage.setItem('user',JSON.stringify(dataToStore))
+
+                }, function (error) {
+                    console.error(error);
+                });
+            }
+        })    
+    }
+    
     componentWillMount(){
-        this.getId()
+        this.initUser()
+    }
+
+    componentDidMount(){
+        this.readFromlocal()
     }
      
     render() {
