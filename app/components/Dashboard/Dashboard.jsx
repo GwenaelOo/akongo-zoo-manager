@@ -15,15 +15,18 @@ class Dashboard extends React.Component {
     }
 
     howManySpeciesInDatabase() {
+        let userData = JSON.parse(localStorage.getItem('user'))
+        
         // Fonction magique que je ne comprend pas 
         var self = this;
         // Selection de la référence de la base de donnée
-        var ref = firebase.database().ref('zooTest/species/');
+        var ref = firebase.database().ref(userData.zooName + '/species/');
         // Type de requete
         ref.once('value').then(function (snapshot) {
             // The Promise was "fulfilled" (it succeeded).
             
             let speciesAmount = Object.keys(snapshot.val()).length;
+            console.log('mon zoo ' + userData.zooName)
             console.log('Nombre de d espèces :' + speciesAmount);
 
             self.setState({
@@ -37,14 +40,16 @@ class Dashboard extends React.Component {
     }
 
     howManyAnimalsInDatabase() {
+        let userData = JSON.parse(localStorage.getItem('user'))
+      
         // Fonction magique que je ne comprend pas 
         var self = this;
         // Selection de la référence de la base de donnée
-        var ref = firebase.database().ref('zooTest/animals/');
+        var ref = firebase.database().ref(userData.zooName + '/animals/');
         // Type de requete
         ref.once('value').then(function (snapshot) {
             // The Promise was "fulfilled" (it succeeded).
-
+            console.log('mon zoo ' + userData.zooName)
             let animalsAmount = Object.keys(snapshot.val()).length;
             console.log('Nombre de d animaux :' + animalsAmount);
 
@@ -59,14 +64,16 @@ class Dashboard extends React.Component {
     }
 
     howManyServicesInDatabase() {
+        let userData = JSON.parse(localStorage.getItem('user'))
+        
         // Fonction magique que je ne comprend pas 
         var self = this;
         // Selection de la référence de la base de donnée
-        var ref = firebase.database().ref('zooTest/services/');
+        var ref = firebase.database().ref(userData.zooName + '/services/');
         // Type de requete
         ref.once('value').then(function (snapshot) {
             // The Promise was "fulfilled" (it succeeded).
-
+            console.log('mon zoo ' + userData.zooName)
             let servicesAmount = Object.keys(snapshot.val()).length;
             console.log('Nombre de services :' + servicesAmount);
 
@@ -80,6 +87,14 @@ class Dashboard extends React.Component {
         });
     }
 
+    getUserData(){
+        let userData = JSON.parse(localStorage.getItem('user'))
+        console.log('initialisation de l api', userData.zooName)
+        this.setState({
+            zooName: userData.zooName
+        })
+    }
+
     componentDidMount() {
         DashboardRun(
             ReactDom.findDOMNode(this.refs.chartSpline)
@@ -91,9 +106,11 @@ class Dashboard extends React.Component {
     }
 
     componentWillMount() {
+        this.getUserData()
         this.howManySpeciesInDatabase()
         this.howManyAnimalsInDatabase()
         this.howManyServicesInDatabase()
+        
     }
 
     render() {

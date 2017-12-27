@@ -63,6 +63,7 @@ class Login extends React.Component {
         firebase.auth().signOut().then(function () {
             console.log('Signed Out');
         }, function (error) {
+            storage.removeItem('user');
             console.error('Sign Out Error', error);
         });
     }

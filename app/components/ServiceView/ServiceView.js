@@ -5,6 +5,9 @@ import { Grid, Row, Col, Panel, Button, FormControl, FormGroup, InputGroup, Drop
 // Ajout des composants du formulaire
 
 import DropzoneProfilePicture from '../Photosupload/DropzoneProfilePicture';
+import TimePicker from 'material-ui/TimePicker';
+
+
 
 let api = require("../Scripts/database_api.js");
 
@@ -17,6 +20,8 @@ class ServiceView extends React.Component {
             serviceId: '',
             serviceName: '',
             serviceDescription: '',
+            serviceOpeningTime: '',
+            serviceClosingTime: '',
             servicePhotoProfil: '',
             servicePhoto1: '',
             servicePhoto2: '',
@@ -38,6 +43,8 @@ class ServiceView extends React.Component {
             serviceCategory: this.state.serviceCategory,
             serviceId: this.state.serviceId,
             serviceName: this.state.serviceName,
+            serviceOpeningTime: this.state.serviceOpeningTime,
+            serviceClosingTime: this.state.serviceClosingTime,
             serviceDescription: this.state.serviceDescription,
             servicePhotoProfil: this.state.servicePhotoProfil,
             servicePhoto1: this.state.servicePhoto1,
@@ -55,6 +62,16 @@ class ServiceView extends React.Component {
         this.setState({
             [photoName]: returnedUrl
         });
+    }
+
+    handleOpeningChange(key, data) {
+        console.log(data)
+        
+    }
+
+    handleClosingChange(key, data) {
+        console.log(data)
+
     }
 
     handleClick() {
@@ -157,9 +174,34 @@ class ServiceView extends React.Component {
                                     </Col>
                                 </FormGroup>
                                 <FormGroup>
-                                    <label className="col-sm-2 control-label">Espèce</label>
+                                    <label className="col-sm-2 control-label">Catégorie du service</label>
                                     <Col sm={10}>
                                         <FormControl type="text" name="serviceCategory" placeholder="Ex. Gorilles" value={this.state.serviceCategory} onChange={this.handleChange} className="form-control" />
+                                    </Col>
+                                </FormGroup>
+                            </fieldset>
+                            <fieldset>
+                                <FormGroup>
+                                    <label className="col-sm-2 control-label">Ouverture</label>
+                                    <Col sm={4}>
+                                        <TimePicker
+                                            name="serviceOpeningTime"
+                                            format="24hr"
+                                            hintText="Heure d'ouverture"
+                                            onChange={this.handleOpeningChange}
+                                        />
+                                  
+                                    </Col>
+                                </FormGroup>
+                                <FormGroup>
+                                    <label className="col-sm-2 control-label">Fermeture</label>
+                                    <Col sm={4}>
+                                        <TimePicker
+                                            name="serviceClosingTime"
+                                            format="24hr"
+                                            hintText="Heure de fermeture"
+                                            onChange={this.handleClosingChange}
+                                        />
                                     </Col>
                                 </FormGroup>
                             </fieldset>

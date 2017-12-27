@@ -14,33 +14,19 @@ class Base extends React.Component {
             url: 'http://www.akongo.fr/assets/background/Background-',
             email: 'test',
             password: '',
-            userUid:''
+            userUid:'',
+            userDataLoaded: false
         });   
-        this.getUserInfos = this.getUserInfos.bind(this);  
         this.initUser = this.initUser.bind(this);
+        this.userDataLoaded = this.userDataLoaded.bind(this);
     }
 
-    getUserInfos(userId) {
-    
-        var self = this;  
-        var ref = firebase.database().ref('users/' + userId);
-        ref.once('value').then(function (snapshot) {
-            let userInfos = snapshot.val();
-            console.log('Zoo du user logué : ' + userInfos.zooName);
-
-           // self.setState({
-           //     speciesAmount: speciesAmount
-           // });
-
-        }, function (error) {
-            console.error(error);
-        });
+    userDataLoaded() {
+        this.setState({
+            userDataLoaded: true
+        })
     }
 
-    readFromlocal(){
-        let userData = localStorage.getItem('user')
-        console.log('nom du zoo lu en local' + userData.userZoo)
-    }
     
     initUser(){
         firebase.auth().onAuthStateChanged(function (user) {
@@ -59,21 +45,23 @@ class Base extends React.Component {
                     }
 
                     localStorage.setItem('user',JSON.stringify(dataToStore))
-
+                    
+                
                 }, function (error) {
                     console.error(error);
-                });
+                    }).then(function (valeur) {
+                       this.userDataLoaded();
+                    }, function (raison) {
+                        // Rejet de la promesse
+                    });
             }
         })    
     }
-    
+ 
     componentWillMount(){
         this.initUser()
     }
 
-    componentDidMount(){
-        this.readFromlocal()
-    }
      
     render() {
 

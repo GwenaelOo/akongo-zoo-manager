@@ -126,11 +126,20 @@ class NewSpeciePage extends React.Component {
 
     }
 
+    getUserData() {
+        let userData = JSON.parse(localStorage.getItem('user'))
+        console.log('inscription des données en states', userData.zooName)
+        this.setState({
+            zooName: userData.zooName
+        })
+    }
+
     readSpecieFromDatabase(specieId) {
+        
         // Fonction magique que je ne comprend pas 
         var self = this;
         // Selection de la référence de la base de donnée
-        var ref = firebase.database().ref('zooTest/species/' + specieId);
+        var ref = firebase.database().ref(this.state.zooName + '/species/' + specieId);
         // Type de requete
         ref.once('value').then(function (snapshot) {
             // The Promise was "fulfilled" (it succeeded).
@@ -201,9 +210,8 @@ class NewSpeciePage extends React.Component {
 
 
     componentWillMount(){
-
+        this.getUserData();
         this.initFoodList();
-
         if (this.props.location.state.SpecieId !== null){
          this.readSpecieFromDatabase(this.props.location.state.SpecieId);
        } 

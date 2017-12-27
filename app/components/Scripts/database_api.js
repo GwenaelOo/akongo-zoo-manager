@@ -19,8 +19,16 @@ function snapshotToArray(snapshot) {
 
 // init zoo Id
 
-let userData = JSON.parse(localStorage.getItem('user'))
-console.log('initialisation de l api', userData.zooName)
+
+        let userData = JSON.parse(localStorage.getItem('user'))
+        console.log('initialisation de l api', userData.zooName)
+        
+    
+        //let userData = {}
+        //console('init de l api en attente')
+
+
+   
 
 module.exports = {
 
@@ -45,6 +53,8 @@ module.exports = {
             SpeciePhoto2: specieData.SpeciePhoto2,
             SpeciePhoto3: specieData.SpeciePhoto3,
             SpeciePhoto4: specieData.SpeciePhoto4,
+            SpecieCreatedBy: userData.userId,
+            SpecieCreationDate: Date.now()
         },
         );
 
@@ -65,7 +75,7 @@ module.exports = {
 
         console.log(specieData.SpecieId)
 
-        firebase.database().ref('zooTest/species/' + specieData.SpecieId).update({
+        firebase.database().ref(userData.zooName + '/species/' + specieData.SpecieId).update({
             SpecieId: specieData.SpecieId,
             SpecieName: specieData.SpecieName,
             SpecieLatinName: specieData.SpecieLatinName,
@@ -84,6 +94,8 @@ module.exports = {
             SpeciePhoto2: specieData.SpeciePhoto2,
             SpeciePhoto3: specieData.SpeciePhoto3,
             SpeciePhoto4: specieData.SpeciePhoto4,
+            SpecieLastModificationBy: userData.userUid,
+            SpecieLastEditDate: Date.now()
         },
         );
 
@@ -102,7 +114,7 @@ module.exports = {
 
     addNewAnimalToDatabase: function (animalData) {
 
-        firebase.database().ref('zooTest/species/' + animalData.animalSpecieId + '/animals/' + animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+        firebase.database().ref(userData.zooName + '/species/' + animalData.animalSpecieId + '/animals/' + animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
             animalSpecieId: animalData.animalSpecieId,
             animalSpecie: animalData.animalSpecie,
             animalId: animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
@@ -114,7 +126,7 @@ module.exports = {
         },
         );
 
-        firebase.database().ref('zooTest/animals/' + animalData.animalSpecieId + animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+        firebase.database().ref(userData.zooName + '/animals/' + animalData.animalSpecieId + animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
             animalSpecie: animalData.animalSpecie,
             animalId: animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
             animalName: animalData.animalName,
@@ -139,7 +151,7 @@ module.exports = {
 
         console.log(animalData.animalId)
 
-        firebase.database().ref('zooTest/species/' + animalData.animalSpecieId + '/' + animalData.animalId).update({
+        firebase.database().ref(userData.zooName + '/species/' + animalData.animalSpecieId + '/' + animalData.animalId).update({
             animalSpecieId: animalData.animalSpecieId,
             animalSpecie: animalData.animalSpecie,
             animalId: animalData.animalId,
@@ -151,7 +163,7 @@ module.exports = {
         },
         );
 
-        firebase.database().ref('zooTest/animals/' + animalData.animalSpecieId + animalData.animalId).update({
+        firebase.database().ref(userData.zooName + '/animals/' + animalData.animalSpecieId + animalData.animalId).update({
             animalSpecie: animalData.animalSpecie,
             animalName: animalData.animalName,
             animalPhotoProfil: animalData.animalPhotoProfil,
@@ -173,7 +185,7 @@ module.exports = {
 
     addNewServiceToDatabase: function (serviceData) {
 
-        firebase.database().ref('zooTest/services/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+        firebase.database().ref(userData.zooName + '/services/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
 
             serviceId: serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
             serviceName: serviceData.serviceName,
@@ -183,7 +195,7 @@ module.exports = {
         },
         );
 
-        firebase.database().ref('zooTest/services/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+        firebase.database().ref(userData.zooName + '/services/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
 
             serviceId: serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
             serviceName: serviceData.serviceName,
@@ -208,7 +220,7 @@ module.exports = {
 
         console.log(serviceData.serviceId)
 
-        firebase.database().ref('zooTest/services/' + serviceData.serviceId).update({
+        firebase.database().ref(userData.zooName + '/services/' + serviceData.serviceId).update({
 
             serviceId: serviceData.serviceId,
             serviceName: serviceData.serviceName,
@@ -218,7 +230,7 @@ module.exports = {
         },
         );
 
-        firebase.database().ref('zooTest/services/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+        firebase.database().ref(userData.zooName + '/services/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
             serviceSpecie: serviceData.serviceSpecie,
             serviceName: serviceData.serviceName,
             servicePhotoProfil: serviceData.servicePhotoProfil,
@@ -241,7 +253,7 @@ module.exports = {
 
     addNewAnimationToDatabase: function (animationData) {
 
-        firebase.database().ref('zooTest/animations/' + animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+        firebase.database().ref(userData.zooName + '/animations/' + animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
 
             animationId: animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
             animationName: animationData.animationName,
@@ -251,7 +263,7 @@ module.exports = {
         },
         );
 
-        firebase.database().ref('zooTest/animations/' + animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+        firebase.database().ref(userData.zooName + '/animations/' + animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
 
             animationId: animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
             animationName: animationData.animationName,
@@ -276,7 +288,7 @@ module.exports = {
 
         console.log(animationData.animationId)
 
-        firebase.database().ref('zooTest/animations/' + animationData.animationId).update({
+        firebase.database().ref(userData.zooName + '/animations/' + animationData.animationId).update({
 
             animationId: animationData.animationId,
             animationName: animationData.animationName,
@@ -286,7 +298,7 @@ module.exports = {
         },
         );
 
-        firebase.database().ref('zooTest/animations/' + animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
+        firebase.database().ref(userData.zooName + '/animations/' + animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
             animationSpecie: animationData.animationSpecie,
             animationName: animationData.animationName,
             animationPhotoProfil: animationData.animationPhotoProfil,
@@ -317,7 +329,7 @@ module.exports = {
         let newList = []
 
 
-        var query = firebase.database().ref("zooTest/Lists/FoodList").orderByKey();
+        var query = firebase.database().ref(userData.zooName + '/Lists/FoodList').orderByKey();
         query.once("value")
             .then(function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
@@ -357,7 +369,7 @@ module.exports = {
                 // Promesse tenue
                 console.log('apres traitement', newList)
                 let FoodList = newList
-                firebase.database().ref('zooTest/Lists/').set({
+                firebase.database().ref(userData.zooName + '/Lists/').set({
                     FoodList,
                 })
             })

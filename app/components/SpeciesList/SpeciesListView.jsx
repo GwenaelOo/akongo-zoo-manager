@@ -16,10 +16,11 @@ class SpeciesListView extends React.Component {
     }
 
     readSpecieFromDatabase() {
+        let userData = JSON.parse(localStorage.getItem('user'))
         // Fonction magique que je ne comprend pas 
         var self = this;
         // Selection de la référence de la base de donnée
-        var ref = firebase.database().ref('zooTest/species/');
+        var ref = firebase.database().ref(userData.zooName + '/species/');
         // Type de requete
         ref.once('value').then(function (snapshot) {
             // The Promise was "fulfilled" (it succeeded).

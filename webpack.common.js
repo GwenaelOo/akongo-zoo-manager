@@ -9,6 +9,13 @@ var baseHref = process.env.WP_BASE_HREF ? process.env.WP_BASE_HREF : '/';
 
 module.exports = {
 
+    
+    module: {
+        loaders: [
+            { include: /\.json$/, loaders: ["json-loader"] }
+        ]
+    },
+   
     entry: {
         'vendor': './app/Vendor.jsx',
         'app': './app/App.jsx'
@@ -44,7 +51,9 @@ module.exports = {
                         compact: false
                     }
                 }
-            }, {
+                
+            }, 
+            {
                 test: /\.css$/,
                 exclude: path.join(process.cwd(), '/app'),
                 use: ExtractTextPlugin.extract({
@@ -86,7 +95,7 @@ module.exports = {
             // , noParse: [/\.min\.js/]
     },
 
-    resolveLoader: {
+   resolveLoader: {
         alias: {
             'rtlcss-loader': path.join(__dirname, 'rtlcss-loader.js')
         }
@@ -124,4 +133,6 @@ module.exports = {
             WP_BASE_HREF: JSON.stringify(baseHref)
         })
     ]
-};
+
+    
+}; 
