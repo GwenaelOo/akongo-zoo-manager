@@ -27,7 +27,7 @@ class NewSpeciePage extends React.Component {
             SpecieGestation: '',
             SpecieWeight: '',
             SpecieLifeExpectancy: '',
-            SpecieFood: [''],
+            SpecieFood: [],
             SpeciePhotoProfil: '',
             SpeciePhoto1: '',
             SpeciePhoto2: '',
@@ -75,9 +75,8 @@ class NewSpeciePage extends React.Component {
         this.setState({ [name]: selected.target.value });
 
         let specieData = {
-           
-            SpecieFood: this.state.SpecieFood,
-            
+    
+            SpecieFood: this.state.SpecieFood,        
         }
 
         
@@ -136,8 +135,21 @@ class NewSpeciePage extends React.Component {
         ref.once('value').then(function (snapshot) {
             // The Promise was "fulfilled" (it succeeded).
             let data = snapshot.val()
+
+            let foodList = []
+            data.SpecieFood.forEach(function (foodItem) {
+                if (foodItem.customOption === true) {
+                    foodList.push(foodItem.SpecieFood);
+                } else {
+                foodList.push(foodItem);
+                }
+            })
+
+            console.log('I retrieved the foodlist array', foodList)
+            
             console.log(data.SpecieFood)
             console.log(data);
+
             self.setState({
                 SpecieId: data.SpecieId,
                 SpecieName: data.SpecieName,
@@ -150,7 +162,7 @@ class NewSpeciePage extends React.Component {
                 SpecieDescription: data.SpecieDescription,
                 SpecieGestation: data.SpecieGestation,
                 SpecieWeight: data.SpecieWeight,
-                SpecieFood: data.SpecieFood,
+                SpecieFood: foodList,
                 SpecieLifeExpectancy: data.SpecieLifeExpectancy,
                 SpeciePhotoProfil: data.SpeciePhotoProfil,
                 SpeciePhoto1: data.SpeciePhoto1,
@@ -158,29 +170,20 @@ class NewSpeciePage extends React.Component {
                 SpeciePhoto3: data.SpeciePhoto3,
                 SpeciePhoto4: data.SpeciePhoto4,
                 EditMode: true,
-            });
-        }).then(function(){
-            let foodList =[]
-            console.log('data', data.SpecieFood)
-            data.SpecieFood.forEach(function (childSnapshot) {
-                var childData = childSnapshot.val();
-                foodList.push(childData);
-                self.setState({
-                    SpecieFood: foodList,
-                });
-
-            });
-        });
+            })       
+            ;
+        })
     }
 
     initFoodList() {
+        let userData = JSON.parse(localStorage.getItem('user'))
         // Fonction magique que je ne comprend pas 
         var self = this;
         // Selection de la référence de la base de donnée
 
         let foodList = []
 
-        var query = firebase.database().ref("zooTest/Lists/FoodList").orderByKey();
+        var query = firebase.database().ref(userData.zooName + "/Lists/FoodList").orderByKey();
         query.once("value")
             .then(function (snapshot) {
                 snapshot.forEach(function (childSnapshot) {
@@ -209,8 +212,8 @@ class NewSpeciePage extends React.Component {
        } 
     }
 
-    render() {
-      
+    render()   
+    {
         const innerIcon = <em className="fa fa-check"></em>;
         const innerButton = <Button>Before</Button>;
         const innerDropdown = (
@@ -360,7 +363,8 @@ class NewSpeciePage extends React.Component {
                                             labelKey="SpecieFood"
                                             multiple  
                                             options={this.state.zooFoodList}
-                                            Selected={this.state.SpecieFood}
+                                            defaultSelected={this.state.SpecieFood}
+                                            
                                             placeholder="Choose a state..."
                                             
                                         />
