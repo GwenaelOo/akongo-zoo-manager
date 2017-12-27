@@ -94,7 +94,7 @@ module.exports = {
             SpeciePhoto2: specieData.SpeciePhoto2,
             SpeciePhoto3: specieData.SpeciePhoto3,
             SpeciePhoto4: specieData.SpeciePhoto4,
-            SpecieLastModificationBy: userData.userUid,
+            SpecieLastModificationBy: userData.userId,
             SpecieLastEditDate: Date.now()
         },
         );
@@ -122,6 +122,8 @@ module.exports = {
             animalDescription: animalData.animalDescription,
             animalLifeExpectancy: animalData.animalLifeExpectancy,
             animalPhotoProfil: animalData.animalPhotoProfil,
+            animalCreatedBy: userData.userId,
+            animalCreationDate: Date.now()
 
         },
         );
@@ -159,6 +161,8 @@ module.exports = {
             animalDescription: animalData.animalDescription,
             animalLifeExpectancy: animalData.animalLifeExpectancy,
             animalPhotoProfil: animalData.animalPhotoProfil,
+            animalLastModificationBy: userData.userId,
+            animalLastEditDate: Date.now()
 
         },
         );
@@ -191,6 +195,7 @@ module.exports = {
             serviceName: serviceData.serviceName,
             serviceDescription: serviceData.serviceDescription,
             servicePhotoProfil: serviceData.servicePhotoProfil,
+            
 
         },
         );
@@ -200,6 +205,7 @@ module.exports = {
             serviceId: serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
             serviceName: serviceData.serviceName,
             servicePhotoProfil: serviceData.servicePhotoProfil,
+            
         },
         );
 
