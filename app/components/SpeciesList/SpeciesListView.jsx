@@ -10,29 +10,33 @@ class SpeciesListView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            speciesList: ''
+            speciesList: []
         };
     
     }
 
     readSpecieFromDatabase() {
         let userData = JSON.parse(localStorage.getItem('user'))
+
+        let collection = (userData.zooName + '-species')
         // Fonction magique que je ne comprend pas 
         var self = this;
         // Selection de la référence de la base de donnée
-        var ref = firebase.database().ref(userData.zooName + '/species/');
-        // Type de requete
-        ref.once('value').then(function (snapshot) {
-            // The Promise was "fulfilled" (it succeeded).
-            let data = snapshot.val()
+      
+        firebase.firestore().collection(collection).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                console.log(doc.id, " => ", doc.data());
+                console.log('c est ma state' + self.state.speciesList)
+                let newSpeciesList = self.state.speciesList
+                newSpeciesList.push(doc.data())
 
-            self.setState({
-                speciesList: data
+                self.setState({
+                    speciesList: newSpeciesList
+                })
             });
-        }, function (error) {
-            // The Promise was rejected.
-            console.error(error);
         });
+        
+
     }
     componentWillMount() {
         this.readSpecieFromDatabase();
@@ -44,7 +48,7 @@ class SpeciesListView extends React.Component {
                 <h3>Mes animaux</h3>
                 {/* START row */}
                 <div className="row">
-                    <SpecieList speciesList={this.state.speciesList} />
+                <SpecieList speciesList={this.state.speciesList} />
                 </div>
                 {/* END panel tab */}
             </ContentWrapper>

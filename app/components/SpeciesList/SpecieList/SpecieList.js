@@ -28,7 +28,7 @@ class SpecieList extends React.Component {
        
       }
 
-      console.log(list)
+ 
 
         return (
             <div>
