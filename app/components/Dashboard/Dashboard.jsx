@@ -7,87 +7,87 @@ import DashboardRun from './Dashboard.run';
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { 
+        this.state = {
             speciesAmount: 0,
             animalsAmount: 0,
             servicesAmount: 0
         }
     }
 
-    howManySpeciesInDatabase() {
+    howManySpeciesInFirebase() {
+
         let userData = JSON.parse(localStorage.getItem('user'))
+        let collection = (userData.zooName + '-species')
+
+        var self = this;
+
+        let newSpeciesAmount = []
+        firebase.firestore().collection(collection).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
         
-        // Fonction magique que je ne comprend pas 
-        var self = this;
-        // Selection de la référence de la base de donnée
-        var ref = firebase.database().ref(userData.zooName + '/species/');
-        // Type de requete
-        ref.once('value').then(function (snapshot) {
-            // The Promise was "fulfilled" (it succeeded).
-            
-            let speciesAmount = Object.keys(snapshot.val()).length;
-            console.log('mon zoo ' + userData.zooName)
-            console.log('Nombre de d espèces :' + speciesAmount);
+                newSpeciesAmount.push(doc.data())
+            });
+
+            console.log("Nombre de d espèces : " + newSpeciesAmount.length)
 
             self.setState({
-                speciesAmount: speciesAmount
-            });
-            
-        }, function (error) {
-            // The Promise was rejected.
-            console.error(error);
+                speciesAmount: newSpeciesAmount.length
+            })
+
         });
+
     }
 
-    howManyAnimalsInDatabase() {
+
+    howManyServicesInFirebase() {
+
         let userData = JSON.parse(localStorage.getItem('user'))
-      
-        // Fonction magique que je ne comprend pas 
-        var self = this;
-        // Selection de la référence de la base de donnée
-        var ref = firebase.database().ref(userData.zooName + '/animals/');
-        // Type de requete
-        ref.once('value').then(function (snapshot) {
-            // The Promise was "fulfilled" (it succeeded).
-            console.log('mon zoo ' + userData.zooName)
-            let animalsAmount = Object.keys(snapshot.val()).length;
-            console.log('Nombre de d animaux :' + animalsAmount);
+        let collection = (userData.zooName + '-services')
 
-            self.setState({
-                animalsAmount: animalsAmount
+        var self = this;
+
+        let newServicesAmount = []
+        firebase.firestore().collection(collection).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+            
+                newServicesAmount.push(doc.data())
             });
 
-        }, function (error) {
-            // The Promise was rejected.
-            console.error(error);
+            console.log("Nombre de services: " + newServicesAmount.length)
+
+            self.setState({
+                servicesAmount: newServicesAmount.length
+            })
+
         });
+
     }
 
-    howManyServicesInDatabase() {
+    howManyAnimalsInFirebase() {
+
         let userData = JSON.parse(localStorage.getItem('user'))
-        
-        // Fonction magique que je ne comprend pas 
-        var self = this;
-        // Selection de la référence de la base de donnée
-        var ref = firebase.database().ref(userData.zooName + '/services/');
-        // Type de requete
-        ref.once('value').then(function (snapshot) {
-            // The Promise was "fulfilled" (it succeeded).
-            console.log('mon zoo ' + userData.zooName)
-            let servicesAmount = Object.keys(snapshot.val()).length;
-            console.log('Nombre de services :' + servicesAmount);
+        let collection = (userData.zooName + '-services')
 
-            self.setState({
-                servicesAmount: servicesAmount
+        var self = this;
+
+        let newServicesAmount = []
+        firebase.firestore().collection(collection).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+            
+                newServicesAmount.push(doc.data())
             });
 
-        }, function (error) {
-            // The Promise was rejected.
-            console.error(error);
-        });
-    }
+            console.log("Nombre d'animaux: " + newServicesAmount.length)
 
-    getUserData(){
+            self.setState({
+                animalsAmount: newServicesAmount.length
+            })
+
+        });
+
+    }
+    
+    getUserData() {
         let userData = JSON.parse(localStorage.getItem('user'))
         console.log('initialisation de l api', userData.zooName)
         this.setState({
@@ -105,12 +105,13 @@ class Dashboard extends React.Component {
         $(this.refs.chartSpline).data('plot').shutdown();
     }
 
+
     componentWillMount() {
         this.getUserData()
-        this.howManySpeciesInDatabase()
-        this.howManyAnimalsInDatabase()
-        this.howManyServicesInDatabase()
-        
+        this.howManySpeciesInFirebase()
+        this.howManyAnimalsInFirebase()
+        this.howManyServicesInFirebase()
+
     }
 
     render() {
@@ -118,7 +119,7 @@ class Dashboard extends React.Component {
             <ContentWrapper>
                 <div className="content-heading">
                     { /* START Language list */}
-                   
+
                     { /* END Language list */} Ecran de contrôle
                     <small data-localize="dashboard.WELCOME">Bienvenue dans Akongo Zoo Manager</small>
                 </div>

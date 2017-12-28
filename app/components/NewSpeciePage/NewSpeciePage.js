@@ -139,7 +139,6 @@ class NewSpeciePage extends React.Component {
             // The Promise was "fulfilled" (it succeeded).
             let data = snapshot.data()
            
-
             let foodList = []
             data.SpecieFood.forEach(function (foodItem) {
                 if (foodItem.customOption === true) {
@@ -148,7 +147,6 @@ class NewSpeciePage extends React.Component {
                     foodList.push(foodItem);
                 }
             })
-
 
             self.setState({
                 SpecieId: data.SpecieId,
@@ -170,8 +168,7 @@ class NewSpeciePage extends React.Component {
                 SpeciePhoto3: data.SpeciePhoto3,
                 SpeciePhoto4: data.SpeciePhoto4,
                 EditMode: true,
-            })
-                ;
+            });
         })
  
     }
