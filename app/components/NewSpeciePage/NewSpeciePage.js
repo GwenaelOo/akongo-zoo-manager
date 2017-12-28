@@ -38,6 +38,7 @@ class NewSpeciePage extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleReturnedUrl = this.handleReturnedUrl.bind(this);
+        this.readSpecieFromFireStore = this.readSpecieFromFireStore.bind(this)
     }
 
     handleChange(event) {
@@ -125,6 +126,57 @@ class NewSpeciePage extends React.Component {
 
     }
 
+    readSpecieFromFireStore(specieId) {
+        let userData = JSON.parse(localStorage.getItem('user'))
+        var self = this
+        // Fonction magique que je ne comprend pas 
+     
+        let docRef = firebase.firestore()
+            .collection(userData.zooName + '-species' )
+            .doc(specieId);
+
+        docRef.get().then(function (snapshot) {
+            // The Promise was "fulfilled" (it succeeded).
+            let data = snapshot.data()
+           
+
+            let foodList = []
+            data.SpecieFood.forEach(function (foodItem) {
+                if (foodItem.customOption === true) {
+                    foodList.push(foodItem.SpecieFood);
+                } else {
+                    foodList.push(foodItem);
+                }
+            })
+
+
+            self.setState({
+                SpecieId: data.SpecieId,
+                SpecieName: data.SpecieName,
+                SpecieLatinName: data.SpecieLatinName,
+                SpecieEnglishName: data.SpecieEnglishName,
+                SpecieClass: data.SpecieClass,
+                SpecieOrder: data.SpecieOrder,
+                SpecieFamilly: data.SpecieFamilly,
+                SpecieIUCNClassification: data.SpecieIUCNClassification,
+                SpecieDescription: data.SpecieDescription,
+                SpecieGestation: data.SpecieGestation,
+                SpecieWeight: data.SpecieWeight,
+                SpecieFood: foodList,
+                SpecieLifeExpectancy: data.SpecieLifeExpectancy,
+                SpeciePhotoProfil: data.SpeciePhotoProfil,
+                SpeciePhoto1: data.SpeciePhoto1,
+                SpeciePhoto2: data.SpeciePhoto2,
+                SpeciePhoto3: data.SpeciePhoto3,
+                SpeciePhoto4: data.SpeciePhoto4,
+                EditMode: true,
+            })
+                ;
+        })
+ 
+    }
+
+
     readSpecieFromDatabase(specieId) {
         let userData = JSON.parse(localStorage.getItem('user'))
         // Fonction magique que je ne comprend pas 
@@ -205,10 +257,10 @@ class NewSpeciePage extends React.Component {
 
 
     componentWillMount(){
-       
-        this.initFoodList();
+     
+        //this.initFoodList();
         if (this.props.location.state.SpecieId !== null){
-         this.readSpecieFromDatabase(this.props.location.state.SpecieId);
+         this.readSpecieFromFireStore(this.props.location.state.SpecieId);
        } 
     }
 

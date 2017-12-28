@@ -34,8 +34,14 @@ module.exports = {
 
     addNewSpecieToDatabase: function (specieData) {
 
-        firebase.database().ref( userData.zooName + '/species/' + specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
-            SpecieId: specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
+        let collection = (userData.zooName + '-species');
+        let document = specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))
+        let specieId = document
+        // Ajout dans realTimeDataBase
+
+        firebase.database().ref( userData.zooName + '/species/' + specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)))
+        .set({
+            SpecieId: specieId,
             SpecieName: specieData.SpecieName,
             SpecieLatinName: specieData.SpecieLatinName,
             SpecieEnglishName: specieData.SpecieEnglishName,
@@ -55,18 +61,51 @@ module.exports = {
             SpeciePhoto4: specieData.SpeciePhoto4,
             SpecieCreatedBy: userData.userId,
             SpecieCreationDate: Date.now()
-        },
-        );
+        });
+        // ********************
+        // Ajout dans firebase 
+        // ********************
 
-        swal({
-            title: "Good job!",
-            text: "L'espèce " + specieData.SpecieName + " a été ajoutée à votre Zoo",
-            type: "success",
-            showCancelButton: false
-        }, function () {
-            // Redirect the user
-            window.location.href = 'http://localhost:3000/SpeciesList';
-        })
+        firebase.firestore()
+             .collection(collection)
+             .doc(document)
+             .set({
+                 SpecieId: specieId,
+                 SpecieName: specieData.SpecieName,
+                 SpecieLatinName: specieData.SpecieLatinName,
+                 SpecieEnglishName: specieData.SpecieEnglishName,
+                 SpecieClass: specieData.SpecieClass,
+                 SpecieOrder: specieData.SpecieOrder,
+                 SpecieFamilly: specieData.SpecieFamilly,
+                 SpecieIUCNClassification: specieData.SpecieIUCNClassification,
+                 SpecieDescription: specieData.SpecieDescription,
+                 SpecieGestation: specieData.SpecieGestation,
+                 SpecieWeight: specieData.SpecieWeight,
+                 SpecieLifeExpectancy: specieData.SpecieLifeExpectancy,
+                 SpecieFood: specieData.SpecieFood,
+                 SpeciePhotoProfil: specieData.SpeciePhotoProfil,
+                 SpeciePhoto1: specieData.SpeciePhoto1,
+                 SpeciePhoto2: specieData.SpeciePhoto2,
+                 SpeciePhoto3: specieData.SpeciePhoto3,
+                 SpeciePhoto4: specieData.SpeciePhoto4,
+                 SpecieCreatedBy: userData.userId,
+                 SpecieCreationDate: Date.now() 
+             })
+             
+             .then(function () {
+                 swal({
+                     title: "Good job!",
+                     text: "L'espèce " + specieData.SpecieName + " a été ajoutée à votre Zoo",
+                     type: "success",
+                     showCancelButton: false
+                 }, function () {
+                     // Redirect the user
+                     window.location.href = 'http://localhost:3000/SpeciesList';
+                 })
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
 
 
     },
@@ -108,6 +147,54 @@ module.exports = {
             // Redirect the user
             window.location.href = 'http://localhost:3000/SpeciesList';
         })
+
+        // ********************
+        // Ajout dans firebase 
+        // ********************
+
+        let collection = (userData.zooName + '-species');
+        let document = specieData.SpecieId
+
+        firebase.firestore()
+            .collection(collection)
+            .doc(document)
+            .set({
+                SpecieId: specieData.SpecieId,
+                SpecieName: specieData.SpecieName,
+                SpecieLatinName: specieData.SpecieLatinName,
+                SpecieEnglishName: specieData.SpecieEnglishName,
+                SpecieClass: specieData.SpecieClass,
+                SpecieOrder: specieData.SpecieOrder,
+                SpecieFamilly: specieData.SpecieFamilly,
+                SpecieIUCNClassification: specieData.SpecieIUCNClassification,
+                SpecieDescription: specieData.SpecieDescription,
+                SpecieGestation: specieData.SpecieGestation,
+                SpecieWeight: specieData.SpecieWeight,
+                SpecieFood: specieData.SpecieFood,
+                SpecieLifeExpectancy: specieData.SpecieLifeExpectancy,
+                SpeciePhotoProfil: specieData.SpeciePhotoProfil,
+                SpeciePhoto1: specieData.SpeciePhoto1,
+                SpeciePhoto2: specieData.SpeciePhoto2,
+                SpeciePhoto3: specieData.SpeciePhoto3,
+                SpeciePhoto4: specieData.SpeciePhoto4,
+                SpecieLastModificationBy: userData.userId,
+                SpecieLastEditDate: Date.now()
+            })
+
+            .then(function () {
+                swal({
+                    title: "Good job!",
+                    text: "L'espèce " + specieData.SpecieName + " a été correctement éditée",
+                    type: "success",
+                    showCancelButton: false
+                }, function () {
+                    // Redirect the user
+                    window.location.href = 'http://localhost:3000/SpeciesList';
+                })
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
 
 
     },
