@@ -38,7 +38,8 @@ const listofPages = [
     '/lock',
     '/notfound',
     '/error500',
-    '/maintenance'
+    '/maintenance',
+    '/InitialLoading'
 ];
 
 const Routes = ({ location }) => {
@@ -70,6 +71,7 @@ const Routes = ({ location }) => {
                     <Route path="/notfound" component={NotFound}/>
                     <Route path="/error500" component={Error500}/>
                     <Route path="/maintenance" component={Maintenance}/>
+                    <Route path="/InitialLoading" component={InitialLoading} />
                 </Switch>
             </BasePage>
         )
@@ -88,7 +90,7 @@ const Routes = ({ location }) => {
                             <Route path="/Dashboard" component={Dashboard} />
 
                             {/*SpecieListView*/}
-                            <Route path="/InitialLoading" component={InitialLoading} />
+                           
 
                             {/*Species*/}
                             <Route path="/NewSpeciePage" component={NewSpeciePage} />

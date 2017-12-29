@@ -32,6 +32,10 @@ module.exports = {
         let document = specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))
         let specieId = document
       
+        if(specieData.SpeciePhotoProfil === ''){
+            specieData.SpeciePhotoProfil = 'http://thedroideffect.com/wp-content/themes/thedroideffect/images/missing-image-640x360.png'
+        }
+
         // ********************
         // Ajout dans firebase 
         // ********************
