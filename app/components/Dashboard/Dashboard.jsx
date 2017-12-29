@@ -8,9 +8,9 @@ class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            speciesAmount: 0,
-            animalsAmount: 0,
-            servicesAmount: 0
+            speciesAmount: '...',
+            animalsAmount: '...',
+            servicesAmount: '...'
         }
     }
 
@@ -66,21 +66,21 @@ class Dashboard extends React.Component {
     howManyAnimalsInFirebase() {
 
         let userData = JSON.parse(localStorage.getItem('user'))
-        let collection = (userData.zooName + '-services')
+        let collection = (userData.zooName + '-animals')
 
         var self = this;
 
-        let newServicesAmount = []
+        let newAnimalsAmount = []
         firebase.firestore().collection(collection).get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
             
-                newServicesAmount.push(doc.data())
+                newAnimalsAmount.push(doc.data())
             });
 
-            console.log("Nombre d'animaux: " + newServicesAmount.length)
+            console.log("Nombre d'animaux: " + newAnimalsAmount.length)
 
             self.setState({
-                animalsAmount: newServicesAmount.length
+                animalsAmount: newAnimalsAmount.length
             })
 
         });

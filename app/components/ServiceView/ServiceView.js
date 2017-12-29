@@ -66,12 +66,17 @@ class ServiceView extends React.Component {
 
     handleOpeningChange(key, data) {
         console.log(data)
+        this.setState({
+            serviceOpeningTime: data
+        });
         
     }
 
     handleClosingChange(key, data) {
         console.log(data)
-
+        this.setState({
+            serviceClosingTime: data
+        });
     }
 
     handleClick() {
@@ -83,6 +88,8 @@ class ServiceView extends React.Component {
             serviceName: this.state.serviceName,
             serviceDescription: this.state.serviceDescription,
             servicePhotoProfil: this.state.servicePhotoProfil,
+            serviceOpeningTime: this.state.serviceOpeningTime,
+            serviceClosingTime: this.state.serviceClosingTime,
             servicePhoto1: this.state.servicePhoto1,
             servicePhoto2: this.state.servicePhoto2,
             servicePhoto3: this.state.servicePhoto3,
@@ -187,6 +194,7 @@ class ServiceView extends React.Component {
                                         <TimePicker
                                             name="serviceOpeningTime"
                                             format="24hr"
+                                            autoOk= "true"
                                             hintText="Heure d'ouverture"
                                             onChange={this.handleOpeningChange}
                                         />
@@ -199,6 +207,7 @@ class ServiceView extends React.Component {
                                         <TimePicker
                                             name="serviceClosingTime"
                                             format="24hr"
+                                            autoOk="true"
                                             hintText="Heure de fermeture"
                                             onChange={this.handleClosingChange}
                                         />

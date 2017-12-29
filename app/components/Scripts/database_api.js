@@ -20,19 +20,18 @@ function snapshotToArray(snapshot) {
 // init zoo Id
 
 
-        let userData = JSON.parse(localStorage.getItem('user'))
-        console.log('initialisation de l api', userData.zooName)
+    if (JSON.parse(localStorage.getItem('user'))) {
+            let userData = JSON.parse(localStorage.getItem('user'))
+            console.log('initialisation de l API')
+        }
+
         
-    
-        //let userData = {}
-        //console('init de l api en attente')
-
-
-   
 
 module.exports = {
 
     addNewSpecieToDatabase: function (specieData) {
+
+        
 
         let collection = (userData.zooName + '-species');
         let document = specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))
@@ -143,112 +142,119 @@ module.exports = {
 
     addNewAnimalToDatabase: function (animalData) {
 
-        firebase.database().ref(userData.zooName + '/species/' + animalData.animalSpecieId + '/animals/' + animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
-            animalSpecieId: animalData.animalSpecieId,
-            animalSpecie: animalData.animalSpecie,
-            animalId: animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
-            animalName: animalData.animalName,
-            animalDescription: animalData.animalDescription,
-            animalLifeExpectancy: animalData.animalLifeExpectancy,
-            animalPhotoProfil: animalData.animalPhotoProfil,
-            animalCreatedBy: userData.userId,
-            animalCreationDate: Date.now()
+        // ********************
+        // Ajout dans firebase 
+        // ********************
 
-        },
-        );
+        let collection = (userData.zooName + '-animals');
+        let document = animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))
+        let specieId = document
 
-        firebase.database().ref(userData.zooName + '/animals/' + animalData.animalSpecieId + animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
-            animalSpecie: animalData.animalSpecie,
-            animalId: animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
-            animalName: animalData.animalName,
-            animalPhotoProfil: animalData.animalPhotoProfil,
-        },
-        );
 
-        swal({
-            title: "Good job!",
-            text: "L'animal " + animalData.animalName + " a été ajoutée à votre Zoo",
-            type: "success",
-            showCancelButton: false
-        }, function () {
-            // Redirect the user
-            window.location.href = 'http://localhost:3000/Dashboard';
-        })
+        firebase.firestore()
+            .collection(collection)
+            .doc(document)
+            .set({
+                animalSpecieId: animalData.animalSpecieId,
+                animalSpecie: animalData.animalSpecie,
+                animalId: specieId,
+                animalName: animalData.animalName,
+                animalDescription: animalData.animalDescription,
+                animalLifeExpectancy: animalData.animalLifeExpectancy,
+                animalPhotoProfil: animalData.animalPhotoProfil,
+                animalCreatedBy: userData.userId,
+                animalCreationDate: Date.now()
+            })
 
+            .then(function () {
+                swal({
+                    title: "Good job!",
+                    text: "L'espèce " + animalData.animalName + " a été ajoutée à votre Zoo",
+                    type: "success",
+                    showCancelButton: false
+                }, function () {
+                    // Redirect the user
+                    window.location.href = 'http://localhost:3000/SpeciesList';
+                })
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
 
     },
 
     editNewAnimalToDatabase: function (animalData) {
 
-        console.log(animalData.animalId)
+        let collection = (userData.zooName + '-animals');
+        let document = animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))
+        let specieId = document
 
-        firebase.database().ref(userData.zooName + '/species/' + animalData.animalSpecieId + '/' + animalData.animalId).update({
-            animalSpecieId: animalData.animalSpecieId,
-            animalSpecie: animalData.animalSpecie,
-            animalId: animalData.animalId,
-            animalName: animalData.animalName,
-            animalDescription: animalData.animalDescription,
-            animalLifeExpectancy: animalData.animalLifeExpectancy,
-            animalPhotoProfil: animalData.animalPhotoProfil,
-            animalLastModificationBy: userData.userId,
-            animalLastEditDate: Date.now()
 
-        },
-        );
+        firebase.firestore()
+            .collection(collection)
+            .doc(document)
+            .update({
+                animalSpecieId: animalData.animalSpecieId,
+                animalSpecie: animalData.animalSpecie,
+                animalId: specieId,
+                animalName: animalData.animalName,
+                animalDescription: animalData.animalDescription,
+                animalLifeExpectancy: animalData.animalLifeExpectancy,
+                animalPhotoProfil: animalData.animalPhotoProfil,
+                animalLastModificationBy: userData.userId,
+                animalLastEditDate: Date.now()
+            })
 
-        firebase.database().ref(userData.zooName + '/animals/' + animalData.animalSpecieId + animalData.animalId).update({
-            animalSpecie: animalData.animalSpecie,
-            animalName: animalData.animalName,
-            animalPhotoProfil: animalData.animalPhotoProfil,
-        },
-        );
-
-        swal({
-            title: "Good job!",
-            text: "L'espèce " + animalData.animalName + " a été correctement éditée",
-            type: "success",
-            showCancelButton: false
-        }, function () {
-            // Redirect the user
-            window.location.href = 'http://localhost:3000/SpeciesList';
-        })
-
+            .then(function () {
+                swal({
+                    title: "Good job!",
+                    text: "L'espèce " + animalData.animalName + " a été correctement éditée",
+                    type: "success",
+                    showCancelButton: false
+                }, function () {
+                    // Redirect the user
+                    window.location.href = 'http://localhost:3000/SpeciesList';
+                })
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
 
     },
 
     addNewServiceToDatabase: function (serviceData) {
 
-        firebase.database().ref(userData.zooName + '/services/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
-
-            serviceId: serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
-            serviceName: serviceData.serviceName,
-            serviceDescription: serviceData.serviceDescription,
-            servicePhotoProfil: serviceData.servicePhotoProfil,
-            
-
-        },
-        );
-
-        firebase.database().ref(userData.zooName + '/services/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
-
-            serviceId: serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
-            serviceName: serviceData.serviceName,
-            servicePhotoProfil: serviceData.servicePhotoProfil,
-            
-        },
-        );
-
-        swal({
-            title: "Good job!",
-            text: "Le service " + serviceData.serviceName + " a été ajoutée à votre Zoo",
-            type: "success",
-            showCancelButton: false
-        }, function () {
-            // Redirect the user
-            window.location.href = 'http://localhost:3000/Dashboard';
-        })
+        let collection = (userData.zooName + '-services');
+        let document = serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))
+        let serviceId = document
 
 
+        firebase.firestore()
+            .collection(collection)
+            .doc(document)
+            .set({
+                serviceId: serviceId,
+                serviceName: serviceData.serviceName,
+                serviceDescription: serviceData.serviceDescription,
+                servicePhotoProfil: serviceData.servicePhotoProfil,
+                serviceOpeningTime: serviceData.serviceOpeningTime,
+                serviceClosingTime: serviceData.serviceClosingTime,
+            })
+
+            .then(function () {
+                swal({
+                    title: "Good job!",
+                    text: "Le service " + serviceData.serviceName + " a été ajoutée à votre Zoo",
+                    type: "success",
+                    showCancelButton: false
+                }, function () {
+                    // Redirect the user
+                    window.location.href = 'http://localhost:3000/SpeciesList';
+                })
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
     },
 
     editNewServiceToDatabase: function (serviceData) {
@@ -256,7 +262,6 @@ module.exports = {
         console.log(serviceData.serviceId)
 
         firebase.database().ref(userData.zooName + '/services/' + serviceData.serviceId).update({
-
             serviceId: serviceData.serviceId,
             serviceName: serviceData.serviceName,
             serviceDescription: serviceData.serviceDescription,
@@ -281,10 +286,7 @@ module.exports = {
             // Redirect the user
             window.location.href = 'http://localhost:3000/SpeciesList';
         })
-
-
     },
-
 
     addNewAnimationToDatabase: function (animationData) {
 
@@ -294,8 +296,7 @@ module.exports = {
             animationName: animationData.animationName,
             animationDescription: animationData.animationDescription,
             animationPhotoProfil: animationData.animationPhotoProfil,
-
-        },
+             },
         );
 
         firebase.database().ref(userData.zooName + '/animations/' + animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
@@ -303,7 +304,7 @@ module.exports = {
             animationId: animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
             animationName: animationData.animationName,
             animationPhotoProfil: animationData.animationPhotoProfil,
-        },
+              },
         );
 
         swal({
@@ -349,8 +350,6 @@ module.exports = {
             // Redirect the user
             window.location.href = 'http://localhost:3000/SpeciesList';
         })
-
-
     },
 
 

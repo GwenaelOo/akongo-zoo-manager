@@ -43,7 +43,7 @@ class Base extends React.Component {
                         userId: user.uid,
                         zooName: userInfos.zooName
                     }
-
+                  
                     localStorage.setItem('user',JSON.stringify(dataToStore))
                     
                 
