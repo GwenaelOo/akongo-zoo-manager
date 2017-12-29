@@ -41,7 +41,7 @@ class Login extends React.Component {
                 var providerData = user.providerData;
                 console.log(email, uid)
             
-                window.location.href = 'http://localhost:3000/Dashboard';
+                window.location.href = 'http://localhost:3000/InitialLoading';
             } else {
                 // User is signed out.
                 // ...

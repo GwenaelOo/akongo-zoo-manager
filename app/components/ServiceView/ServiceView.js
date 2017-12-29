@@ -194,7 +194,7 @@ class ServiceView extends React.Component {
                                         <TimePicker
                                             name="serviceOpeningTime"
                                             format="24hr"
-                                            autoOk= "true"
+                                            autoOk= "True"
                                             hintText="Heure d'ouverture"
                                             onChange={this.handleOpeningChange}
                                         />
@@ -207,7 +207,7 @@ class ServiceView extends React.Component {
                                         <TimePicker
                                             name="serviceClosingTime"
                                             format="24hr"
-                                            autoOk="true"
+                                            autoOk="True"
                                             hintText="Heure de fermeture"
                                             onChange={this.handleClosingChange}
                                         />

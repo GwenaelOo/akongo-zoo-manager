@@ -19,20 +19,15 @@ function snapshotToArray(snapshot) {
 
 // init zoo Id
 
-
-    if (JSON.parse(localStorage.getItem('user'))) {
             let userData = JSON.parse(localStorage.getItem('user'))
-            console.log('initialisation de l API')
-        }
-
+      
         
 
 module.exports = {
 
     addNewSpecieToDatabase: function (specieData) {
 
-        
-
+    
         let collection = (userData.zooName + '-species');
         let document = specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))
         let specieId = document

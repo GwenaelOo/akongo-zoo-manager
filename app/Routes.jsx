@@ -13,6 +13,7 @@ import Lock from './components/Pages/Lock';
 import NotFound from './components/Pages/NotFound';
 import Error500 from './components/Pages/Error500';
 import Maintenance from './components/Pages/Maintenance';
+import InitialLoading from './components/Pages/InitialLoading';
 
 import Dashboard from './components/Dashboard/Dashboard';
 
@@ -85,6 +86,9 @@ const Routes = ({ location }) => {
 
                             {/*SpecieListView*/}
                             <Route path="/Dashboard" component={Dashboard} />
+
+                            {/*SpecieListView*/}
+                            <Route path="/InitialLoading" component={InitialLoading} />
 
                             {/*Species*/}
                             <Route path="/NewSpeciePage" component={NewSpeciePage} />
