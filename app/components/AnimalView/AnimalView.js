@@ -148,11 +148,6 @@ class AnimalView extends React.Component {
         });
     }
 
-    getSpecieNameFromSpecieId(specieId) {
-       // A développer
-    }
-
-
     componentWillMount(){
         if (this.props.location.state.SpecieId !== null) {
             console.log('recuperation de la specieId', this.props.location.state.SpecieId)

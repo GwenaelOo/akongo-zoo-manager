@@ -7,8 +7,6 @@ import { Grid, Row, Col, Panel, Button, FormControl, FormGroup, InputGroup, Drop
 import DropzoneProfilePicture from '../Photosupload/DropzoneProfilePicture';
 import TimePicker from 'material-ui/TimePicker';
 
-
-
 let api = require("../Scripts/database_api.js");
 
 class ServiceView extends React.Component {
@@ -59,7 +57,6 @@ class ServiceView extends React.Component {
     }
 
     handleReturnedUrl(returnedUrl, photoId) {
-
         let photoName = ('service' + photoId)
         this.setState({
             [photoName]: returnedUrl
@@ -67,16 +64,13 @@ class ServiceView extends React.Component {
     }
 
     handleOpeningChange(key, data){
-        console.log('euh ' + data)
+        console.log(data)
         this.setState({
             serviceOpeningTime: data
-        });
-        console.log('this is my state mother fucker ' + this.state.serviceOpeningTime)
-        
+        });  
     }
 
     handleClosingChange(key, data) {
-        console.log(data)
         this.setState({
            serviceClosingTime: data
         });
@@ -102,25 +96,32 @@ class ServiceView extends React.Component {
         console.log('serviceId à la création', this.state.serviceCategoryId)
 
         if (this.state.EditMode === true) {
+            console.log('j edite')
             api.editNewServiceToDatabase(serviceData);
+            
         }
         else {
+            console.log('je cree')
             api.addNewServiceToDatabase(serviceData);
         }
 
 
     }
 
-    readserviceFromDatabase(serviceId) {
+    readServiceFromDatabase(serviceId) {
+
+        let userData = JSON.parse(localStorage.getItem('user'))
+        var self = this
         // Fonction magique que je ne comprend pas 
-        var self = this;
-        // Selection de la référence de la base de donnée
-        var ref = firebase.database().ref('zooTest/species/' + this.state.serviceCategoryId + this.state.serviceId);
-        // Type de requete
-        ref.once('value').then(function (snapshot) {
+
+        let docRef = firebase.firestore()
+            .collection(userData.zooName + '-services')
+            .doc(serviceId);
+
+        docRef.get().then(function (snapshot) {
             // The Promise was "fulfilled" (it succeeded).
-            let data = snapshot.val()
-            console.log(data);
+            let data = snapshot.data()
+
             self.setState({
                 serviceId: data.serviceId,
                 serviceName: data.serviceName,
@@ -146,15 +147,11 @@ class ServiceView extends React.Component {
     componentWillMount() {
         if (this.props.location.state.serviceId !== null) {
             console.log('recuperation du serviceId', this.props.location.state.serviceId)
-            this.setState({
-                serviceCategoryId: this.props.location.state.serviceId
-            })
+            this.readServiceFromDatabase(this.props.location.state.serviceId);
         } else {
             console.log('Pas de données, nouveau service')
         }
     }
-
-    
 
     render() {
 
@@ -201,6 +198,7 @@ class ServiceView extends React.Component {
                                             format="24hr"
                                             hintText="Heure d'ouverture"
                                             onChange={this.handleOpeningChange}
+                                            value={this.serviceOpeningTime}
                                         />
                                   
                                     </Col>
@@ -213,6 +211,7 @@ class ServiceView extends React.Component {
                                             format="24hr"
                                             hintText="Heure de fermeture"
                                             onChange={this.handleClosingChange}
+                                            
                                         />
                                     </Col>
                                 </FormGroup>

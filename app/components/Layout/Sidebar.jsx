@@ -149,7 +149,7 @@ class Sidebar extends React.Component {
                                     <ul id="myThings" className="nav sidebar-subnav">
                                         <li className="sidebar-subnav-header">Gestion des services</li>
                                         <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
-                                            <Link to="SpeciesList" title="SpeciesListView">
+                                            <Link to="ServiceListView" title="SpeciesListView">
                                                 <span>Voir tous les services</span>
                                             </Link>
                                         </li>

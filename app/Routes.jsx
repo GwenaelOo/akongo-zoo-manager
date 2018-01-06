@@ -23,6 +23,7 @@ import SpeciesListView from './components/SpeciesList/SpeciesListView';
 import AnimalView from './components/AnimalView/AnimalView';
 
 import ServiceView from './components/ServiceView/ServiceView';
+import ServiceListView from './components/ServicesListView/ServicesListView';
 
 import AnimationView from './components/AnimationView/AnimationView';
 
@@ -101,6 +102,7 @@ const Routes = ({ location }) => {
 
                             {/*Service*/}
                             <Route path="/ServiceView" component={ServiceView} />
+                            <Route path="/ServiceListView" component={ServiceListView} />
 
                             {/*Service*/}
                             <Route path="/AnimationView" component={AnimationView} />

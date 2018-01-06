@@ -63,7 +63,7 @@ module.exports = {
                  SpeciePhoto3: specieData.SpeciePhoto3,
                  SpeciePhoto4: specieData.SpeciePhoto4,
                  SpecieCreatedBy: userData.userId,
-                 SpecieCreationDate: Date.now() 
+                 SpecieCreationDate: Date() 
              })
              
              .then(function () {
@@ -118,7 +118,7 @@ module.exports = {
                 SpeciePhoto3: specieData.SpeciePhoto3,
                 SpeciePhoto4: specieData.SpeciePhoto4,
                 SpecieLastModificationBy: userData.userId,
-                SpecieLastEditDate: Date.now()
+                SpecieLastEditDate: Date()
             })
 
             .then(function () {
@@ -162,7 +162,7 @@ module.exports = {
                 animalLifeExpectancy: animalData.animalLifeExpectancy,
                 animalPhotoProfil: animalData.animalPhotoProfil,
                 animalCreatedBy: userData.userId,
-                animalCreationDate: Date.now()
+                animalCreationDate: Date()
             })
 
             .then(function () {
@@ -201,7 +201,7 @@ module.exports = {
                 animalLifeExpectancy: animalData.animalLifeExpectancy,
                 animalPhotoProfil: animalData.animalPhotoProfil,
                 animalLastModificationBy: userData.userId,
-                animalLastEditDate: Date.now()
+                animalLastEditDate: Date()
             })
 
             .then(function () {
@@ -238,6 +238,8 @@ module.exports = {
                 servicePhotoProfil: serviceData.servicePhotoProfil,
                 serviceOpeningTime: serviceData.serviceOpeningTime,
                 serviceClosingTime: serviceData.serviceClosingTime,
+                serviceCreatedBy: userData.userId,
+                serviceCreationDate: Date()
             })
 
             .then(function () {
@@ -248,7 +250,7 @@ module.exports = {
                     showCancelButton: false
                 }, function () {
                     // Redirect the user
-                    window.location.href = 'http://localhost:3000/SpeciesList';
+                    window.location.href = 'http://localhost:3000/Dashboard';
                 })
             })
             .catch(function (error) {
@@ -258,35 +260,42 @@ module.exports = {
 
     editNewServiceToDatabase: function (serviceData) {
 
-        console.log(serviceData.serviceId)
+        let collection = (userData.zooName + '-services');
+        let document = serviceData.serviceId
+        let serviceId = document
 
-        firebase.database().ref(userData.zooName + '/services/' + serviceData.serviceId).update({
-            serviceId: serviceData.serviceId,
-            serviceName: serviceData.serviceName,
-            serviceDescription: serviceData.serviceDescription,
-            servicePhotoProfil: serviceData.servicePhotoProfil,
 
-        },
-        );
+        firebase.firestore()
+            .collection(collection)
+            .doc(document)
+            .update({
+                serviceId: serviceId,
+                serviceName: serviceData.serviceName,
+                serviceDescription: serviceData.serviceDescription,
+                servicePhotoProfil: serviceData.servicePhotoProfil,
+                serviceOpeningTime: serviceData.serviceOpeningTime,
+                serviceClosingTime: serviceData.serviceClosingTime,
+                serviceLastModificationBy: userData.userId,
+                serviceLastEditDate: Date()
+            })
 
-        firebase.database().ref(userData.zooName + '/services/' + serviceData.serviceName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
-            serviceSpecie: serviceData.serviceSpecie,
-            serviceName: serviceData.serviceName,
-            servicePhotoProfil: serviceData.servicePhotoProfil,
-        },
-        );
-
-        swal({
-            title: "Good job!",
-            text: "L'espèce " + serviceData.serviceName + " a été correctement éditée",
-            type: "success",
-            showCancelButton: false
-        }, function () {
-            // Redirect the user
-            window.location.href = 'http://localhost:3000/SpeciesList';
-        })
+            .then(function () {
+                swal({
+                    title: "Good job!",
+                    text: "Le service " + serviceData.serviceName + " a été ajoutée à votre Zoo",
+                    type: "success",
+                    showCancelButton: false
+                }, function () {
+                    // Redirect the user
+                    window.location.href = 'http://localhost:3000/Dashboard';
+                })
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
     },
 
+    
     addNewAnimationToDatabase: function (animationData) {
 
         firebase.database().ref(userData.zooName + '/animations/' + animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({

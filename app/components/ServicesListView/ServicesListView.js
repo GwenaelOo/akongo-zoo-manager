@@ -1,51 +1,51 @@
 import React from 'react';
 import ContentWrapper from '../Layout/ContentWrapper';
-import SpecieList from './SpecieList/SpecieList';
+import ServicesList from './ServicesList/ServicesList';
 import { Tabs, Tab } from 'react-bootstrap';
 let config = require("../../config/config");
 let api = require("../Scripts/database_api.js");
 
 
-class SpeciesListView extends React.Component {
+class ServicesListView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            speciesList: []
+            ServicesList: []
         };
-    
+
     }
 
-    readSpecieFromDatabase() {
+    readServicesFromDatabase() {
         let userData = JSON.parse(localStorage.getItem('user'))
 
-        let collection = (userData.zooName + '-species')
-        // Fonction magique que je ne comprend pas 
+        let collection = (userData.zooName + '-services')
+
         var self = this;
-        // Selection de la référence de la base de donnée
-      
+     
         firebase.firestore().collection(collection).get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
-                let newSpeciesList = self.state.speciesList
-                newSpeciesList.push(doc.data())
+                let newServicesList = self.state.ServicesList
+                newServicesList.push(doc.data())
+
                 self.setState({
-                    speciesList: newSpeciesList
+                    ServicesList: newServicesList
                 })
             });
         });
-        
+
 
     }
     componentWillMount() {
-        this.readSpecieFromDatabase();
+        this.readServicesFromDatabase();
     }
     render() {
-          
+        console.log(this.state.ServicesList)
         return (
             <ContentWrapper>
-                <h3>Mes animaux</h3>
+                <h3>Mes services</h3>
                 {/* START row */}
                 <div className="row">
-                <SpecieList speciesList={this.state.speciesList} />
+                    <ServicesList servicesList={this.state.ServicesList} />
                 </div>
                 {/* END panel tab */}
             </ContentWrapper>
@@ -54,4 +54,4 @@ class SpeciesListView extends React.Component {
 
 }
 
-export default SpeciesListView;
+export default ServicesListView;
