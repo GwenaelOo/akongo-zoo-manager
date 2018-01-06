@@ -30,6 +30,8 @@ class ServiceView extends React.Component {
             EditMode: false,
         };
         this.handleChange = this.handleChange.bind(this);
+        this.handleOpeningChange = this.handleOpeningChange.bind(this);
+        this.handleClosingChange = this.handleClosingChange.bind(this);
         this.handleReturnedUrl = this.handleReturnedUrl.bind(this);
     }
 
@@ -64,18 +66,19 @@ class ServiceView extends React.Component {
         });
     }
 
-    handleOpeningChange(key, data) {
-        console.log(data)
+    handleOpeningChange(key, data){
+        console.log('euh ' + data)
         this.setState({
             serviceOpeningTime: data
         });
+        console.log('this is my state mother fucker ' + this.state.serviceOpeningTime)
         
     }
 
     handleClosingChange(key, data) {
         console.log(data)
         this.setState({
-            serviceClosingTime: data
+           serviceClosingTime: data
         });
     }
 
@@ -151,6 +154,8 @@ class ServiceView extends React.Component {
         }
     }
 
+    
+
     render() {
 
         const innerIcon = <em className="fa fa-check"></em>;
@@ -194,7 +199,6 @@ class ServiceView extends React.Component {
                                         <TimePicker
                                             name="serviceOpeningTime"
                                             format="24hr"
-                                            autoOk= "True"
                                             hintText="Heure d'ouverture"
                                             onChange={this.handleOpeningChange}
                                         />
@@ -207,7 +211,6 @@ class ServiceView extends React.Component {
                                         <TimePicker
                                             name="serviceClosingTime"
                                             format="24hr"
-                                            autoOk="True"
                                             hintText="Heure de fermeture"
                                             onChange={this.handleClosingChange}
                                         />
