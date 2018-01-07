@@ -187,6 +187,15 @@ class Sidebar extends React.Component {
                                             </Link>
                                         </li>
 
+                                        <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
+                                            <Link to={{
+                                                pathname: "AkongoDatabaseView",
+                                                
+                                            }}>
+                                                <span>Base de donnée AKONGO</span>
+                                            </Link>
+                                        </li>
+
                                     </ul>
                                 </Collapse>
                             </li>

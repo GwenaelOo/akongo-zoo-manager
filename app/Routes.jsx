@@ -28,6 +28,8 @@ import ServiceListView from './components/ServicesListView/ServicesListView';
 import AnimationView from './components/AnimationView/AnimationView';
 import AnimationListView from './components/AnimationView/AnimationListView';
 
+import AkongoDatabaseView from './components/AkongoDatabaseView/AkongoDatabaseView';
+
 
 // List of routes that uses the page layout
 // listed here to Switch between layouts
@@ -107,6 +109,10 @@ const Routes = ({ location }) => {
                             {/*Service*/}
                             <Route path="/AnimationView" component={AnimationView} />
                             <Route path="/AnimationListView" component={AnimationListView} />
+
+                            {/*AkongoDatabase*/}
+                            <Route path="/AkongoDatabaseView" component={AkongoDatabaseView} />
+                          
             
 
                             <Redirect to="/login"/>
