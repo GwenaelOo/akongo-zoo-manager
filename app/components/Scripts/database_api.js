@@ -330,40 +330,43 @@ module.exports = {
             });
     },
 
-    
     editNewAnimationToDatabase: function (animationData) {
 
-        console.log(animationData.animationId)
+        let collection = (userData.zooName + '-animations');
+        let document = animationData.animationId
+        let animationId = document
 
-        firebase.database().ref(userData.zooName + '/animations/' + animationData.animationId).update({
 
-            animationId: animationData.animationId,
-            animationName: animationData.animationName,
-            animationDescription: animationData.animationDescription,
-            animationPhotoProfil: animationData.animationPhotoProfil,
+        firebase.firestore()
+            .collection(collection)
+            .doc(document)
+            .update({
+                animationId: animationData.animationId,
+                animationName: animationData.animationName,
+                animationDescription: animationData.animationDescription,
+                animationPhotoProfil: animationData.animationPhotoProfil,
+                animationLastModificationBy: userData.userId,
+                animationLastEditDate: Date()
+            })
 
-        },
-        );
-
-        firebase.database().ref(userData.zooName + '/animations/' + animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
-            animationSpecie: animationData.animationSpecie,
-            animationName: animationData.animationName,
-            animationPhotoProfil: animationData.animationPhotoProfil,
-        },
-        );
-
-        swal({
-            title: "Good job!",
-            text: "L'espèce " + animationData.animationName + " a été correctement éditée",
-            type: "success",
-            showCancelButton: false
-        }, function () {
-            // Redirect the user
-            window.location.href = 'http://localhost:3000/SpeciesList';
-        })
+            .then(function () {
+                swal({
+                    title: "Good job!",
+                    text: "L'animation " + animationData.animationName + " a été correctement éditée",
+                    type: "success",
+                    showCancelButton: false
+                }, function () {
+                    // Redirect the user
+                    window.location.href = 'http://localhost:3000/Dashboard';
+                })
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
     },
 
-
+    
+   
     //
     // Gestion des listes Nouritures 
     //

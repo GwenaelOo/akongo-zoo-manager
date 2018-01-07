@@ -181,7 +181,7 @@ class Sidebar extends React.Component {
                                         <li className={this.routeActive('SeeSpecies') ? 'active' : ''}>
                                             <Link to={{
                                                 pathname: "AnimationView",
-                                                state: { SpecieId: null }
+                                                state: { animationId: null }
                                             }}>
                                                 <span>Ajouter une animations</span>
                                             </Link>

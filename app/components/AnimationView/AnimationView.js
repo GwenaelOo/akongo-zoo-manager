@@ -83,15 +83,23 @@ class AnimationView extends React.Component {
     }
 
     readAnimationFromDatabase(animationId) {
+
+
+        let userData = JSON.parse(localStorage.getItem('user'))
+        var self = this
         // Fonction magique que je ne comprend pas 
-        var self = this;
-        // Selection de la référence de la base de donnée
-        var ref = firebase.database().ref('zooTest/species/' + this.state.animationCategoryId + this.state.animationId);
-        // Type de requete
-        ref.once('value').then(function (snapshot) {
+
+        let docRef = firebase.firestore()
+            .collection(userData.zooName + '-animations')
+            .doc(animationId);
+
+        docRef.get().then(function (snapshot) {
             // The Promise was "fulfilled" (it succeeded).
-            let data = snapshot.val()
+            let data = snapshot.data()
+
+            console.log('données récupérée')
             console.log(data);
+
             self.setState({
                 animationId: data.animationId,
                 animationName: data.animationName,
@@ -117,9 +125,8 @@ class AnimationView extends React.Component {
     componentWillMount() {
         if (this.props.location.state.animationId !== null) {
             console.log('recuperation du animationId', this.props.location.state.animationId)
-            this.setState({
-                animationCategoryId: this.props.location.state.animationId
-            })
+            this.readAnimationFromDatabase(this.props.location.state.animationId)
+           
         } else {
             console.log('Pas de données, nouveau animation')
         }

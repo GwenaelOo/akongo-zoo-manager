@@ -63,16 +63,16 @@ class ServiceView extends React.Component {
         });
     }
 
-    handleOpeningChange(key, data){
+    handleOpeningChange(key, data) {
         console.log(data)
         this.setState({
             serviceOpeningTime: data
-        });  
+        });
     }
 
     handleClosingChange(key, data) {
         this.setState({
-           serviceClosingTime: data
+            serviceClosingTime: data
         });
     }
 
@@ -98,7 +98,7 @@ class ServiceView extends React.Component {
         if (this.state.EditMode === true) {
             console.log('j edite')
             api.editNewServiceToDatabase(serviceData);
-            
+
         }
         else {
             console.log('je cree')
@@ -200,7 +200,7 @@ class ServiceView extends React.Component {
                                             onChange={this.handleOpeningChange}
                                             value={this.serviceOpeningTime}
                                         />
-                                  
+
                                     </Col>
                                 </FormGroup>
                                 <FormGroup>
@@ -211,12 +211,21 @@ class ServiceView extends React.Component {
                                             format="24hr"
                                             hintText="Heure de fermeture"
                                             onChange={this.handleClosingChange}
-                                            
+
                                         />
                                     </Col>
                                 </FormGroup>
                             </fieldset>
 
+                        </fieldset>
+                        <fieldset>
+                            <div className="col-md-8">
+                                <label htmlFor="userName">Description du service</label>
+                                <Panel>
+                                    <textarea name="serviceDescription" rows="10" className="form-control note-editor" value={this.state.serviceDescription} onChange={this.handleChange}>
+                                    </textarea>
+                                </Panel>
+                            </div>
                         </fieldset>
 
                         <fieldset>
