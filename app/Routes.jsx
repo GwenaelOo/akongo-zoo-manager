@@ -26,7 +26,7 @@ import ServiceView from './components/ServiceView/ServiceView';
 import ServiceListView from './components/ServicesListView/ServicesListView';
 
 import AnimationView from './components/AnimationView/AnimationView';
-
+import AnimationListView from './components/AnimationView/AnimationListView';
 
 
 // List of routes that uses the page layout
@@ -106,6 +106,7 @@ const Routes = ({ location }) => {
 
                             {/*Service*/}
                             <Route path="/AnimationView" component={AnimationView} />
+                            <Route path="/AnimationListView" component={AnimationListView} />
             
 
                             <Redirect to="/login"/>

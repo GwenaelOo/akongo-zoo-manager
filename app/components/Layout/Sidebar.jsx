@@ -174,7 +174,7 @@ class Sidebar extends React.Component {
                                     <ul id="myThings" className="nav sidebar-subnav">
                                         <li className="sidebar-subnav-header">Gestion des animations</li>
                                         <li className={this.routeActive('SpeciesListView') ? 'active' : ''}>
-                                            <Link to="SpeciesList" title="SpeciesListView">
+                                            <Link to="AnimationListView" title="AnimationListView">
                                                 <span>Voir les animations</span>
                                             </Link>
                                         </li>

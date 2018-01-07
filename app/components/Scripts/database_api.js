@@ -295,39 +295,42 @@ module.exports = {
             });
     },
 
-    
     addNewAnimationToDatabase: function (animationData) {
 
-        firebase.database().ref(userData.zooName + '/animations/' + animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
-
-            animationId: animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
-            animationName: animationData.animationName,
-            animationDescription: animationData.animationDescription,
-            animationPhotoProfil: animationData.animationPhotoProfil,
-             },
-        );
-
-        firebase.database().ref(userData.zooName + '/animations/' + animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))).set({
-
-            animationId: animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
-            animationName: animationData.animationName,
-            animationPhotoProfil: animationData.animationPhotoProfil,
-              },
-        );
-
-        swal({
-            title: "Good job!",
-            text: "Le animation " + animationData.animationName + " a été ajoutée à votre Zoo",
-            type: "success",
-            showCancelButton: false
-        }, function () {
-            // Redirect the user
-            window.location.href = 'http://localhost:3000/Dashboard';
-        })
+        let collection = (userData.zooName + '-animations');
+        let document = animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))
+        let animationId = document
 
 
+        firebase.firestore()
+            .collection(collection)
+            .doc(document)
+            .set({
+                animationId: animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
+                animationName: animationData.animationName,
+                animationDescription: animationData.animationDescription,
+                animationPhotoProfil: animationData.animationPhotoProfil,
+                animationCreatedBy: userData.userId,
+                animationCreationDate: Date()
+            })
+
+            .then(function () {
+                swal({
+                    title: "Good job!",
+                    text: "L'animation " + animationData.animationName + " a été ajoutée à votre Zoo",
+                    type: "success",
+                    showCancelButton: false
+                }, function () {
+                    // Redirect the user
+                    window.location.href = 'http://localhost:3000/Dashboard';
+                })
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
     },
 
+    
     editNewAnimationToDatabase: function (animationData) {
 
         console.log(animationData.animationId)

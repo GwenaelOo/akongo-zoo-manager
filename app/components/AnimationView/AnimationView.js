@@ -80,8 +80,6 @@ class AnimationView extends React.Component {
         else {
             api.addNewAnimationToDatabase(animationData);
         }
-
-
     }
 
     readAnimationFromDatabase(animationId) {
