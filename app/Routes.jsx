@@ -17,16 +17,16 @@ import InitialLoading from './components/Pages/InitialLoading';
 
 import Dashboard from './components/Dashboard/Dashboard';
 
-import NewSpeciePage from './components/NewSpeciePage/NewSpeciePage';
-import SpeciesListView from './components/SpeciesList/SpeciesListView';
+import SpecieView from './components/_Species/SpecieView';
+import SpeciesListView from './components/_Species/SpeciesListView';
 
-import AnimalView from './components/AnimalView/AnimalView';
+import AnimalView from './components/_Animals/AnimalView';
 
-import ServiceView from './components/ServiceView/ServiceView';
-import ServiceListView from './components/ServicesListView/ServicesListView';
+import ServiceView from './components/_Services/ServiceView';
+import ServiceListView from './components/_Services/ServicesListView';
 
-import AnimationView from './components/AnimationView/AnimationView';
-import AnimationListView from './components/AnimationView/AnimationListView';
+import AnimationView from './components/_Animations/AnimationView';
+import AnimationListView from './components/_Animations/AnimationListView';
 
 import AkongoDatabaseView from './components/AkongoDatabaseView/AkongoDatabaseView';
 
@@ -96,7 +96,7 @@ const Routes = ({ location }) => {
                            
 
                             {/*Species*/}
-                            <Route path="/NewSpeciePage" component={NewSpeciePage} />
+                            <Route path="/SpecieView" component={SpecieView} />
                             <Route path="/SpeciesList" component={SpeciesListView} />
 
                             {/*Animal*/}

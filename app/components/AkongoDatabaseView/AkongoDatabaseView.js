@@ -2,16 +2,53 @@ import React from 'react';
 import ContentWrapper from '../Layout/ContentWrapper';
 import { Grid, Row, Col, Panel, Button, Table, Pagination } from 'react-bootstrap';
 import TableExtendedRun from './TableExtended.run';
+import AkongoListItem from './AkongoListItem/AkongoListItem';
 
 class TableExtended extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            speciesList: []
+        };
+
+    }
+    
     componentDidMount() {
         TableExtendedRun();
+        this.readSpecieFromDatabase();
     }
+
+    readSpecieFromDatabase() {
+        let userData = JSON.parse(localStorage.getItem('user'))
+
+        let collection = ('Akongo' + '-species')
+        // Fonction magique que je ne comprend pas 
+        var self = this;
+        // Selection de la référence de la base de donnée
+
+        firebase.firestore().collection(collection).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                let newSpeciesList = self.state.speciesList
+                newSpeciesList.push(doc.data())
+                self.setState({
+                    speciesList: newSpeciesList
+                })
+            });
+        });
+    }
+
     render() {
+
+        console.log(this.state.speciesList)
+
+        let rows = this.state.speciesList.map(specie => {
+            return <AkongoListItem key={specie.SpecieId} specieId={specie.SpecieId} speciePhoto={specie.SpeciePhotoProfil} specieName={specie.SpecieName} specieLatinName={specie.SpecieLatinName} specieClass={specie.SpecieClass} specieOrder={specie.SpecieOrder} />
+        })
+
         return (
             <ContentWrapper>
                 <h3>Tables
-                               <small>A showcase of different components inside tables</small>
+                    <small>A showcase of different components inside tables</small>
                 </h3>
                 { /* START panel */}
                 <div className="panel panel-default">
@@ -28,6 +65,7 @@ class TableExtended extends React.Component {
                                 <th>Ordre</th>
                                 <th>% de données</th>
                                 <th>Last Login</th>
+                               
                                 <th data-check-all="data-check-all">
                                     <div data-toggle="tooltip" data-title="Check All" className="checkbox c-checkbox">
                                         <label>
@@ -38,38 +76,9 @@ class TableExtended extends React.Component {
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
 
-
-
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <div className="media">
-                                        <img src="img/user/01.jpg" alt="Image" className="img-responsive img-circle" />
-                                    </div>
-                                </td>
-                                <td>Gorille</td>
-                                <td>gorilla gorilla</td>
-                                <td>Mammifère</td>
-                                <td>Primate</td>
-                                <td className="text-center">
-                                    <div data-label="100%" className="radial-bar radial-bar-100 radial-bar-xs"></div>
-                                </td>
-                                <td>1 week</td>
-                                <td>
-                                    <div className="checkbox c-checkbox">
-                                        <label>
-                                            <input type="checkbox" />
-                                            <em className="fa fa-check"></em>
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-
-
-
-                        </tbody>
+                        <tbody>{rows}</tbody>
+                        
                     </Table>
                     { /* END table-responsive */}
                     <div className="panel-footer">
