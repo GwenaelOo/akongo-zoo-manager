@@ -10,9 +10,8 @@ class Sidebar extends React.Component {
         super(props, context);
 
         this.state = {
-            userBlockCollapse: false,
+            userBlockCollapse: true,
             collapse: {
-                
                 species: this.routeActive(['seeSpecies', 'addSpecies', 'modifySpecies']), 
                 services: this.routeActive(['seeSpecies', 'addSpecies', 'modifySpecies']),
                 animations: this.routeActive(['seeSpecies', 'addSpecies', 'modifySpecies']),  
@@ -25,11 +24,24 @@ class Sidebar extends React.Component {
                 userBlockCollapse: !this.state.userBlockCollapse
             });
         });
+       
     };
+
+   
+    getUserName() {
+        let userData = JSON.parse(localStorage.getItem('user'))
+        return userData.firstname
+    }
+    getZooName() {
+        let userData = JSON.parse(localStorage.getItem('user'))
+        return userData.zooNameDisplay
+    }
+      
 
     componentDidMount() {
         // pass navigator to access router api
         SidebarRun(this.navigator.bind(this));
+        
     }
 
     navigator(route) {
@@ -39,6 +51,7 @@ class Sidebar extends React.Component {
     componentWillUnmount() {
         // React removed me from the DOM, I have to unsubscribe from the pubsub using my token
         pubsub.unsubscribe(this.pubsub_token);
+        this.getUserName()
     }
 
     routeActive(paths) {
@@ -62,6 +75,8 @@ class Sidebar extends React.Component {
     }
 
     render() {
+
+        
         return (
             <aside className='aside'>
                 { /* START Sidebar (left) */}
@@ -83,8 +98,8 @@ class Sidebar extends React.Component {
                                             </div>
                                             { /* Name and Job */}
                                             <div className="user-block-info">
-                                                <span className="user-block-name">Hello, Gwen</span>
-                                                <span className="user-block-role">Webmaster</span>
+                                                <span className="user-block-name">Hello, {this.getUserName()}</span>
+                                                <span className="user-block-role">{this.getZooName()}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -93,8 +108,6 @@ class Sidebar extends React.Component {
                             { /* END user info */}
 
                             { /* Menu Management des epèces*/}
-
-
 
                             <li className="nav-heading ">
                                 <span data-localize="sidebar.heading.HEADER">Menu de navigation</span>
@@ -107,7 +120,9 @@ class Sidebar extends React.Component {
                                     <span data-localize="sidebar.nav.DASHBOARD">Dashboard</span>
                                 </Link>
                             </li>
-                         
+
+                            
+
 
                             { /* Menu Management des epèces*/
                             <li className="nav-heading ">
@@ -195,15 +210,28 @@ class Sidebar extends React.Component {
                                                 <span>Ajouter une animations</span>
                                             </Link>
                                         </li>
-
-                                       
-
                                     </ul>
                                 </Collapse>
+                            </li>      
+                            <li className="nav-heading ">
+                                <span data-localize="sidebar.heading.HEADER">Menu du Plan</span>
                             </li>
 
-                      
-                    
+                            <li className={this.routeActive('dashboard') ? 'active' : ''}>
+                                <Link to="Plan" title="Gestion du Plan">
+                                    <em className="icon-map"></em>
+                                    <span data-localize="sidebar.nav.DASHBOARD">Gestion du Plan</span>
+                                </Link>
+                            </li>   
+
+                            <li className={this.routeActive('dashboard') ? 'active' : ''}>
+                                <Link to="Plan" title="Gestion du Plan">
+                                    <em className="icon-map"></em>
+                                    <span data-localize="sidebar.nav.DASHBOARD">Gestion des notifications</span>
+                                </Link>
+                            </li>          
+                            
+                                   
                         </ul>
                         { /* END sidebar nav */}
                     </nav>

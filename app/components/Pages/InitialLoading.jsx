@@ -16,7 +16,9 @@ class InitialLoading extends React.Component {
 
                     let dataToStore = {
                         userId: user.uid,
-                        zooName: userInfos.zooName
+                        zooName: userInfos.zooName,
+                        firstname: userInfos.firstname,
+                        zooNameDisplay: userInfos.zooNameDisplay
                     }
 
                     localStorage.setItem('user', JSON.stringify(dataToStore))

@@ -7,7 +7,7 @@ class AkongoListItem extends React.Component {
         super(props);
         this.state = {
             isChecked: false,
-            amIright: 'lol',
+
             list: []
         };
         this.addSpecieToTheList = this.addSpecieToTheList.bind(this);

@@ -310,6 +310,7 @@ module.exports = {
                 animationName: animationData.animationName,
                 animationDescription: animationData.animationDescription,
                 animationPhotoProfil: animationData.animationPhotoProfil,
+                animationPhotoProfilId: animationData.animationPhotoProfilId,
                 animationCreatedBy: userData.userId,
                 animationCreationDate: Date()
             })

@@ -5,6 +5,7 @@ import { Grid, Row, Col, Panel, Button, FormControl, FormGroup, InputGroup, Drop
 // Ajout des composants du formulaire
 
 import DropzoneProfilePicture from '../Photosupload/DropzoneProfilePicture';
+import UploadPhoto from '../Upload/UploadPhoto/UploadPhoto';
 
 let api = require("../Scripts/database_api.js");
 
@@ -49,12 +50,16 @@ class AnimationView extends React.Component {
         console.log(animationData)
     }
 
-    handleReturnedUrl(returnedUrl, photoId) {
+    handleReturnedUrl(returnedUrl, photoId, returnedId) {
 
         let photoName = ('animation' + photoId)
+        let photoNameId = ('animation' + photoId + 'Id')
+
         this.setState({
-            [photoName]: returnedUrl
+            [photoName]: returnedUrl,
+            [photoNameId]: returnedId
         });
+
     }
 
     handleClick() {
@@ -66,6 +71,7 @@ class AnimationView extends React.Component {
             animationName: this.state.animationName,
             animationDescription: this.state.animationDescription,
             animationPhotoProfil: this.state.animationPhotoProfil,
+            animationPhotoProfilId: this.state.animationPhotoProfilId,
             animationPhoto1: this.state.animationPhoto1,
             animationPhoto2: this.state.animationPhoto2,
             animationPhoto3: this.state.animationPhoto3,
@@ -179,7 +185,7 @@ class AnimationView extends React.Component {
                                     </div>
 
                                     <div className="col-md-4" >
-                                        <DropzoneProfilePicture animationName={this.state.animationName} background={this.state.animationPhotoProfil} id="PhotoProfil" methodToReturnUrl={this.handleReturnedUrl} />
+                                        <UploadPhoto animationName={this.state.animationName} background={this.state.animationPhotoProfil} id="PhotoProfil" methodToReturnUrl={this.handleReturnedUrl} />
                                     </div>
 
                                     <div className="col-md-1" >

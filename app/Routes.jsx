@@ -30,6 +30,8 @@ import AnimationListView from './components/_Animations/AnimationListView';
 
 import AkongoDatabaseView from './components/AkongoDatabaseView/AkongoDatabaseView';
 
+import Plan from './components/_Plan/Plan';
+
 
 // List of routes that uses the page layout
 // listed here to Switch between layouts
@@ -92,8 +94,7 @@ const Routes = ({ location }) => {
                             {/*SpecieListView*/}
                             <Route path="/Dashboard" component={Dashboard} />
 
-                            {/*SpecieListView*/}
-                           
+                            {/*SpecieListView*/}           
 
                             {/*Species*/}
                             <Route path="/SpecieView" component={SpecieView} />
@@ -112,8 +113,10 @@ const Routes = ({ location }) => {
 
                             {/*AkongoDatabase*/}
                             <Route path="/AkongoDatabaseView" component={AkongoDatabaseView} />
+
+                            {/*Plan*/}
+                            <Route path="/Plan" component={Plan} />
                           
-            
 
                             <Redirect to="/login"/>
                         </Switch>

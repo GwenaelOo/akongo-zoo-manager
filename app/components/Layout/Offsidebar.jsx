@@ -19,6 +19,7 @@ class Offsidebar extends React.Component {
         this.setState({
             key
         });
+        console.log(this.state.key)
     }
 
     render() {
