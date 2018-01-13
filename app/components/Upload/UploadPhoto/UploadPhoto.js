@@ -46,7 +46,7 @@ class UploadPhoto extends React.Component {
             ////////////////////////
             let uid = Date.now()
             let userData = JSON.parse(localStorage.getItem('user'))
-            let folder = userData.zooNameDisplay
+            let folder = userData.zooName
            
             var storageRef = firebase.storage().ref(folder + '/temp/' + uid + '.jpg');
             storageRef.put(file).then(function (snapshot) {

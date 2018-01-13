@@ -26,8 +26,9 @@ import './styles/app.scss'
     // Init dataBase
     config.initDatabase();
 
-    // Init Auth 
+    // Definine url
 
+        
 ReactDOM.render((
     
 

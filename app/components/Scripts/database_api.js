@@ -19,7 +19,7 @@ function snapshotToArray(snapshot) {
 
 // init zoo Id
 
-            let userData = JSON.parse(localStorage.getItem('user'))
+     let userData = JSON.parse(localStorage.getItem('user'))
       
         
 
@@ -63,7 +63,9 @@ module.exports = {
                  SpeciePhoto3: specieData.SpeciePhoto3,
                  SpeciePhoto4: specieData.SpeciePhoto4,
                  SpecieCreatedBy: userData.userId,
-                 SpecieCreationDate: Date() 
+                 SpecieCreationDate: Date(),
+                 dataType: 'specie',
+                 zooName: userData.zooName
              })
              
              .then(function () {
@@ -74,7 +76,7 @@ module.exports = {
                      showCancelButton: false
                  }, function () {
                      // Redirect the user
-                     window.location.href = 'http://localhost:3000/SpeciesList';
+                     window.location.href = 'http://localhost:3000/speciesList';
                  })
             })
             .catch(function (error) {
@@ -129,7 +131,7 @@ module.exports = {
                     showCancelButton: false
                 }, function () {
                     // Redirect the user
-                    window.location.href = 'http://localhost:3000/SpeciesList';
+                    window.location.href = 'http://localhost:3000/speciesList';
                 })
             })
             .catch(function (error) {
@@ -162,7 +164,9 @@ module.exports = {
                 animalLifeExpectancy: animalData.animalLifeExpectancy,
                 animalPhotoProfil: animalData.animalPhotoProfil,
                 animalCreatedBy: userData.userId,
-                animalCreationDate: Date()
+                animalCreationDate: Date(),
+                dataType: 'animal',
+                zooName: userData.zooName
             })
 
             .then(function () {
@@ -239,7 +243,10 @@ module.exports = {
                 serviceOpeningTime: serviceData.serviceOpeningTime,
                 serviceClosingTime: serviceData.serviceClosingTime,
                 serviceCreatedBy: userData.userId,
-                serviceCreationDate: Date()
+                serviceCreationDate: Date(),
+                dataType: 'service',
+                zooName: userData.zooName
+                
             })
 
             .then(function () {
@@ -312,7 +319,9 @@ module.exports = {
                 animationPhotoProfil: animationData.animationPhotoProfil,
                 animationPhotoProfilId: animationData.animationPhotoProfilId,
                 animationCreatedBy: userData.userId,
-                animationCreationDate: Date()
+                animationCreationDate: Date(),
+                dataType: 'animation',
+                zooName: userData.zooName
             })
 
             .then(function () {

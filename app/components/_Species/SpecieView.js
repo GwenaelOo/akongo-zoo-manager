@@ -9,7 +9,7 @@ import DropzoneProfilePicture from '../Photosupload/DropzoneProfilePicture';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import '../CustomComponents/TypeHead/Typehead.scss';
 
-let api = require("..//Scripts/database_api.js");
+let api = require("../Scripts/database_api.js");
 
 class NewSpeciePage extends React.Component {
     constructor(props) {
@@ -275,11 +275,9 @@ class NewSpeciePage extends React.Component {
 
         return (
             <ContentWrapper>
-                <h3>Form Elements
-                               <small>Standard and custom elements for any form</small>
-                </h3>
+                <h3>Ajouter/Modifier une espèce</h3>
 
-                <Panel header="Form elements">
+                <Panel>
                     <form className="form-horizontal" onSubmit={this.handleSubmit}>
                         <fieldset>
                             <legend> Informations générales</legend>     
@@ -371,7 +369,7 @@ class NewSpeciePage extends React.Component {
                         </fieldset>
 
                         <fieldset>
-                            <legend> Informations générales</legend>
+                            <legend> Informations Biologiques</legend>
                             <fieldset>
                                 <FormGroup>
                                     <label className="col-sm-2 control-label">Durée de la gestation</label>
