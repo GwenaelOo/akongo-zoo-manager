@@ -2,3 +2,4 @@ app/config/
 node_modules/
 public/
 dist/
+firebase-debug.log

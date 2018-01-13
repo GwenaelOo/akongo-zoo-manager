@@ -9,7 +9,8 @@ class UploadPhoto extends React.Component {
         this.state = {
             files: [],
             background: '',
-            returnedURL: ''
+            returnedURL: '',
+            returnedId: ''
         }
     }
 

@@ -1,9 +1,7 @@
 import React from 'react';
 import { Grid, Row, Col, Panel, Button } from 'react-bootstrap';
 import { Router, Route, Link, History } from 'react-router-dom';
-
-const akongoURL = 'http://localhost:3000/' 
-//const akongoURL = 'http://localhost:3000/' 
+const nav = require("../Nav/Nav");
 
 class InitialLoading extends React.Component {
     constructor(props) {
@@ -33,16 +31,11 @@ class InitialLoading extends React.Component {
 
                     localStorage.setItem('user', JSON.stringify(dataToStore))
 
-                    let urlToStore = {
-                        akongoURL: akongoURL
-                    }
-                    localStorage.setItem('nav', JSON.stringify(urlToStore))
-
-
                 }, function (error) {
                     console.error(error);
                 }).then(function (valeur) {
-                    window.location.href = akongoURL + 'Dashboard';
+                    console.log('je suis au niveau de la redirection' + nav.akongoURL)
+                    window.location.href = nav.akongoURL + 'Dashboard';
                 }, function (raison) {
                     // Rejet de la promesse
                 });
@@ -55,9 +48,6 @@ class InitialLoading extends React.Component {
         this.initUser()
     }
     render() {
-        if(this.state.redirect === true){
-            
-        }
         return (
             <div>
               

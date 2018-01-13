@@ -19,6 +19,7 @@ class AnimationView extends React.Component {
             animationName: '',
             animationDescription: '',
             animationPhotoProfil: '',
+            animationPhotoProfilId: '',
             animationPhoto1: '',
             animationPhoto2: '',
             animationPhoto3: '',

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Row, Col, Panel, Button } from 'react-bootstrap';
 import { Router, Route, Link, History, Redirect, } from 'react-router-dom';
+const nav = require("../Nav/Nav");
 
 class Login extends React.Component {
     constructor(props) {
@@ -41,7 +42,8 @@ class Login extends React.Component {
                 var providerData = user.providerData;
                 console.log(email, uid)
             
-                window.location.href = 'http://localhost:3000/InitialLoading';
+                window.location.href = nav.akongoURL + 'InitialLoading';
+
             } else {
                 // User is signed out.
                 // ...

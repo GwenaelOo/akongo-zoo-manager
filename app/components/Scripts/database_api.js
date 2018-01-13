@@ -1,6 +1,7 @@
 // récupération config
 
 var config = require("../../config/config");
+const nav = require("../Nav/Nav");
 
 // Init dataBase
 
@@ -76,7 +77,7 @@ module.exports = {
                      showCancelButton: false
                  }, function () {
                      // Redirect the user
-                     window.location.href = 'http://localhost:3000/speciesList';
+                     window.location.href = nav.akongoURL + 'speciesList';
                  })
             })
             .catch(function (error) {
@@ -131,7 +132,7 @@ module.exports = {
                     showCancelButton: false
                 }, function () {
                     // Redirect the user
-                    window.location.href = 'http://localhost:3000/speciesList';
+                    window.location.href = nav.akongoURL + 'speciesList';
                 })
             })
             .catch(function (error) {
@@ -177,7 +178,7 @@ module.exports = {
                     showCancelButton: false
                 }, function () {
                     // Redirect the user
-                    window.location.href = 'http://localhost:3000/SpeciesList';
+                    window.location.href = nav.akongoURL + 'SpeciesList';
                 })
             })
             .catch(function (error) {
@@ -216,7 +217,7 @@ module.exports = {
                     showCancelButton: false
                 }, function () {
                     // Redirect the user
-                    window.location.href = 'http://localhost:3000/SpeciesList';
+                    window.location.href = nav.akongoURL + 'SpeciesList';
                 })
             })
             .catch(function (error) {
@@ -257,7 +258,7 @@ module.exports = {
                     showCancelButton: false
                 }, function () {
                     // Redirect the user
-                    window.location.href = 'http://localhost:3000/Dashboard';
+                    window.location.href = nav.akongoURL + 'Dashboard';
                 })
             })
             .catch(function (error) {
@@ -294,7 +295,7 @@ module.exports = {
                     showCancelButton: false
                 }, function () {
                     // Redirect the user
-                    window.location.href = 'http://localhost:3000/Dashboard';
+                    window.location.href = nav.akongoURL + 'Dashboard';
                 })
             })
             .catch(function (error) {
@@ -332,7 +333,7 @@ module.exports = {
                     showCancelButton: false
                 }, function () {
                     // Redirect the user
-                    window.location.href = 'http://localhost:3000/Dashboard';
+                    window.location.href = nav.akongoURL + 'Dashboard';
                 })
             })
             .catch(function (error) {
@@ -367,7 +368,7 @@ module.exports = {
                     showCancelButton: false
                 }, function () {
                     // Redirect the user
-                    window.location.href = 'http://localhost:3000/Dashboard';
+                    window.location.href = nav.akongoURL + 'Dashboard';
                 })
             })
             .catch(function (error) {

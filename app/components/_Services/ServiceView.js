@@ -167,11 +167,10 @@ class ServiceView extends React.Component {
 
         return (
             <ContentWrapper>
-                <h3>Form Elements
-                               <small>Standard and custom elements for any form</small>
+                <h3>Ajouter/Modifier un service
                 </h3>
 
-                <Panel header="Form elements">
+                <Panel>
                     <form className="form-horizontal" onSubmit={this.handleSubmit}>
                         <fieldset>
                             <legend> Informations générales</legend>
