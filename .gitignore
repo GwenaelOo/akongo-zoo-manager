@@ -1,5 +1,4 @@
 app/config/
 node_modules/
-public/
-dist/
+prod/
 firebase-debug.log

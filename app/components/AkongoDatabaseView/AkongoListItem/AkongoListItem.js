@@ -8,7 +8,6 @@ class AkongoListItem extends React.Component {
         this.state = {
             isChecked: false,
         };
-      
     }
     
     addSpecieToTheList(specie, prevList){

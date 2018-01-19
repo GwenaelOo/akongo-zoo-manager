@@ -10,16 +10,19 @@ class TableExtended extends React.Component {
         this.state = {
             speciesList: [],
             selectedSpecieList: [],
-            newSelectedSpecieList: []
+            filter: ''
         };
 
     }
 
     specieSelectedList = speciesList => {
-
         this.setState({
             selectedSpecieList: speciesList
         })
+    }
+
+    handleSearchChange = event => {
+        this.setState({ filter: event.target.value });
     }
 
     handleSpecieSelect(key){
@@ -36,7 +39,6 @@ class TableExtended extends React.Component {
 
     readSpecieFromDatabase() {
         let userData = JSON.parse(localStorage.getItem('user'))
-
         let collection = ('Akongo' + '-species')
         // Fonction magique que je ne comprend pas 
         var self = this;
@@ -54,10 +56,35 @@ class TableExtended extends React.Component {
     }
 
     render() {
+        console.log(this.state.filter)
+        let filteredSpeciesListName = this.state.speciesList.filter(
+            specie => {
+                return specie.SpecieName.toLowerCase().indexOf(this.state.filter.toLowerCase()) !== -1
+            }
+        )
 
-        console.log(this.state.selectedSpecieList)
+        let filteredSpeciesListLatinName = this.state.speciesList.filter(
+            specie => {
+                return specie.SpecieLatinName.toLowerCase().indexOf(this.state.filter.toLowerCase()) !== -1
+            }
+        )
 
-        let rows = this.state.speciesList.map(specie => {
+        let filteredSpeciesListClass = this.state.speciesList.filter(
+            specie => {
+                return specie.SpecieClass.toLowerCase().indexOf(this.state.filter.toLowerCase()) !== -1
+            }
+        )
+
+        let filteredSpeciesListOrder = this.state.speciesList.filter(
+            specie => {
+                return specie.SpecieOrder.toLowerCase().indexOf(this.state.filter.toLowerCase()) !== -1
+            }
+        )
+
+        let filteredSpeciesList = filteredSpeciesListName.concat(filteredSpeciesListLatinName, filteredSpeciesListClass, filteredSpeciesListOrder)
+
+        let rows = filteredSpeciesList.map(specie => {
+           
             return <AkongoListItem
              key={specie.SpecieId}
              specieId={specie.SpecieId}
@@ -78,7 +105,7 @@ class TableExtended extends React.Component {
                 </h3>
                 { /* START panel */}
                 <div className="panel panel-default">
-                    <div className="panel-heading">Demo Table #1</div>
+                    <div className="panel-heading">Nombre d'espèce selectionné  {this.state.selectedSpecieList.length}</div>
                     { /* START table-responsive */}
                     <Table id="table-ext-1" responsive bordered hover>
                         <thead>
@@ -111,7 +138,7 @@ class TableExtended extends React.Component {
                         <Row>
                             <Col lg={2}>
                                 <div className="input-group">
-                                    <input type="text" placeholder="Search" className="input-sm form-control" />
+                                    <input type="text" placeholder="Search" value={this.state.filter} onChange={this.handleSearchChange} className="input-sm form-control" />
                                     <span className="input-group-btn">
                                         <button type="button" className="btn btn-sm btn-default">Search</button>
                                     </span>
