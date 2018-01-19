@@ -76,6 +76,7 @@ class Login extends React.Component {
        
     }
     render() {
+        console.log('v0.0.1')
         return (
             <div style={{
                 'padding-top': '-100px',

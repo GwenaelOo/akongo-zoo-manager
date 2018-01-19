@@ -1,6 +1,7 @@
 import Dropzone from 'react-dropzone'
 import React, { Component } from 'react';
 import axios from 'axios'
+const nav = require("../../Nav/Nav");
 
 class UploadMap extends React.Component {
     constructor(props) {
@@ -8,21 +9,10 @@ class UploadMap extends React.Component {
 
         this.state = {
             files: [],
-            background: '',
+            background: 'http://res.cloudinary.com/akongo/image/upload/v1512762269/test/mmpjwr0yxwuwx7soyzq6.png',
             returnedURL: ''
         }
-    }
-
-    componentWillReceiveProps(nextProps) {
-
-
-        if (nextProps.background !== this.state.background) {
-            this.setState({ background: nextProps.background });
-        }
-
-        if (nextProps.background === '') {
-            this.setState({ background: 'http://res.cloudinary.com/akongo/image/upload/v1512762269/test/mmpjwr0yxwuwx7soyzq6.png' })
-        }
+        this.handleUrl = this.handleUrl.bind(this);
     }
 
     onDrop(files) {
@@ -41,23 +31,34 @@ class UploadMap extends React.Component {
             formData.append("api_key", "247372227977832"); // Replace API key with your own Cloudinary key
             formData.append("timestamp", (Date.now() / 1000) | 0);
 
-            // Make an AJAX upload request using Axios (replace Cloudinary URL below with your own)
-            return axios.post("https://api.cloudinary.com/v1_1/akongo/image/upload/", formData, {
-                headers: { "X-Requested-With": "XMLHttpRequest" },
-            }).then(response => {
-                const data = response.data;
-                const fileURL = data.secure_url // You should store this URL for future references in your app
+            ////////////////////////
+            // Test google Storage
+            ////////////////////////
+            let uid = Date.now()
+            let userData = JSON.parse(localStorage.getItem('user'))
+            let folder = userData.zooName
 
-                this.setState({
-                    background: data.url,
-                    returnedUrl: data.url
-                });
-            })
+            var storageRef = firebase.storage().ref(folder + 'map/' + userData.zooName + '.pdf');
+            storageRef.put(file).then(function (snapshot) {
+                console.log('Uploaded a blob or file!');
+
+                let mapURL = nav.bucketURL + userData.zooName + '/map/' + userData.zooName + '.pdf'
+                console.log(mapURL)
+               
+                this.handleUrl(mapURL)
+            
+            });
+           
+
+            //this.props.methodToReturnUrl(this.state.returnedUrl);
+    
         });
-        // Once all the files are uploaded 
-        axios.all(uploaders).then(() => {
+        
+    }
 
-            this.props.methodToReturnUrl(this.state.returnedUrl, this.props.id);
+    handleUrl(mapURL){
+        this.setState({
+            mapURL: mapURL
         });
     }
 

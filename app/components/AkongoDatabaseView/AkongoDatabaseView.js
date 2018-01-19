@@ -8,9 +8,25 @@ class TableExtended extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            speciesList: []
+            speciesList: [],
+            selectedSpecieList: [],
+            newSelectedSpecieList: []
         };
 
+    }
+
+    specieSelectedList = speciesList => {
+
+        this.setState({
+            selectedSpecieList: speciesList
+        })
+    }
+
+    handleSpecieSelect(key){
+        console.log(key)
+        let newSelectedSpecieList = this.state.selectedSpecieList
+        newSelectedSpecieList.push(key)
+        console.log(newSelectedSpecieList)
     }
     
     componentDidMount() {
@@ -39,10 +55,20 @@ class TableExtended extends React.Component {
 
     render() {
 
-        console.log(this.state.speciesList)
+        console.log(this.state.selectedSpecieList)
 
         let rows = this.state.speciesList.map(specie => {
-            return <AkongoListItem key={specie.SpecieId} specieId={specie.SpecieId} speciePhoto={specie.SpeciePhotoProfil} specieName={specie.SpecieName} specieLatinName={specie.SpecieLatinName} specieClass={specie.SpecieClass} specieOrder={specie.SpecieOrder} />
+            return <AkongoListItem
+             key={specie.SpecieId}
+             specieId={specie.SpecieId}
+             speciePhoto={specie.SpeciePhotoProfil}
+             specieName={specie.SpecieName}
+             specieLatinName={specie.SpecieLatinName}
+             specieClass={specie.SpecieClass}
+             specieOrder={specie.SpecieOrder}      
+             specieSelectedList={this.state.selectedSpecieList} 
+             handleSelectedSpecie={this.specieSelectedList}
+             />
         })
 
         return (

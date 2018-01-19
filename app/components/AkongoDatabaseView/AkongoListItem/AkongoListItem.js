@@ -7,58 +7,36 @@ class AkongoListItem extends React.Component {
         super(props);
         this.state = {
             isChecked: false,
-
-            list: []
         };
-        this.addSpecieToTheList = this.addSpecieToTheList.bind(this);
-        this.removeSpecieToTheList = this.removeSpecieToTheList.bind(this);
+      
     }
+    
+    addSpecieToTheList(specie, prevList){
 
-    addSpecieToTheList(specie){
-        console.log(this.state.list)
-        console.log('etat de la liste à l ajout' + this.state.list)
-        let newList = this.state.list
-        newList.push(specie)
-        this.setState({
-            list: newList,
-        })
+        let selectedList = this.props.specieSelectedList
+        selectedList.push(specie)        
     }
 
     removeSpecieToTheList(specie){
-        console.log(this.state.list)
-        console.log(this.state.isChecked)
-        console.log(this.state.amIright)
-        let newList = this.state.list
-        console.log('c ma liste' + newList)
-        console.log('c mon e' + specie)
-        let IndexOfElementToRemove = newList.indexOf(specie);
-        newList.splice(IndexOfElementToRemove)
-
-        this.setState({
-            list: this.newList
-        })
-
+       
+        let IndexOfElementToRemove = this.props.specieSelectedList.indexOf(specie);
+        console.log(IndexOfElementToRemove)
+        this.props.specieSelectedList.splice(0,IndexOfElementToRemove)
     }
     
-    handleCheck(e) {
-        console.log('etat de la liste a l entree')
-        console.log(this.state.list)
-
+    handleCheck(e, b, list) {
+     
         this.setState({
             isChecked: !this.state.isChecked
         })
 
         if (this.state.isChecked === true) {
-            console.log('suppression de l espece' + e)
             this.removeSpecieToTheList(e)            
 
         } else {
-            console.log('ajout de l espece ' + e)
-            this.addSpecieToTheList(e)
+            this.addSpecieToTheList(e, list)
         }
-        console.log('etat de la liste a la sortie')
-        console.log(this.state.list)
-    
+        this.props.handleSelectedSpecie(this.props.specieSelectedList)
     }
     render() {
         return ( 
