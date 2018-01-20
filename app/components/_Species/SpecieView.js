@@ -33,6 +33,7 @@ class NewSpeciePage extends React.Component {
             SpeciePhoto2: '',
             SpeciePhoto3: '',
             SpeciePhoto4: '',
+            logId: 0,
             EditMode: false,
             zooFoodList: ['chargement']
         };
@@ -96,45 +97,46 @@ class NewSpeciePage extends React.Component {
 
         let specieData = {
             SpecieId: this.state.SpecieId,
-            SpecieName: this.state.SpecieName
+            SpecieName: this.state.SpecieName,
+            log: this.state.logId
         }   
 
         api.deleteSpecieFromDatabase(specieData)
     }
 
     handleClick(){
+            let specieData = {
+                SpecieId: this.state.SpecieId,
+                SpecieName: this.state.SpecieName,
+                SpecieLatinName: this.state.SpecieLatinName,
+                SpecieEnglishName: this.state.SpecieEnglishName,
+                SpecieClass: this.state.SpecieClass,
+                SpecieOrder: this.state.SpecieOrder,
+                SpecieFamilly: this.state.SpecieFamilly,
+                SpecieIUCNClassification: this.state.SpecieIUCNClassification,
+                SpecieDescription: this.state.SpecieDescription,
+                SpecieGestation: this.state.SpecieGestation,
+                SpecieWeight: this.state.SpecieWeight,
+                SpecieLifeExpectancy: this.state.SpecieLifeExpectancy,
+                SpecieFood: this.state.SpecieFood,
+                SpeciePhotoProfil: this.state.SpeciePhotoProfil,
+                SpeciePhoto1: this.state.SpeciePhoto1,
+                SpeciePhoto2: this.state.SpeciePhoto2,
+                SpeciePhoto3: this.state.SpeciePhoto3,
+                SpeciePhoto4: this.state.SpeciePhoto4,
+                log: this.state.logId + 1
+            }
 
-           let specieData = {
-               SpecieId: this.state.SpecieId,
-               SpecieName: this.state.SpecieName,
-               SpecieLatinName: this.state.SpecieLatinName,
-               SpecieEnglishName: this.state.SpecieEnglishName,
-               SpecieClass: this.state.SpecieClass,
-               SpecieOrder: this.state.SpecieOrder,
-               SpecieFamilly: this.state.SpecieFamilly,
-               SpecieIUCNClassification: this.state.SpecieIUCNClassification,
-               SpecieDescription: this.state.SpecieDescription,
-               SpecieGestation: this.state.SpecieGestation,
-               SpecieWeight: this.state.SpecieWeight,
-               SpecieLifeExpectancy: this.state.SpecieLifeExpectancy,
-               SpecieFood: this.state.SpecieFood,
-               SpeciePhotoProfil: this.state.SpeciePhotoProfil,
-               SpeciePhoto1: this.state.SpeciePhoto1,
-               SpeciePhoto2: this.state.SpeciePhoto2,
-               SpeciePhoto3: this.state.SpeciePhoto3,
-               SpeciePhoto4: this.state.SpeciePhoto4,
-           }
-
-        if(this.state.EditMode === true ){
-            api.editNewSpecieToDatabase(specieData);
-        }
-        else {
-            api.addNewSpecieToDatabase(specieData);
-        }
+            if (this.state.EditMode === true) {
+                api.editNewSpecieToDatabase(specieData);
+            }
+            else {
+                api.addNewSpecieToDatabase(specieData);
+            }
 
             api.updateFoodDataBase(specieData.SpecieFood);
-
-    }
+        }
+    
 
     readSpecieFromFireStore(specieId) {
         let userData = JSON.parse(localStorage.getItem('user'))
@@ -183,6 +185,25 @@ class NewSpeciePage extends React.Component {
  
     }
 
+    getLogLenght(){
+        let userData = JSON.parse(localStorage.getItem('user'))
+        var self = this
+        let collection = (userData.zooName + '-log')
+        firebase.firestore().collection(collection).get().then(function (querySnapshot) {
+            let logLenght = []
+            querySnapshot.forEach(function (doc) {
+                logLenght.push(doc.data())
+            });
+           
+            let logId = logLenght.length;
+            console.log(logId)
+            self.setState({
+                logId: logId
+            });
+
+        })
+    }
+    
 
     readSpecieFromDatabase(specieId) {
         let userData = JSON.parse(localStorage.getItem('user'))
@@ -203,11 +224,6 @@ class NewSpeciePage extends React.Component {
                 foodList.push(foodItem);
                 }
             })
-
-            console.log('I retrieved the foodlist array', foodList)
-            
-            console.log(data.SpecieFood)
-            console.log(data);
 
             self.setState({
                 SpecieId: data.SpecieId,
@@ -264,7 +280,7 @@ class NewSpeciePage extends React.Component {
 
 
     componentWillMount(){
-     
+        this.getLogLenght();
         //this.initFoodList();
         if (this.props.location.state.SpecieId !== null){
          this.readSpecieFromFireStore(this.props.location.state.SpecieId);
@@ -289,8 +305,9 @@ class NewSpeciePage extends React.Component {
             </Button>
             );
 
-
+        console.log(this.state.logId)
         return (
+           
             <ContentWrapper>
                 <h3>Ajouter/Modifier une espèce</h3>
 

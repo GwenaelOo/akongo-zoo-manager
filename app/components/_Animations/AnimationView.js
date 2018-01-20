@@ -24,6 +24,7 @@ class AnimationView extends React.Component {
             animationPhoto2: '',
             animationPhoto3: '',
             animationPhoto4: '',
+            logId: 0,
             EditMode: false,
         };
         this.handleChange = this.handleChange.bind(this);
@@ -77,6 +78,7 @@ class AnimationView extends React.Component {
             animationPhoto2: this.state.animationPhoto2,
             animationPhoto3: this.state.animationPhoto3,
             animationPhoto4: this.state.animationPhoto4,
+            log: this.state.logId + 1
         }
 
         console.log('animationId à la création', this.state.animationCategoryId)
@@ -124,12 +126,41 @@ class AnimationView extends React.Component {
         });
     }
 
-    getSpecieNameFromSpecieId(specieId) {
-        // A développer
+    getLogLenght() {
+        let userData = JSON.parse(localStorage.getItem('user'))
+        var self = this
+        let collection = (userData.zooName + '-log')
+        firebase.firestore().collection(collection).get().then(function (querySnapshot) {
+            let logLenght = []
+            querySnapshot.forEach(function (doc) {
+                logLenght.push(doc.data())
+            });
+
+            let logId = logLenght.length;
+            console.log(logId)
+            self.setState({
+                logId: logId
+            });
+
+        })
+    }
+
+
+    handleDelete() {
+
+        let animationData = {
+            animationId: this.state.animationId,
+            animationName: this.state.animationName,
+            log: this.state.logId + 1
+        }
+
+        api.deleteAnimationFromDatabase(animationData)
     }
 
 
     componentWillMount() {
+        this.getLogLenght()
+
         if (this.props.location.state.animationId !== null) {
             console.log('recuperation du animationId', this.props.location.state.animationId)
             this.readAnimationFromDatabase(this.props.location.state.animationId)
@@ -150,6 +181,12 @@ class AnimationView extends React.Component {
         );
         const innerRadio = <input type="radio" aria-label="..." />;
         const innerCheckbox = <input type="checkbox" aria-label="..." />;
+
+        const deleteButton = (
+            <Button bsClass="btn btn-labeled btn-danger mr" onClick={() => { this.handleDelete() }}>
+                <span className="btn-label"><i className="fa fa-trash-o"></i></span> Supprimer l'animation
+            </Button>
+        );
 
         return (
             <ContentWrapper>
@@ -216,8 +253,12 @@ class AnimationView extends React.Component {
                     </form>
                 </Panel>
 
-                <Panel>
-                    <Button type="submit" bsStyle="default" onClick={() => { this.handleClick() }}>Valider la fiche animation</Button>
+                <Panel style={{ "display": "flex" }}>
+                    <Button bsClass="btn btn-labeled btn-success mr" bsSize="large" onClick={() => { this.handleClick() }}>
+                        <span className="btn-label"><i className="fa fa-check"></i></span> Valider l'animation
+                    </Button>
+
+                    {this.state.EditMode ? deleteButton : null}
                 </Panel>
             </ContentWrapper>
         );

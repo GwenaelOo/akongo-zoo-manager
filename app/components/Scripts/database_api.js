@@ -23,9 +23,9 @@ function snapshotToArray(snapshot) {
      let userData = JSON.parse(localStorage.getItem('user'))
       
         
-
 module.exports = {
 
+    
     addNewSpecieToDatabase: function (specieData) {
 
     
@@ -66,10 +66,33 @@ module.exports = {
                  SpecieCreatedBy: userData.userId,
                  SpecieCreationDate: Date(),
                  dataType: 'specie',
-                 zooName: userData.zooName
-             })
-             
-             .then(function () {
+                 zooName: userData.zooName,
+            })
+            
+     
+            // ********************
+            // Ecriture du log
+            // ********************
+            
+            
+            .then(function () {
+                firebase.firestore()
+                    .collection(userData.zooName + '-log')
+                    .doc("log-" + specieData.log)
+                    .set({
+                        action: "create",
+                        dataType: 'specie',
+                        elementId: specieData.SpecieId,
+                        elementName: specieData.SpecieName,
+                        actionMadeById: userData.userId,
+                        actionMadeByName: userData.firstname,
+                        actionDate: Date(),
+                        zooName: userData.zooName
+                    })     
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            }).then(function () {
                  swal({
                      title: "Good job!",
                      text: "L'espèce " + specieData.SpecieName + " a été ajoutée à votre Zoo",
@@ -124,6 +147,24 @@ module.exports = {
                 SpecieLastEditDate: Date()
             })
 
+            // ********************
+            // Ecriture du log
+            // ********************
+            .then(function () {
+                firebase.firestore()
+                    .collection(userData.zooName + '-log')
+                    .doc("log-" + specieData.log)
+                    .set({
+                        action: "edit",
+                        dataType: 'specie',
+                        elementId: specieData.SpecieId,
+                        elementName: specieData.SpecieName,
+                        actionMadeById: userData.userId,
+                        actionMadeByName: userData.firstname,
+                        actionDate: Date(),
+                        zooName: userData.zooName
+                    })
+            })
             .then(function () {
                 swal({
                     title: "Good job!",
@@ -158,9 +199,26 @@ module.exports = {
             .delete()
 
             .then(function () {
+                firebase.firestore()
+                    .collection(userData.zooName + '-log')
+                    .doc("log-" + specieData.log)
+                    .set({
+                        action: "delete",
+                        dataType: 'specie',
+                        elementId: specieData.SpecieId,
+                        elementName: specieData.SpecieName,
+                        actionMadeById: userData.userId,
+                        actionMadeByName: userData.firstname,
+                        actionDate: Date(),
+                        zooName: userData.zooName
+                    })
+            })
+            
+
+            .then(function () {
                 swal({
                     title: "Good job!",
-                    text: "L'espèce " + specieData.SpecieName + " a été correctement éditée",
+                    text: "L'espèce " + specieData.SpecieName + " a été correctement supprimée",
                     type: "success",
                     showCancelButton: false
                 }, function () {
@@ -282,6 +340,21 @@ module.exports = {
                 zooName: userData.zooName
                 
             })
+            .then(function () {
+                firebase.firestore()
+                    .collection(userData.zooName + '-log')
+                    .doc("log-" + serviceData.log)
+                    .set({
+                        action: "create",
+                        dataType: 'service',
+                        elementId: serviceData.serviceId,
+                        elementName: serviceData.serviceName,
+                        actionMadeById: userData.userId,
+                        actionMadeByName: userData.firstname,
+                        actionDate: Date(),
+                        zooName: userData.zooName
+                    })
+            })
 
             .then(function () {
                 swal({
@@ -321,9 +394,66 @@ module.exports = {
             })
 
             .then(function () {
+                firebase.firestore()
+                    .collection(userData.zooName + '-log')
+                    .doc("log-" + serviceData.log)
+                    .set({
+                        action: "edit",
+                        dataType: 'service',
+                        elementId: serviceData.serviceId,
+                        elementName: serviceData.serviceName,
+                        actionMadeById: userData.userId,
+                        actionMadeByName: userData.firstname,
+                        actionDate: Date(),
+                        zooName: userData.zooName
+                    })
+            })
+
+            .then(function () {
                 swal({
                     title: "Good job!",
                     text: "Le service " + serviceData.serviceName + " a été ajoutée à votre Zoo",
+                    type: "success",
+                    showCancelButton: false
+                }, function () {
+                    // Redirect the user
+                    window.location.href = nav.akongoURL + 'Dashboard';
+                })
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
+    },
+
+    deleteServiceFromDatabase: function (serviceData) {
+
+        let collection = (userData.zooName + '-services');
+        let document = serviceData.serviceId
+
+        firebase.firestore()
+            .collection(collection)
+            .doc(document)
+            .delete()
+
+            .then(function () {
+                firebase.firestore()
+                    .collection(userData.zooName + '-log')
+                    .doc("log-" + serviceData.log)
+                    .set({
+                        action: "delete",
+                        dataType: 'service',
+                        elementId: serviceData.serviceId,
+                        elementName: serviceData.serviceName,
+                        actionMadeById: userData.userId,
+                        actionMadeByName: userData.firstname,
+                        actionDate: Date(),
+                        zooName: userData.zooName
+                    })
+            })
+            .then(function () {
+                swal({
+                    title: "Good job!",
+                    text: "Le service " + serviceData.serviceName + " a été supprimé de votre Zoo",
                     type: "success",
                     showCancelButton: false
                 }, function () {
@@ -356,6 +486,22 @@ module.exports = {
                 animationCreationDate: Date(),
                 dataType: 'animation',
                 zooName: userData.zooName
+            })
+
+            .then(function () {
+                firebase.firestore()
+                    .collection(userData.zooName + '-log')
+                    .doc("log-" + animationData.log)
+                    .set({
+                        action: "create",
+                        dataType: 'animation',
+                        elementId: animationData.animationId,
+                        elementName: animationData.animationName,
+                        actionMadeById: userData.userId,
+                        actionMadeByName: userData.firstname,
+                        actionDate: Date(),
+                        zooName: userData.zooName
+                    })
             })
 
             .then(function () {
@@ -394,9 +540,82 @@ module.exports = {
             })
 
             .then(function () {
+                firebase.firestore()
+                    .collection(userData.zooName + '-log')
+                    .doc("log-" + animationData.log)
+                    .set({
+                        action: "edit",
+                        dataType: 'animation',
+                        elementId: animationData.animationId,
+                        elementName: animationData.animationName,
+                        actionMadeById: userData.userId,
+                        actionMadeByName: userData.firstname,
+                        actionDate: Date(),
+                        zooName: userData.zooName
+                    })
+            })
+
+            .then(function () {
                 swal({
                     title: "Good job!",
                     text: "L'animation " + animationData.animationName + " a été correctement éditée",
+                    type: "success",
+                    showCancelButton: false
+                }, function () {
+                    // Redirect the user
+                    window.location.href = nav.akongoURL + 'Dashboard';
+                })
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
+    },
+
+    deleteAnimationFromDatabase: function (animationData) {
+
+        let collection = (userData.zooName + '-animations');
+        let document = animationData.animationId
+
+        firebase.firestore()
+            .collection(collection)
+            .doc(document)
+            .delete()
+
+            .then(function () {
+                firebase.firestore()
+                    .collection(userData.zooName + '-log')
+                    .doc("log-" + animationData.log)
+                    .set({
+                        action: "delete",
+                        dataType: 'animation',
+                        elementId: animationData.animationId,
+                        elementName: animationData.animationName,
+                        actionMadeById: userData.userId,
+                        actionMadeByName: userData.firstname,
+                        actionDate: Date(),
+                        zooName: userData.zooName
+                    })
+            })
+            .then(function () {
+                firebase.firestore()
+                    .collection(userData.zooName + '-log')
+                    .doc("log-" + animationData.log)
+                    .set({
+                        action: "delete",
+                        dataType: 'animation',
+                        elementId: animationData.animationId,
+                        elementName: animationData.animationName,
+                        actionMadeById: userData.userId,
+                        actionMadeByName: userData.firstname,
+                        actionDate: Date(),
+                        zooName: userData.zooName
+                    })
+            })
+
+            .then(function () {
+                swal({
+                    title: "Good job!",
+                    text: "L'animation " + animationData.animationName + " a été ajoutée à votre Zoo",
                     type: "success",
                     showCancelButton: false
                 }, function () {
