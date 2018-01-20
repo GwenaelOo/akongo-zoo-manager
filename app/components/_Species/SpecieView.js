@@ -92,6 +92,16 @@ class NewSpeciePage extends React.Component {
         });
     }
 
+    handleDelete(){
+
+        let specieData = {
+            SpecieId: this.state.SpecieId,
+            SpecieName: this.state.SpecieName
+        }   
+
+        api.deleteSpecieFromDatabase(specieData)
+    }
+
     handleClick(){
 
            let specieData = {
@@ -272,6 +282,13 @@ class NewSpeciePage extends React.Component {
         );
         const innerRadio = <input type="radio" aria-label="..." />;
         const innerCheckbox = <input type="checkbox" aria-label="..." />;
+
+        const deleteButton = (
+            <Button bsClass="btn btn-labeled btn-danger mr" onClick={() => { this.handleDelete() }}>
+                <span className="btn-label"><i className="fa fa-trash-o"></i></span> Supprimer l'espèce
+            </Button>
+            );
+
 
         return (
             <ContentWrapper>
@@ -458,8 +475,14 @@ class NewSpeciePage extends React.Component {
                     </form>
                 </Panel>
 
-                <Panel>
-                    <Button type="submit" bsStyle="default" onClick={() => { this.handleClick() }}>Valider la fiche espèce</Button>
+                <Panel style={{"display":"flex"}}>
+                    <Button bsClass="btn btn-labeled btn-success mr" bsSize="large" onClick={() => { this.handleClick() }}>
+                        <span className="btn-label"><i className="fa fa-check"></i></span> Valider l'espèce
+                    </Button>
+                   
+                    {this.state.EditMode ? deleteButton : null}
+                   
+                    
                 </Panel>
             </ContentWrapper>
         );

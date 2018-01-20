@@ -142,6 +142,39 @@ module.exports = {
 
     },
 
+    deleteSpecieFromDatabase: function (specieData) {
+
+
+        // ********************
+        // Ajout dans firebase 
+        // ********************
+
+        let collection = (userData.zooName + '-species');
+        let document = specieData.SpecieId
+
+        firebase.firestore()
+            .collection(collection)
+            .doc(document)
+            .delete()
+
+            .then(function () {
+                swal({
+                    title: "Good job!",
+                    text: "L'espèce " + specieData.SpecieName + " a été correctement éditée",
+                    type: "success",
+                    showCancelButton: false
+                }, function () {
+                    // Redirect the user
+                    window.location.href = nav.akongoURL + 'speciesList';
+                })
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
+
+
+    },
+
     addNewAnimalToDatabase: function (animalData) {
 
         // ********************
