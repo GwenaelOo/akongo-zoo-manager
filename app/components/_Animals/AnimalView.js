@@ -3,8 +3,8 @@ import ContentWrapper from '../Layout/ContentWrapper';
 import { Grid, Row, Col, Panel, Button, FormControl, FormGroup, InputGroup, DropdownButton, MenuItem } from 'react-bootstrap';
 
 // Ajout des composants du formulaire
-import TextInput from './Components/TextInput';
-import IUCNSelector from './Components/IUCNSelector';
+import TextInput from './AnimalView/Components/TextInput';
+import IUCNSelector from './AnimalView/Components/IUCNSelector';
 import DropzoneProfilePicture from '../Photosupload/DropzoneProfilePicture';
 
 let api = require("../Scripts/database_api.js");
@@ -33,9 +33,40 @@ class AnimalView extends React.Component {
             animalPhoto3: '',
             animalPhoto4: '',
             EditMode: false,
+            logId: 0
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleReturnedUrl = this.handleReturnedUrl.bind(this);
+    }
+
+    getLogLenght() {
+        let userData = JSON.parse(localStorage.getItem('user'))
+        var self = this
+        let collection = (userData.zooName + '-log')
+        firebase.firestore().collection(collection).get().then(function (querySnapshot) {
+            let logLenght = []
+            querySnapshot.forEach(function (doc) {
+                logLenght.push(doc.data())
+            });
+
+            let logId = logLenght.length;
+            console.log(logId)
+            self.setState({
+                logId: logId
+            });
+
+        })
+    }
+
+    handleDelete() {
+
+        let animalData = {
+            animalId: this.state.animalId,
+            animalName: this.state.animalName,
+            log: this.state.logId
+        }
+
+        api.deleteAnimalFromDatabase(animalData)
     }
 
     handleChange(event) {
@@ -98,43 +129,39 @@ class AnimalView extends React.Component {
                animalPhoto2: this.state.animalPhoto2,
                animalPhoto3: this.state.animalPhoto3,
                animalPhoto4: this.state.animalPhoto4,
+               log: this.state.logId + 1
            }
 
         console.log('animalId à la création', this.state.animalSpecieId)
 
         if(this.state.EditMode === true ){
+            console.log('je edite')
             api.editNewAnimalToDatabase(animalData);
         }
         else {
+            console.log('je crée')
             api.addNewAnimalToDatabase(animalData);
         }
 
         
     }
 
-    readanimalFromDatabase(animalId) {
+    readAnimalFromDatabase(animalId) {
+        let userData = JSON.parse(localStorage.getItem('user'))
+        var self = this
         // Fonction magique que je ne comprend pas 
-        var self = this;
-        // Selection de la référence de la base de donnée
-        var ref = firebase.database().ref('zooTest/species/' + this.state.animalSpecieId + this.state.animalId);
-        // Type de requete
-        ref.once('value').then(function (snapshot) {
-            // The Promise was "fulfilled" (it succeeded).
-            let data = snapshot.val()
+
+        let docRef = firebase.firestore()
+            .collection(userData.zooName + '-animals')
+            .doc(animalId);
+
+        docRef.get().then(function (snapshot) {
+           
+            let data = snapshot.data()
             console.log(data);
             self.setState({
                 animalId: data.animalId,
                 animalName: data.animalName,
-                animalLatinName: data.animalLatinName,
-                animalEnglishName: data.animalEnglishName,
-                animalClass: data.animalClass,
-                animalOrder: data.animalOrder,
-                animalFamilly: data.animalFamilly,
-                animalIUCNClassification: data.animalIUCNClassification,
-                animalDescription: data.animalDescription,
-                animalGestation: data.animalGestation,
-                animalWeight: data.animalWeight,
-                animalLifeExpectancy: data.animalLifeExpectancy,
                 animalPhotoProfil: data.animalPhotoProfil,
                 animalPhoto1: data.animalPhoto1,
                 animalPhoto2: data.animalPhoto2,
@@ -149,16 +176,18 @@ class AnimalView extends React.Component {
     }
 
     componentWillMount(){
-        if (this.props.location.state.SpecieId !== null) {
-            console.log('recuperation de la specieId', this.props.location.state.SpecieId)
-            this.setState({
-                animalSpecieId: this.props.location.state.SpecieId
-            })
+    this.getLogLenght()
+
+        if (this.props.location.state.view === 'edit' ){
+            if (this.props.location.state.animalId !== null) {
+                this.readAnimalFromDatabase(this.props.location.state.animalId)
+            } 
         } 
     }
 
     render() {
       
+        console.log(this.state.EditMode)
         const innerIcon = <em className="fa fa-check"></em>;
         const innerButton = <Button>Before</Button>;
         const innerDropdown = (
@@ -168,6 +197,12 @@ class AnimalView extends React.Component {
         );
         const innerRadio = <input type="radio" aria-label="..." />;
         const innerCheckbox = <input type="checkbox" aria-label="..." />;
+
+        const deleteButton = (
+            <Button bsClass="btn btn-labeled btn-danger mr" onClick={() => { this.handleDelete() }}>
+                <span className="btn-label"><i className="fa fa-trash-o"></i></span> Supprimer l'espèce
+            </Button>
+        );
 
         return (
             <ContentWrapper>
@@ -234,8 +269,13 @@ class AnimalView extends React.Component {
                     </form>
                 </Panel>
 
-                <Panel>
-                    <Button type="submit" bsStyle="default" onClick={() => { this.handleClick() }}>Valider la fiche Animal</Button>
+
+                <Panel style={{ "display": "flex" }}>
+                    <Button bsClass="btn btn-labeled btn-success mr" bsSize="large" onClick={() => { this.handleClick() }}>
+                        <span className="btn-label"><i className="fa fa-check"></i></span> Valider l'espèce
+                    </Button>
+
+                    {this.state.EditMode ? deleteButton : null}
                 </Panel>
             </ContentWrapper>
         );

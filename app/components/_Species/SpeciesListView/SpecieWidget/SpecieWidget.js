@@ -33,7 +33,7 @@ class SpecieWidget extends React.Component {
                     <a href="#" className="text-white">
                         <Link to={{
                                     pathname: "AnimalView",
-                                    state:{SpecieId: this.props.specieData.SpecieId}}}>
+                                    state:{view: 'create'}}}>
                                     <em className = "fa fa-plus fa-2x" > </em>
                                 </Link>    
                         <br />
@@ -42,7 +42,11 @@ class SpecieWidget extends React.Component {
 
                 <div className="col-xs-4">
                     <a href="#" className="text-white">
-                        <em className="fa fa-eye fa-2x"></em>
+                     <Link to={{
+                                    pathname: "AnimalListView",
+                                    state:{SpecieId: this.props.specieData.SpecieId}}}>
+                                    <em className="fa fa-eye fa-2x"></em>
+                                 </Link>  
                         <br />
                     </a>
                 </div>

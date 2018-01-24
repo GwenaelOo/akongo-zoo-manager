@@ -69,12 +69,10 @@ module.exports = {
                  zooName: userData.zooName,
             })
             
-     
             // ********************
             // Ecriture du log
             // ********************
-            
-            
+                     
             .then(function () {
                 firebase.firestore()
                     .collection(userData.zooName + '-log')
@@ -262,6 +260,22 @@ module.exports = {
             })
 
             .then(function () {
+                firebase.firestore()
+                    .collection(userData.zooName + '-log')
+                    .doc("log-" + animalData.log)
+                    .set({
+                        action: "create",
+                        dataType: 'animal',
+                        elementId: animalData.animalId,
+                        elementName: animalData.animalName,
+                        actionMadeById: userData.userId,
+                        actionMadeByName: userData.firstname,
+                        actionDate: Date(),
+                        zooName: userData.zooName
+                    })
+            })
+
+            .then(function () {
                 swal({
                     title: "Good job!",
                     text: "L'espèce " + animalData.animalName + " a été ajoutée à votre Zoo",
@@ -281,7 +295,7 @@ module.exports = {
     editNewAnimalToDatabase: function (animalData) {
 
         let collection = (userData.zooName + '-animals');
-        let document = animalData.animalName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))
+        let document = animalData.animalId
         let specieId = document
 
 
@@ -301,9 +315,68 @@ module.exports = {
             })
 
             .then(function () {
+                firebase.firestore()
+                    .collection(userData.zooName + '-log')
+                    .doc("log-" + animalData.log)
+                    .set({
+                        action: "edit",
+                        dataType: 'animal',
+                        elementId: animalData.animalId,
+                        elementName: animalData.animalName,
+                        actionMadeById: userData.userId,
+                        actionMadeByName: userData.firstname,
+                        actionDate: Date(),
+                        zooName: userData.zooName
+                    })
+            })
+
+            .then(function () {
                 swal({
                     title: "Good job!",
                     text: "L'espèce " + animalData.animalName + " a été correctement éditée",
+                    type: "success",
+                    showCancelButton: false
+                }, function () {
+                    // Redirect the user
+                    window.location.href = nav.akongoURL + 'SpeciesList';
+                })
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
+
+    },
+
+    deleteAnimalFromDatabase: function (animalData) {
+
+        let collection = (userData.zooName + '-animals');
+        let document = animalData.animalId
+
+        firebase.firestore()
+            .collection(collection)
+            .doc(document)
+            .delete()
+
+            .then(function () {
+                firebase.firestore()
+                    .collection(userData.zooName + '-log')
+                    .doc("log-" + animalData.log)
+                    .set({
+                        action: "delete",
+                        dataType: 'animal',
+                        elementId: animalData.animalId,
+                        elementName: animalData.animalName,
+                        actionMadeById: userData.userId,
+                        actionMadeByName: userData.firstname,
+                        actionDate: Date(),
+                        zooName: userData.zooName
+                    })
+            })
+            
+            .then(function () {
+                swal({
+                    title: "Good job!",
+                    text: "L'espèce " + animalData.animalName + " a été supprimée de votre Zoo",
                     type: "success",
                     showCancelButton: false
                 }, function () {
