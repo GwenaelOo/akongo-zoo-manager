@@ -99,9 +99,20 @@ class NewSpeciePage extends React.Component {
             SpecieId: this.state.SpecieId,
             SpecieName: this.state.SpecieName,
             log: this.state.logId
-        }   
-
-        api.deleteSpecieFromDatabase(specieData)
+        }
+        
+        swal({
+            title: "Etès vous sur?",
+            text: "La suppression est irréversible, vous ne serez plus en mesure de récupérer ces données!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Oui, supprimez tout!",
+            closeOnConfirm: false
+        },
+            function () {
+                api.deleteSpecieFromDatabase(specieData)
+            });  
     }
 
     handleClick(){

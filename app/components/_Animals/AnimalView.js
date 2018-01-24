@@ -66,9 +66,19 @@ class AnimalView extends React.Component {
             log: this.state.logId
         }
 
-        api.deleteAnimalFromDatabase(animalData)
+        swal({
+            title: "Etès vous sur?",
+            text: "La suppression est irréversible, vous ne serez plus en mesure de récupérer ces données!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Oui, supprimez tout!",
+            closeOnConfirm: false
+        },
+            function () {
+                api.deleteAnimalFromDatabase(AnimalData)
+            });
     }
-
     handleChange(event) {
 
         let name = event.target.name
@@ -108,7 +118,6 @@ class AnimalView extends React.Component {
     }
 
     handleClick(){
-
            let animalData = {
                animalSpecieId: this.state.animalSpecieId,
                animalSpecie: this.state.animalSpecie,
@@ -141,9 +150,7 @@ class AnimalView extends React.Component {
         else {
             console.log('je crée')
             api.addNewAnimalToDatabase(animalData);
-        }
-
-        
+        }       
     }
 
     readAnimalFromDatabase(animalId) {

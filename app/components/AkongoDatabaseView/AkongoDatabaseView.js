@@ -4,15 +4,22 @@ import { Grid, Row, Col, Panel, Button, Table, Pagination } from 'react-bootstra
 import TableExtendedRun from './TableExtended.run';
 import AkongoListItem from './AkongoListItem/AkongoListItem';
 
+const api = require("../Scripts/database_api.js");
+
 class TableExtended extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             speciesList: [],
             selectedSpecieList: [],
-            filter: ''
+            filter: '',
+            logId: 0
         };
 
+    }
+
+    handleClick(specieList){
+        api.addSeveralSpeciesToDatabase(specieList, this.state.logId)
     }
 
     specieSelectedList = speciesList => {
@@ -35,6 +42,26 @@ class TableExtended extends React.Component {
     componentDidMount() {
         TableExtendedRun();
         this.readSpecieFromDatabase();
+        this.getLogLenght();
+    }
+
+    getLogLenght() {
+        let userData = JSON.parse(localStorage.getItem('user'))
+        var self = this
+        let collection = (userData.zooName + '-log')
+        firebase.firestore().collection(collection).get().then(function (querySnapshot) {
+            let logLenght = []
+            querySnapshot.forEach(function (doc) {
+                logLenght.push(doc.data())
+            });
+
+            let logId = logLenght.length;
+            console.log(logId)
+            self.setState({
+                logId: logId
+            });
+
+        })
     }
 
     readSpecieFromDatabase() {
@@ -56,9 +83,10 @@ class TableExtended extends React.Component {
     }
 
     render() {
-        console.log(this.state.filter)
+        console.log(this.state.selectedSpecieList)
         let filteredSpeciesListName = this.state.speciesList.filter(
             specie => {
+                
                 return specie.SpecieName.toLowerCase().indexOf(this.state.filter.toLowerCase()) !== -1
             }
         )
@@ -82,6 +110,8 @@ class TableExtended extends React.Component {
         )
 
         let filteredSpeciesList = filteredSpeciesListName.concat(filteredSpeciesListLatinName, filteredSpeciesListClass, filteredSpeciesListOrder)
+
+        let specieAmount = this.state.selectedSpecieList.length
 
         let rows = filteredSpeciesList.map(specie => {
            
@@ -147,14 +177,10 @@ class TableExtended extends React.Component {
                             <Col lg={8}></Col>
                             <Col lg={2}>
                                 <div className="input-group pull-right">
-                                    <select className="input-sm form-control">
-                                        <option value="0">Bulk action</option>
-                                        <option value="1">Delete</option>
-                                        <option value="2">Clone</option>
-                                        <option value="3">Export</option>
-                                    </select>
-                                    <span className="input-group-btn">
-                                        <button className="btn btn-sm btn-default">Apply</button>
+                                    <span className="input-group-btn">  
+                                    <Button bsClass="btn btn-labeled btn-success mr" bsSize="large" onClick={() => { this.handleClick(this.state.selectedSpecieList) }}>
+                                            <span className="btn-label"><i className="fa fa-check"></i></span> Ajouter les {specieAmount} espèces à mon zoo
+                                      </Button>)
                                     </span>
                                 </div>
                             </Col>

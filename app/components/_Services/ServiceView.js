@@ -172,7 +172,18 @@ class ServiceView extends React.Component {
             log: this.state.logId
         }
 
-        api.deleteServiceFromDatabase(serviceData)
+        swal({
+            title: "Etès vous sur?",
+            text: "La suppression est irréversible, vous ne serez plus en mesure de récupérer ces données!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Oui, supprimez tout!",
+            closeOnConfirm: false
+        },
+            function () {
+                api.deleteServiceFromDatabase(serviceData)
+            });   
     }
 
 

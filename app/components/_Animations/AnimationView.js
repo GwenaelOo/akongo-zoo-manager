@@ -152,9 +152,20 @@ class AnimationView extends React.Component {
             animationId: this.state.animationId,
             animationName: this.state.animationName,
             log: this.state.logId + 1
-        }
-
-        api.deleteAnimationFromDatabase(animationData)
+        } 
+        
+        swal({
+            title: "Etès vous sur?",
+            text: "La suppression est irréversible, vous ne serez plus en mesure de récupérer ces données!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Oui, supprimez tout!",
+            closeOnConfirm: false
+        },
+            function () {
+                api.deleteAnimationFromDatabase(animationData)
+            });   
     }
 
 

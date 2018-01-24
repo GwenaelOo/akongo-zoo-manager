@@ -701,8 +701,95 @@ module.exports = {
             });
     },
 
-    
+    //
+    // Gestion de l'ajout dans Akongo
+    //
    
+    addSeveralSpeciesToDatabase: function(speciesList, logId) {
+
+        let i = logId - 1
+        
+        let userData = JSON.parse(localStorage.getItem('user'))
+        
+        for (let specie of speciesList) {
+
+            let specieData
+            let newLogId = i++
+
+            // Récupération des information de l'espèce sur la base akongo
+
+            let docRef = firebase.firestore()
+                .collection('Akongo-species')
+                .doc(specie);
+
+            console.log('je suis là')
+            docRef.get().then(function (snapshot) {
+                // The Promise was "fulfilled" (it succeeded).
+                specieData = snapshot.data()
+                }).
+                
+                // Ecriture dans la base du zoo
+                
+                then(function () {
+
+                    firebase.firestore()
+                        .collection(userData.zooName + '-species')
+                        .doc(specieData.SpecieId)
+                        .set({
+                            SpecieId: specieData.SpecieId,
+                            SpecieName: specieData.SpecieName,
+                            SpecieLatinName: specieData.SpecieLatinName,
+                            SpecieEnglishName: specieData.SpecieEnglishName,
+                            SpecieClass: specieData.SpecieClass,
+                            SpecieOrder: specieData.SpecieOrder,
+                            SpecieFamilly: specieData.SpecieFamilly,
+                            SpecieIUCNClassification: specieData.SpecieIUCNClassification,
+                            SpecieDescription: specieData.SpecieDescription,
+                            SpecieGestation: specieData.SpecieGestation,
+                            SpecieWeight: specieData.SpecieWeight,
+                            SpecieLifeExpectancy: specieData.SpecieLifeExpectancy,
+                            SpecieFood: specieData.SpecieFood,
+                            SpeciePhotoProfil: specieData.SpeciePhotoProfil,
+                            SpeciePhoto1: specieData.SpeciePhoto1,
+                            SpeciePhoto2: specieData.SpeciePhoto2,
+                            SpeciePhoto3: specieData.SpeciePhoto3,
+                            SpeciePhoto4: specieData.SpeciePhoto4,
+                            SpecieCreatedBy: userData.userId,
+                            SpecieCreationDate: Date(),
+                            dataType: 'specie',
+                            zooName: userData.zooName,
+                        })
+
+                    
+                        .then(function () {
+                            firebase.firestore()
+                                .collection(userData.zooName + '-log')
+                                .doc("log-" + newLogId)
+                                .set({
+                                    action: "create",
+                                    dataType: 'specie',
+                                    elementId: specieData.SpecieId,
+                                    elementName: specieData.SpecieName,
+                                    actionMadeById: userData.userId,
+                                    actionMadeByName: userData.firstname,
+                                    actionDate: Date(),
+                                    zooName: userData.zooName
+                                })
+                        })
+                })
+        } 
+            swal({
+                title: "Good job!",
+                text: "Les " + speciesList.length + " espèces ont été ajoutées à votre Zoo",
+                type: "success",
+                showCancelButton: false
+            }, function () {
+                // Redirect the user
+                window.location.href = nav.akongoURL + 'Dashboard';
+            })
+        },
+
+
     //
     // Gestion des listes Nouritures 
     //
