@@ -102,7 +102,7 @@ class NewSpeciePage extends React.Component {
         }
         
         swal({
-            title: "Etès vous sur?",
+            title: "Êtes-vous sûr ?",
             text: "La suppression est irréversible, vous ne serez plus en mesure de récupérer ces données!",
             type: "warning",
             showCancelButton: true,

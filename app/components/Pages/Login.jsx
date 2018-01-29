@@ -71,6 +71,7 @@ class Login extends React.Component {
     }
 
     componentWillMount(){
+        
         this.signout()
         this.generateRandomBackground();
        

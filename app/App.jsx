@@ -28,6 +28,22 @@ import './styles/app.scss'
 
     // Definine url
 
+
+    let userData = JSON.parse(localStorage.getItem('user'))
+
+    if (userData === null ) {
+        console.log('not logged')
+        let dataToStore = {
+            userId: '',
+            zooName: '',
+            firstname: '',
+            zooNameDisplay: '',
+            logged: false
+        }
+
+        localStorage.setItem('user', JSON.stringify(dataToStore))
+    }
+
         
 ReactDOM.render((
     

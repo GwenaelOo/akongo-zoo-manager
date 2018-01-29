@@ -26,7 +26,8 @@ class InitialLoading extends React.Component {
                         userId: user.uid,
                         zooName: userInfos.zooName,
                         firstname: userInfos.firstname,
-                        zooNameDisplay: userInfos.zooNameDisplay
+                        zooNameDisplay: userInfos.zooNameDisplay,
+                        logged: true
                     }
 
                     localStorage.setItem('user', JSON.stringify(dataToStore))
@@ -43,10 +44,11 @@ class InitialLoading extends React.Component {
         })
     }
 
-    
+   
     componentDidMount() {
-        this.initUser()
+        this.initUser()    
     }
+    
     render() {
         return (
             <div>

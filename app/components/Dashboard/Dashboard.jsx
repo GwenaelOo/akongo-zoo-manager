@@ -3,6 +3,7 @@ import ReactDom from 'react-dom';
 import ContentWrapper from '../Layout/ContentWrapper';
 import { Grid, Row, Col, Dropdown, MenuItem } from 'react-bootstrap';
 import DashboardRun from './Dashboard.run';
+import LogWidget from '../Widget/LogWidget/LogWidget'
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -409,152 +410,9 @@ class Dashboard extends React.Component {
                     { /* END dashboard main content */}
                     { /* START dashboard sidebar */}
                     <Col lg={3}>
-                        { /* START loader widget */}
-                        <div className="panel panel-default">
-                            <div className="panel-body">
-                                <a href="#" className="text-muted pull-right">
-                                    <em className="fa fa-arrow-right"></em>
-                                </a>
-                                <div className="text-info">Average Monthly Uploads</div>
-                                <div className="text-center pv-xl">
-                                    <div data-easypiechart data-percent="70" data-animate='{"duration": "800", "enabled": "true"}' data-bar-color="#23b7e5" data-track-Color="rgba(200,200,200,0.4)" data-scale-Color="false" data-line-width="10"
-                                        data-line-cap="round" data-size="145" className="easypie-chart easypie-chart-lg">
-                                        <span>70%</span>
-                                    </div>
-                                </div>
-                                <div data-sparkline="" data-bar-color="#23b7e5" data-height="30" data-bar-width="5" data-bar-spacing="2" data-values="5,4,8,7,8,5,4,6,5,5,9,4,6,3,4,7,5,4,7" className="text-center"></div>
-                            </div>
-                            <div className="panel-footer">
-                                <p className="text-muted">
-                                    <em className="fa fa-upload fa-fw"></em>
-                                    <span>This Month</span>
-                                    <span className="text-dark">1000 Gb</span>
-                                </p>
-                            </div>
-                        </div>
-                        { /* END loader widget */}
+                       
                         { /* START messages and activity */}
-                        <div className="panel panel-default">
-                            <div className="panel-heading">
-                                <div className="panel-title">Latest activities</div>
-                            </div>
-                            { /* START list group */}
-                            <div className="list-group">
-                                { /* START list group item */}
-                                <div className="list-group-item">
-                                    <div className="media-box">
-                                        <div className="pull-left">
-                                            <span className="fa-stack">
-                                                <em className="fa fa-circle fa-stack-2x text-purple"></em>
-                                                <em className="fa fa-cloud-upload fa-stack-1x fa-inverse text-white"></em>
-                                            </span>
-                                        </div>
-                                        <div className="media-box-body clearfix">
-                                            <small className="text-muted pull-right ml">15m</small>
-                                            <div className="media-box-heading"><a href="#" className="text-purple m0">NEW FILE</a>
-                                            </div>
-                                            <p className="m0">
-                                                <small><a href="#">Bootstrap.xls</a>
-                                                </small>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                { /* END list group item */}
-                                { /* START list group item */}
-                                <div className="list-group-item">
-                                    <div className="media-box">
-                                        <div className="pull-left">
-                                            <span className="fa-stack">
-                                                <em className="fa fa-circle fa-stack-2x text-info"></em>
-                                                <em className="fa fa-file-text-o fa-stack-1x fa-inverse text-white"></em>
-                                            </span>
-                                        </div>
-                                        <div className="media-box-body clearfix">
-                                            <small className="text-muted pull-right ml">2h</small>
-                                            <div className="media-box-heading"><a href="#" className="text-info m0">NEW DOCUMENT</a>
-                                            </div>
-                                            <p className="m0">
-                                                <small><a href="#">Bootstrap.doc</a>
-                                                </small>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                { /* END list group item */}
-                                { /* START list group item */}
-                                <div className="list-group-item">
-                                    <div className="media-box">
-                                        <div className="pull-left">
-                                            <span className="fa-stack">
-                                                <em className="fa fa-circle fa-stack-2x text-danger"></em>
-                                                <em className="fa fa-exclamation fa-stack-1x fa-inverse text-white"></em>
-                                            </span>
-                                        </div>
-                                        <div className="media-box-body clearfix">
-                                            <small className="text-muted pull-right ml">5h</small>
-                                            <div className="media-box-heading"><a href="#" className="text-danger m0">BROADCAST</a>
-                                            </div>
-                                            <p className="m0"><a href="#">Read</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                { /* END list group item */}
-                                { /* START list group item */}
-                                <div className="list-group-item">
-                                    <div className="media-box">
-                                        <div className="pull-left">
-                                            <span className="fa-stack">
-                                                <em className="fa fa-circle fa-stack-2x text-success"></em>
-                                                <em className="fa fa-clock-o fa-stack-1x fa-inverse text-white"></em>
-                                            </span>
-                                        </div>
-                                        <div className="media-box-body clearfix">
-                                            <small className="text-muted pull-right ml">15h</small>
-                                            <div className="media-box-heading"><a href="#" className="text-success m0">NEW MEETING</a>
-                                            </div>
-                                            <p className="m0">
-                                                <small>On
-                                                                   <em>10/12/2015 09:00 am</em>
-                                                </small>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                { /* END list group item */}
-                                { /* START list group item */}
-                                <div className="list-group-item">
-                                    <div className="media-box">
-                                        <div className="pull-left">
-                                            <span className="fa-stack">
-                                                <em className="fa fa-circle fa-stack-2x text-warning"></em>
-                                                <em className="fa fa-tasks fa-stack-1x fa-inverse text-white"></em>
-                                            </span>
-                                        </div>
-                                        <div className="media-box-body clearfix">
-                                            <small className="text-muted pull-right ml">1w</small>
-                                            <div className="media-box-heading"><a href="#" className="text-warning m0">TASKS COMPLETION</a>
-                                            </div>
-                                            <div className="progress progress-xs m0">
-                                                <div role="progressbar" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100" style={{ width: "22%" }} className="progress-bar progress-bar-warning progress-bar-striped">
-                                                    <span className="sr-only">22% Complete</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                { /* END list group item */}
-                            </div>
-                            { /* END list group */}
-                            { /* START panel footer */}
-                            <div className="panel-footer clearfix">
-                                <a href="#" className="pull-left">
-                                    <small>Load more</small>
-                                </a>
-                            </div>
-                            { /* END panel-footer */}
-                        </div>
+                            <LogWidget />
                         { /* END messages and activity */}
                     </Col>
                     { /* END dashboard sidebar */}
