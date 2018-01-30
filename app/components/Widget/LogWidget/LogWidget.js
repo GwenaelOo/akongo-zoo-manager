@@ -19,10 +19,10 @@ class LogWidget extends React.Component {
         var self = this;
         // Selection de la référence de la base de donnée
 
-        firebase.firestore().collection(collection).get().then(function (querySnapshot) {
+        firebase.firestore().collection(collection).orderBy('actionTimestamp', 'desc').limit(10).get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
                 let newLogList = self.state.logList
-                console.log(newLogList)
+              
                 newLogList.push(doc.data())
                 self.setState({
                     logList: newLogList
@@ -42,7 +42,7 @@ class LogWidget extends React.Component {
                         <div className="panel-title">Dernières activitées</div>
                         </div>
                             
-                            <LogList logList={this.state.logList.reverse()} />
+                            <LogList logList={this.state.logList} />
                            
                             <div className="panel-footer clearfix">
                                 <a href="#" className="pull-left">

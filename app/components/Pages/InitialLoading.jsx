@@ -24,6 +24,7 @@ class InitialLoading extends React.Component {
 
                     let dataToStore = {
                         userId: user.uid,
+                        city: userInfos.city,
                         zooName: userInfos.zooName,
                         firstname: userInfos.firstname,
                         zooNameDisplay: userInfos.zooNameDisplay,

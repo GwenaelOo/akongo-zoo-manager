@@ -4,6 +4,9 @@ import ContentWrapper from '../Layout/ContentWrapper';
 import { Grid, Row, Col, Dropdown, MenuItem } from 'react-bootstrap';
 import DashboardRun from './Dashboard.run';
 import LogWidget from '../Widget/LogWidget/LogWidget'
+import Weather from '../Widget/WeatherWidget/WeatherWidget'
+import config from '../../config/config'
+import WeatherWidget from '../Widget/WeatherWidget/WeatherWidget';
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -11,7 +14,8 @@ class Dashboard extends React.Component {
         this.state = {
             speciesAmount: '...',
             animalsAmount: '...',
-            servicesAmount: '...'
+            servicesAmount: '...',
+            weatherForecast: {}
         }
     }
 
@@ -39,6 +43,7 @@ class Dashboard extends React.Component {
 
     }
 
+    
 
     howManyServicesInFirebase() {
 
@@ -97,9 +102,7 @@ class Dashboard extends React.Component {
     }
 
     componentDidMount() {
-        DashboardRun(
-            ReactDom.findDOMNode(this.refs.chartSpline)
-        );
+      
     }
 
     componentWillUnmount() {
@@ -107,7 +110,10 @@ class Dashboard extends React.Component {
     }
 
 
-    componentWillMount() {
+    componentDidMount() {
+        DashboardRun(
+            ReactDom.findDOMNode(this.refs.chartSpline)
+        );
         this.getUserData()
         this.howManySpeciesInFirebase()
         this.howManyAnimalsInFirebase()
@@ -116,6 +122,7 @@ class Dashboard extends React.Component {
     }
 
     render() {
+        console.log(this.state.weatherForecast)
         return (
             <ContentWrapper>
                 <div className="content-heading">
@@ -213,65 +220,7 @@ class Dashboard extends React.Component {
                             </Col>
                         </Row>
                         { /* END chart */}
-                        <Row>
-                            <Col lg={12}>
-                                <div className="panel widget">
-                                    <Row className="row-table">
-                                        <Col md={2} sm={3} xs={6} className="text-center bg-info pv-xl">
-                                            <em className="wi wi-day-sunny fa-4x"></em>
-                                        </Col>
-                                        <Col md={2} sm={3} xs={6} className="pv br">
-                                            <div className="h1 m0 text-bold">32&deg;</div>
-                                            <div className="text-uppercase">Clear</div>
-                                        </Col>
-                                        <Col md={2} sm={3} className="hidden-xs pv text-center br">
-                                            <div className="text-info text-sm">10 AM</div>
-                                            <div className="text-muted text-md">
-                                                <em className="wi wi-day-cloudy"></em>
-                                            </div>
-                                            <div className="text-info">
-                                                <em className="wi wi-sprinkles"></em>
-                                                <span className="text-muted">20%</span>
-                                            </div>
-                                            <div className="text-muted">27&deg;</div>
-                                        </Col>
-                                        <Col md={2} sm={3} className="hidden-xs pv text-center br">
-                                            <div className="text-info text-sm">11 AM</div>
-                                            <div className="text-muted text-md">
-                                                <em className="wi wi-day-cloudy"></em>
-                                            </div>
-                                            <div className="text-info">
-                                                <em className="wi wi-sprinkles"></em>
-                                                <span className="text-muted">30%</span>
-                                            </div>
-                                            <div className="text-muted">28&deg;</div>
-                                        </Col>
-                                        <Col md={2} className="hidden-sm hidden-xs pv text-center br">
-                                            <div className="text-info text-sm">12 PM</div>
-                                            <div className="text-muted text-md">
-                                                <em className="wi wi-day-cloudy"></em>
-                                            </div>
-                                            <div className="text-info">
-                                                <em className="wi wi-sprinkles"></em>
-                                                <span className="text-muted">20%</span>
-                                            </div>
-                                            <div className="text-muted">30&deg;</div>
-                                        </Col>
-                                        <Col md={2} className="hidden-sm hidden-xs pv text-center">
-                                            <div className="text-info text-sm">1 PM</div>
-                                            <div className="text-muted text-md">
-                                                <em className="wi wi-day-sunny-overcast"></em>
-                                            </div>
-                                            <div className="text-info">
-                                                <em className="wi wi-sprinkles"></em>
-                                                <span className="text-muted">0%</span>
-                                            </div>
-                                            <div className="text-muted">30&deg;</div>
-                                        </Col>
-                                    </Row>
-                                </div>
-                            </Col>
-                        </Row>
+                        <WeatherWidget />
                         <Row>
                             <Col lg={4}>
                                 { /* START widget */}

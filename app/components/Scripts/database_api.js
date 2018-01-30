@@ -76,7 +76,7 @@ module.exports = {
             .then(function () {
                 firebase.firestore()
                     .collection(userData.zooName + '-log')
-                    .doc("log-" + specieData.log)
+                    .doc("log-" + Date.now())
                     .set({
                         action: "create",
                         dataType: 'specie',
@@ -85,6 +85,7 @@ module.exports = {
                         actionMadeById: userData.userId,
                         actionMadeByName: userData.firstname,
                         actionDate: Date(),
+                        actionTimestamp: Date.now(),
                         zooName: userData.zooName
                     })     
             })
@@ -151,7 +152,7 @@ module.exports = {
             .then(function () {
                 firebase.firestore()
                     .collection(userData.zooName + '-log')
-                    .doc("log-" + specieData.log)
+                    .doc("log-" + Date.now())
                     .set({
                         action: "edit",
                         dataType: 'specie',
@@ -160,6 +161,7 @@ module.exports = {
                         actionMadeById: userData.userId,
                         actionMadeByName: userData.firstname,
                         actionDate: Date(),
+                        actionTimestamp: Date.now(),
                         zooName: userData.zooName
                     })
             })
@@ -199,7 +201,7 @@ module.exports = {
             .then(function () {
                 firebase.firestore()
                     .collection(userData.zooName + '-log')
-                    .doc("log-" + specieData.log)
+                    .doc("log-" + Date.now())
                     .set({
                         action: "delete",
                         dataType: 'specie',
@@ -208,6 +210,7 @@ module.exports = {
                         actionMadeById: userData.userId,
                         actionMadeByName: userData.firstname,
                         actionDate: Date(),
+                        actionTimestamp: Date.now(),
                         zooName: userData.zooName
                     })
             })
@@ -262,7 +265,7 @@ module.exports = {
             .then(function () {
                 firebase.firestore()
                     .collection(userData.zooName + '-log')
-                    .doc("log-" + animalData.log)
+                    .doc("log-" + date.now())
                     .set({
                         action: "create",
                         dataType: 'animal',
@@ -271,6 +274,7 @@ module.exports = {
                         actionMadeById: userData.userId,
                         actionMadeByName: userData.firstname,
                         actionDate: Date(),
+                        actionTimestamp: Date.now(),
                         zooName: userData.zooName
                     })
             })
@@ -317,7 +321,7 @@ module.exports = {
             .then(function () {
                 firebase.firestore()
                     .collection(userData.zooName + '-log')
-                    .doc("log-" + animalData.log)
+                    .doc("log-" + date.now())
                     .set({
                         action: "edit",
                         dataType: 'animal',
@@ -326,6 +330,7 @@ module.exports = {
                         actionMadeById: userData.userId,
                         actionMadeByName: userData.firstname,
                         actionDate: Date(),
+                        actionTimestamp: Date.now(),
                         zooName: userData.zooName
                     })
             })
@@ -360,7 +365,7 @@ module.exports = {
             .then(function () {
                 firebase.firestore()
                     .collection(userData.zooName + '-log')
-                    .doc("log-" + animalData.log)
+                    .doc("log-" + date.now())
                     .set({
                         action: "delete",
                         dataType: 'animal',
@@ -369,6 +374,7 @@ module.exports = {
                         actionMadeById: userData.userId,
                         actionMadeByName: userData.firstname,
                         actionDate: Date(),
+                        actionTimestamp: Date.now(),
                         zooName: userData.zooName
                     })
             })
@@ -416,7 +422,7 @@ module.exports = {
             .then(function () {
                 firebase.firestore()
                     .collection(userData.zooName + '-log')
-                    .doc("log-" + serviceData.log)
+                    .doc("log-" + Date.now())
                     .set({
                         action: "create",
                         dataType: 'service',
@@ -425,6 +431,7 @@ module.exports = {
                         actionMadeById: userData.userId,
                         actionMadeByName: userData.firstname,
                         actionDate: Date(),
+                        actionTimestamp: Date.now(),
                         zooName: userData.zooName
                     })
             })
@@ -469,7 +476,7 @@ module.exports = {
             .then(function () {
                 firebase.firestore()
                     .collection(userData.zooName + '-log')
-                    .doc("log-" + serviceData.log)
+                    .doc("log-" + Date.now())
                     .set({
                         action: "edit",
                         dataType: 'service',
@@ -478,6 +485,7 @@ module.exports = {
                         actionMadeById: userData.userId,
                         actionMadeByName: userData.firstname,
                         actionDate: Date(),
+                        actionTimestamp: Date.now(),
                         zooName: userData.zooName
                     })
             })
@@ -511,7 +519,7 @@ module.exports = {
             .then(function () {
                 firebase.firestore()
                     .collection(userData.zooName + '-log')
-                    .doc("log-" + serviceData.log)
+                    .doc("log-" + Date.now())
                     .set({
                         action: "delete",
                         dataType: 'service',
@@ -520,6 +528,7 @@ module.exports = {
                         actionMadeById: userData.userId,
                         actionMadeByName: userData.firstname,
                         actionDate: Date(),
+                        actionTimestamp: Date.now(),
                         zooName: userData.zooName
                     })
             })
@@ -564,7 +573,7 @@ module.exports = {
             .then(function () {
                 firebase.firestore()
                     .collection(userData.zooName + '-log')
-                    .doc("log-" + animationData.log)
+                    .doc("log-" + Date.now())
                     .set({
                         action: "create",
                         dataType: 'animation',
@@ -573,6 +582,7 @@ module.exports = {
                         actionMadeById: userData.userId,
                         actionMadeByName: userData.firstname,
                         actionDate: Date(),
+                        actionTimestamp: Date.now(),
                         zooName: userData.zooName
                     })
             })
@@ -615,7 +625,7 @@ module.exports = {
             .then(function () {
                 firebase.firestore()
                     .collection(userData.zooName + '-log')
-                    .doc("log-" + animationData.log)
+                    .doc("log-" + Date.now())
                     .set({
                         action: "edit",
                         dataType: 'animation',
@@ -624,6 +634,7 @@ module.exports = {
                         actionMadeById: userData.userId,
                         actionMadeByName: userData.firstname,
                         actionDate: Date(),
+                        actionTimestamp: Date.now(),
                         zooName: userData.zooName
                     })
             })
@@ -657,7 +668,7 @@ module.exports = {
             .then(function () {
                 firebase.firestore()
                     .collection(userData.zooName + '-log')
-                    .doc("log-" + animationData.log)
+                    .doc("log-" + Date.now())
                     .set({
                         action: "delete",
                         dataType: 'animation',
@@ -666,13 +677,14 @@ module.exports = {
                         actionMadeById: userData.userId,
                         actionMadeByName: userData.firstname,
                         actionDate: Date(),
+                        actionTimestamp: Date.now(),
                         zooName: userData.zooName
                     })
             })
             .then(function () {
                 firebase.firestore()
                     .collection(userData.zooName + '-log')
-                    .doc("log-" + animationData.log)
+                    .doc("log-" + Date.now())
                     .set({
                         action: "delete",
                         dataType: 'animation',
@@ -681,6 +693,7 @@ module.exports = {
                         actionMadeById: userData.userId,
                         actionMadeByName: userData.firstname,
                         actionDate: Date(),
+                        actionTimestamp: Date.now(),
                         zooName: userData.zooName
                     })
             })
@@ -722,7 +735,6 @@ module.exports = {
                 .collection('Akongo-species')
                 .doc(specie);
 
-            console.log('je suis là')
             docRef.get().then(function (snapshot) {
                 // The Promise was "fulfilled" (it succeeded).
                 specieData = snapshot.data()
@@ -773,6 +785,7 @@ module.exports = {
                                     actionMadeById: userData.userId,
                                     actionMadeByName: userData.firstname,
                                     actionDate: Date(),
+                                    actionTimestamp: Date.now(),
                                     zooName: userData.zooName
                                 })
                         })

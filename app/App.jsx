@@ -28,10 +28,9 @@ import './styles/app.scss'
 
     // Definine url
 
+    console.log('initialisation')
 
-    let userData = JSON.parse(localStorage.getItem('user'))
-
-    if (userData === null ) {
+    if (localStorage.getItem('user') === null ) {
         console.log('not logged')
         let dataToStore = {
             userId: '',

@@ -61,35 +61,6 @@ class LogItem extends React.Component {
                 break;
         }
     
-      
-        let text
-
-        switch (this.props.logEvent.action) {
-            case "create":
-                console.log("je crée")
-               
-                text = (<a href="#" className="text-success m0">{actionType + eventType}</a>)
-                break;
-            
-            case "edit":
-                console.log("je édite")
-                
-             
-                text = (<a href="#" className="text-info m0">{actionType + eventType}</a>)
-                break;
-            
-            case "delete":
-                console.log("je delete")
-               
-               
-            
-                
-                break;
-        
-            default:
-                break;
-        }
-
         return (
 
             

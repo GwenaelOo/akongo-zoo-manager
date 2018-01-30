@@ -12,9 +12,7 @@ class LogList extends React.Component {
     }
 
     render() {
-        console.log(this.props.logList)
-        
-
+      
         let logs = this.props.logList;
 
         const list = [];
