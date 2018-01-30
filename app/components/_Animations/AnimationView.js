@@ -201,21 +201,22 @@ class AnimationView extends React.Component {
 
         return (
             <ContentWrapper>
-                <h3>Form Elements
-                               <small>Standard and custom elements for any form</small>
+                <h3>Gerez vos animations
                 </h3>
 
-                <Panel header="Form elements">
+                <Panel >
                     <form className="form-horizontal" onSubmit={this.handleSubmit}>
                         <fieldset>
                             <legend> Informations générales</legend>
                             <fieldset>
                                 <FormGroup>
-                                    <label className="col-sm-2 control-label">Nom du animation</label>
+                                    <label className="col-sm-2 control-label">Nom de l'animation</label>
                                     <Col sm={10}>
                                         <FormControl type="text" name="animationName" placeholder={this.state.animationName} value={this.state.animationName} onChange={this.handleChange} className="form-control" />
                                     </Col>
                                 </FormGroup>
+                            <fieldset>
+                            </fieldset>
                                 <FormGroup>
                                     <label className="col-sm-2 control-label">Espèce</label>
                                     <Col sm={10}>
