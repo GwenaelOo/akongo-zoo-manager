@@ -18,7 +18,6 @@ class LogWidget extends React.Component {
         // Fonction magique que je ne comprend pas 
         var self = this;
         // Selection de la référence de la base de donnée
-
         firebase.firestore().collection(collection).orderBy('actionTimestamp', 'desc').limit(10).get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
                 let newLogList = self.state.logList

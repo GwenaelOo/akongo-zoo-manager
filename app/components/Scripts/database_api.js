@@ -562,6 +562,7 @@ module.exports = {
                 animationId: animationData.animationName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000)),
                 animationName: animationData.animationName,
                 animationDescription: animationData.animationDescription,
+                animationStartingTime: animationData.animationStartingTime,
                 animationPhotoProfil: animationData.animationPhotoProfil,
                 animationPhotoProfilId: animationData.animationPhotoProfilId,
                 animationCreatedBy: userData.userId,
@@ -617,6 +618,7 @@ module.exports = {
                 animationId: animationData.animationId,
                 animationName: animationData.animationName,
                 animationDescription: animationData.animationDescription,
+                animationStartingTime: animationData.animationStartingTime,
                 animationPhotoProfil: animationData.animationPhotoProfil,
                 animationLastModificationBy: userData.userId,
                 animationLastEditDate: Date()

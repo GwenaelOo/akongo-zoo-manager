@@ -16,7 +16,6 @@ class UploadPhoto extends React.Component {
 
     componentWillReceiveProps(nextProps) {
 
-
         if (nextProps.background !== this.state.background) {
             this.setState({ background: nextProps.background });
         }
@@ -47,7 +46,7 @@ class UploadPhoto extends React.Component {
             ////////////////////////
             let uid = Date.now()
             let userData = JSON.parse(localStorage.getItem('user'))
-            let folder = userData.zooName
+            let folder = userData.zooName 
            
             var storageRef = firebase.storage().ref(folder + '/temp/' + uid + '.jpg');
             storageRef.put(file).then(function (snapshot) {
@@ -86,8 +85,6 @@ class UploadPhoto extends React.Component {
             'borderRadius': '10px',
             'margin': '10px 10px 10px 10px'
         }
-
-
 
         return (
             <section>

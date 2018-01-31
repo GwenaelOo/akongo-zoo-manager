@@ -42,6 +42,7 @@ class AnimationView extends React.Component {
             animationId: this.state.animationId,
             animationName: this.state.animationName,
             animationDescription: this.state.animationDescription,
+            animationStartingTime: this.state.animationStartingTime,
             animationPhotoProfil: this.state.animationPhotoProfil,
             animationPhoto1: this.state.animationPhoto1,
             animationPhoto2: this.state.animationPhoto2,
@@ -72,6 +73,7 @@ class AnimationView extends React.Component {
             animationId: this.state.animationId,
             animationName: this.state.animationName,
             animationDescription: this.state.animationDescription,
+            animationStartingTime: this.state.animationStartingTime,
             animationPhotoProfil: this.state.animationPhotoProfil,
             animationPhotoProfilId: this.state.animationPhotoProfilId,
             animationPhoto1: this.state.animationPhoto1,
@@ -112,6 +114,8 @@ class AnimationView extends React.Component {
             self.setState({
                 animationId: data.animationId,
                 animationName: data.animationName,
+                animationDescription: data.animationDescription,
+                animationStartingTime: data.animationStartingTime,
                 animationDescription: data.animationDescription,
                 animationPhotoProfil: data.animationPhotoProfil,
                 animationPhoto1: data.animationPhoto1,
@@ -218,13 +222,38 @@ class AnimationView extends React.Component {
                             <fieldset>
                             </fieldset>
                                 <FormGroup>
-                                    <label className="col-sm-2 control-label">Espèce</label>
+                                    <label className="col-sm-2 control-label">Type d'animation</label>
                                     <Col sm={10}>
                                         <FormControl type="text" name="animationCategory" placeholder="Ex. Gorilles" value={this.state.animationCategory} onChange={this.handleChange} className="form-control" />
                                     </Col>
                                 </FormGroup>
                             </fieldset>
+                        </fieldset>
 
+                        <fieldset>
+                            <FormGroup>
+                                <label className="col-sm-2 control-label">Heure de démarage</label>
+                                <Col sm={4}>
+                                    <TimePicker
+                                        name="animationStartingTime"
+                                        format="24hr"
+                                        hintText="Heure d'ouverture"
+                                        onChange={this.handleOpeningChange}
+                                        value={this.serviceOpeningTime}
+                                    />
+
+                                </Col>
+                            </FormGroup>
+                        </fieldset>
+
+                        <fieldset>
+                            <div className="col-md-8">
+                                <label htmlFor="userName">Description de l'animation</label>
+                                <Panel>
+                                    <textarea name="animationDescription" rows="10" className="form-control note-editor" value={this.state.animationDescription} onChange={this.handleChange}>
+                                    </textarea>
+                                </Panel>
+                            </div>
                         </fieldset>
 
                         <fieldset>
@@ -235,7 +264,7 @@ class AnimationView extends React.Component {
                                     </div>
 
                                     <div className="col-md-4" >
-                                        <UploadPhoto animationName={this.state.animationName} background={this.state.animationPhotoProfil} id="PhotoProfil" methodToReturnUrl={this.handleReturnedUrl} />
+                                        <UploadPhoto eventType="animation" eventName={this.state.animationName} background={this.state.animationPhotoProfil} id="PhotoProfil" methodToReturnUrl={this.handleReturnedUrl} />
                                     </div>
 
                                     <div className="col-md-1" >
