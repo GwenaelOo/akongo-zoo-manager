@@ -33,6 +33,9 @@ import AkongoDatabaseView from './components/AkongoDatabaseView/AkongoDatabaseVi
 
 import Plan from './components/_Plan/Plan';
 
+import HeaderView from './components/_Header/HeaderView';
+import HeadersListView from './components/_Header/HeadersListView';
+
 
 // List of routes that uses the page layout
 // listed here to Switch between layouts
@@ -118,7 +121,11 @@ const Routes = ({ location }) => {
 
                             {/*Plan*/}
                             <Route path="/Plan" component={Plan} />
-                          
+
+                            {/*Plan*/}
+                            <Route path="/HeaderView" component={HeaderView} />
+                            <Route path="/HeadersListView" component={HeadersListView} />
+
 
                             <Redirect to="/login"/>
                         </Switch>

@@ -6,6 +6,7 @@ import { Grid, Row, Col, Panel, Button, FormControl, FormGroup, InputGroup, Drop
 
 import DropzoneProfilePicture from '../Photosupload/DropzoneProfilePicture';
 import UploadPhoto from '../Upload/UploadPhoto/UploadPhoto';
+import TimePicker from 'material-ui/TimePicker';
 
 let api = require("../Scripts/database_api.js");
 
@@ -42,7 +43,7 @@ class AnimationView extends React.Component {
             animationId: this.state.animationId,
             animationName: this.state.animationName,
             animationDescription: this.state.animationDescription,
-            animationStartingTime: this.state.animationStartingTime,
+            //animationStartingTime: this.state.animationStartingTime,
             animationPhotoProfil: this.state.animationPhotoProfil,
             animationPhoto1: this.state.animationPhoto1,
             animationPhoto2: this.state.animationPhoto2,
@@ -73,7 +74,7 @@ class AnimationView extends React.Component {
             animationId: this.state.animationId,
             animationName: this.state.animationName,
             animationDescription: this.state.animationDescription,
-            animationStartingTime: this.state.animationStartingTime,
+            //animationStartingTime: this.state.animationStartingTime,
             animationPhotoProfil: this.state.animationPhotoProfil,
             animationPhotoProfilId: this.state.animationPhotoProfilId,
             animationPhoto1: this.state.animationPhoto1,
@@ -115,7 +116,7 @@ class AnimationView extends React.Component {
                 animationId: data.animationId,
                 animationName: data.animationName,
                 animationDescription: data.animationDescription,
-                animationStartingTime: data.animationStartingTime,
+                //animationStartingTime: data.animationStartingTime,
                 animationDescription: data.animationDescription,
                 animationPhotoProfil: data.animationPhotoProfil,
                 animationPhoto1: data.animationPhoto1,

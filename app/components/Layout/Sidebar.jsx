@@ -229,9 +229,22 @@ class Sidebar extends React.Component {
                                     <em className="icon-map"></em>
                                     <span data-localize="sidebar.nav.DASHBOARD">Gestion des notifications</span>
                                 </Link>
-                            </li>          
-                            
-                                   
+                            </li>  
+
+                             <li className="nav-heading ">
+                                <span data-localize="sidebar.heading.HEADER">Gestion de l'app</span>
+                            </li>
+
+                            <li className={this.routeActive('dashboard') ? 'active' : ''}>
+                                <Link to="HeaderView" title="Gestion du header">
+                                    <em className="icon-map"></em>
+                                    <span data-localize="sidebar.nav.DASHBOARD">Gestion du header</span>
+                                </Link>
+                                <Link to="HeadersListView" title="Gestion du header">
+                                    <em className="icon-map"></em>
+                                    <span data-localize="sidebar.nav.DASHBOARD">Liste des headers</span>
+                                </Link>
+                            </li>           
                         </ul>
                         { /* END sidebar nav */}
                     </nav>

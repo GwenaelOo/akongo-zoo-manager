@@ -8,6 +8,7 @@ import IUCNSelector from './SpecieView/Components/IUCNSelector';
 import DropzoneProfilePicture from '../Photosupload/DropzoneProfilePicture';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import '../CustomComponents/TypeHead/Typehead.scss';
+import { DocumentReference } from '@google-cloud/firestore';
 
 let api = require("../Scripts/database_api.js");
 
@@ -29,6 +30,7 @@ class NewSpeciePage extends React.Component {
             SpecieLifeExpectancy: '',
             SpecieFood: [],
             SpeciePhotoProfil: '',
+            SpeciePhotos: [],
             SpeciePhoto1: '',
             SpeciePhoto2: '',
             SpeciePhoto3: '',
@@ -62,6 +64,7 @@ class NewSpeciePage extends React.Component {
             SpecieWeight: this.state.SpecieWeight,
             SpecieLifeExpectancy: this.state.SpecieLifeExpectancy,
             SpeciePhotoProfil: this.state.SpeciePhotoProfil,
+            SpeciePhotos: this.state.SpeciePhotos,
             SpeciePhoto1: this.state.SpeciePhoto1,
             SpeciePhoto2: this.state.SpeciePhoto2,
             SpeciePhoto3: this.state.SpeciePhoto3,
@@ -87,10 +90,33 @@ class NewSpeciePage extends React.Component {
 
     handleReturnedUrl(returnedUrl, photoId) {
 
+        if (photoId === 'photoProfil') {
+
         let photoName = ('Specie' + photoId)
         this.setState({
             [photoName]: returnedUrl
-        });
+             });
+        }
+
+        console.log(this.state.SpeciePhotos)
+
+        let photoUID = this.state.SpeciePhotos.length + 1
+        let photosArray = this.state.SpeciePhotos
+
+        console.log(photosArray.length)
+    
+        let newObject = {
+                photoId: 99,
+                photoURL : returnedUrl
+            }
+
+        photosArray.push(newObject)
+
+         this.setState({
+             SpeciePhotos: photosArray
+         });
+
+         console.log(this.state.SpeciePhotos)
     }
 
     handleDelete(){
@@ -131,6 +157,7 @@ class NewSpeciePage extends React.Component {
                 SpecieLifeExpectancy: this.state.SpecieLifeExpectancy,
                 SpecieFood: this.state.SpecieFood,
                 SpeciePhotoProfil: this.state.SpeciePhotoProfil,
+                SpeciePhotos: this.state.SpeciePhotos,
                 SpeciePhoto1: this.state.SpeciePhoto1,
                 SpeciePhoto2: this.state.SpeciePhoto2,
                 SpeciePhoto3: this.state.SpeciePhoto3,
@@ -139,15 +166,59 @@ class NewSpeciePage extends React.Component {
             }
 
             if (this.state.EditMode === true) {
-                api.editNewSpecieToDatabase(specieData);
+                api.editNewSpecieToDatabase2(specieData);
             }
             else {
-                api.addNewSpecieToDatabase(specieData);
+                api.addNewSpecieToDatabase2(specieData);
             }
 
             api.updateFoodDataBase(specieData.SpecieFood);
         }
     
+        readSpecieFromFirebase(specieId) {
+            let userData = JSON.parse(localStorage.getItem('user'))
+            var self = this
+            // Fonction magique que je ne comprend pas 
+
+            let reference = (userData.zooName + '/speciesData/' + specieData.specieId);
+
+            return firebase.database().ref('/users/' + userId).once('value').then(function (snapshot) {
+                 let data = snapshot.data()
+
+                  let foodList = []
+                  data.SpecieFood.forEach(function (foodItem) {
+                      if (foodItem.customOption === true) {
+                          foodList.push(foodItem.SpecieFood);
+                      } else {
+                          foodList.push(foodItem);
+                      }
+                  })
+
+                  self.setState({
+                      dataVersion: data.dataVersion,
+                      SpecieId: data.specieId,
+                      SpecieName: data.specieName,
+                      SpecieLatinName: data.specieLatinName,
+                      SpecieEnglishName: data.specieEnglishName,
+                      SpecieClass: data.specieClass,
+                      SpecieOrder: data.specieOrder,
+                      SpecieFamilly: data.specieFamilly,
+                      SpecieIUCNClassification: data.specieIUCNClassification,
+                      SpecieDescription: data.specieDescription,
+                      SpecieGestation: data.specieGestation,
+                      SpecieWeight: data.specieWeight,
+                      SpecieFood: foodList,
+                      SpecieLifeExpectancy: data.specieLifeExpectancy,
+                      SpeciePhotoProfil: data.speciePhotoProfil,
+                      SpeciePhoto1: data.speciePhoto1,
+                      SpeciePhoto2: data.speciePhoto2,
+                      SpeciePhoto3: data.speciePhoto3,
+                      SpeciePhoto4: data.speciePhoto4,
+                      EditMode: true,
+                  });
+            })
+
+        }
 
     readSpecieFromFireStore(specieId) {
         let userData = JSON.parse(localStorage.getItem('user'))
@@ -172,24 +243,25 @@ class NewSpeciePage extends React.Component {
             })
 
             self.setState({
-                SpecieId: data.SpecieId,
-                SpecieName: data.SpecieName,
-                SpecieLatinName: data.SpecieLatinName,
-                SpecieEnglishName: data.SpecieEnglishName,
-                SpecieClass: data.SpecieClass,
-                SpecieOrder: data.SpecieOrder,
-                SpecieFamilly: data.SpecieFamilly,
-                SpecieIUCNClassification: data.SpecieIUCNClassification,
-                SpecieDescription: data.SpecieDescription,
-                SpecieGestation: data.SpecieGestation,
-                SpecieWeight: data.SpecieWeight,
+                dataVersion : data.dataVersion,
+                SpecieId: data.specieId,
+                SpecieName: data.specieName,
+                SpecieLatinName: data.specieLatinName,
+                SpecieEnglishName: data.specieEnglishName,
+                SpecieClass: data.specieClass,
+                SpecieOrder: data.specieOrder,
+                SpecieFamilly: data.specieFamilly,
+                SpecieIUCNClassification: data.specieIUCNClassification,
+                SpecieDescription: data.specieDescription,
+                SpecieGestation: data.specieGestation,
+                SpecieWeight: data.specieWeight,
                 SpecieFood: foodList,
-                SpecieLifeExpectancy: data.SpecieLifeExpectancy,
-                SpeciePhotoProfil: data.SpeciePhotoProfil,
-                SpeciePhoto1: data.SpeciePhoto1,
-                SpeciePhoto2: data.SpeciePhoto2,
-                SpeciePhoto3: data.SpeciePhoto3,
-                SpeciePhoto4: data.SpeciePhoto4,
+                SpecieLifeExpectancy: data.specieLifeExpectancy,
+                SpeciePhotoProfil: data.speciePhotoProfil,
+                SpeciePhoto1: data.speciePhoto1,
+                SpeciePhoto2: data.speciePhoto2,
+                SpeciePhoto3: data.speciePhoto3,
+                SpeciePhoto4: data.speciePhoto4,
                 EditMode: true,
             });
         })
@@ -294,7 +366,7 @@ class NewSpeciePage extends React.Component {
         this.getLogLenght();
         //this.initFoodList();
         if (this.props.location.state.SpecieId !== null){
-         this.readSpecieFromFireStore(this.props.location.state.SpecieId);
+         this.readSpecieFromFirebase(this.props.location.state.SpecieId);
        } 
     }
 

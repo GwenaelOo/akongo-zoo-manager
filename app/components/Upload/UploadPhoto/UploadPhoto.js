@@ -48,7 +48,7 @@ class UploadPhoto extends React.Component {
             let userData = JSON.parse(localStorage.getItem('user'))
             let folder = userData.zooName 
            
-            var storageRef = firebase.storage().ref(folder + '/temp/' + uid + '.jpg');
+            var storageRef = firebase.storage().ref('TemporaryPhotoBucket/' + uid + '.jpg');
             storageRef.put(file).then(function (snapshot) {
                 console.log('Uploaded a blob or file!');
             });

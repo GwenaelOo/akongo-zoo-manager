@@ -15,6 +15,9 @@ module.exports = {
             { include: /\.json$/, loaders: ["json-loader"] }
         ]
     },
+    node: {
+        fs: 'empty'
+    },
    
     entry: {
         'vendor': './app/Vendor.jsx',

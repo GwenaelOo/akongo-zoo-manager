@@ -25,7 +25,6 @@ class ServiceView extends React.Component {
             servicePhoto2: '',
             servicePhoto3: '',
             servicePhoto4: '',
-            logId: 0,
             EditMode: false,
         };
         this.handleChange = this.handleChange.bind(this);
@@ -212,7 +211,7 @@ class ServiceView extends React.Component {
 
         const deleteButton = (
             <Button bsClass="btn btn-labeled btn-danger mr" onClick={() => { this.handleDelete() }}>
-                <span className="btn-label"><i className="fa fa-trash-o"></i></span> Supprimer l'espèce
+                <span className="btn-label"><i className="fa fa-trash-o"></i></span> Supprimer le service
             </Button>
         );
 

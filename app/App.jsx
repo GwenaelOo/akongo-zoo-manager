@@ -46,7 +46,6 @@ import './styles/app.scss'
         
 ReactDOM.render((
     
-
     // specify basename below if running
     // in a subdirectory or set as "/" if app runs in root
     <MuiThemeProvider>

@@ -25,53 +25,23 @@ function snapshotToArray(snapshot) {
         
 module.exports = {
 
-     addNewSpecieToDatabase2: function (specieData) {
+    
+    addNewSpecieToDatabase: function (specieData) {
+
+    
+        let collection = (userData.zooName + '-species');
+        let document = specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))
+        let specieId = document
+      
+        if(specieData.SpeciePhotoProfil === ''){
+            specieData.SpeciePhotoProfil = 'http://thedroideffect.com/wp-content/themes/thedroideffect/images/missing-image-640x360.png'
+        }
 
         // ********************
         // Ajout dans firebase 
         // ********************
 
-         let specieUID = specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))
-         let reference = (userData.zooName + '/speciesData/' + specieUID);
-         
-         if (specieData.SpeciePhotoProfil === '') {
-             specieData.SpeciePhotoProfil = 'http://thedroideffect.com/wp-content/themes/thedroideffect/images/missing-image-640x360.png'
-         }
-
-            firebase.database().ref(reference).set({
-                     dataVersion: 1,
-                     specieId: specieUID,
-                     specieName: specieData.SpecieName,
-                     specieLatinName: specieData.SpecieLatinName,
-                     specieEnglishName: specieData.SpecieEnglishName,
-                     specieClass: specieData.SpecieClass,
-                     specieOrder: specieData.SpecieOrder,
-                     specieFamilly: specieData.SpecieFamilly,
-                     specieIUCNClassification: specieData.SpecieIUCNClassification,
-                     specieDescription: specieData.SpecieDescription,
-                     specieGestation: specieData.SpecieGestation,
-                     specieWeight: specieData.SpecieWeight,
-                     specieLifeExpectancy: specieData.SpecieLifeExpectancy,
-                     specieFood: specieData.SpecieFood,
-                     specieProfilePicture: specieData.SpeciePhotoProfil,
-                     speciePhotos: specieData.SpeciePhotos,
-                     specieCreatedBy: userData.userId,
-                     specieCreationDate: Date(),
-                     dataType: 'specie',
-                     zooName: userData.zooName,
-            })
-        
-        // ********************
-        // Ajout dans firestore 
-        // ********************
-
-
-         //let collection = (userData.zooName + '-species');
-         //let document = specieData.SpecieName.toUpperCase().replace(/ /g, "") + (Math.floor(Date.now() / 1000))
-         //let specieId = document
-
-
-         /* firebase.firestore()
+        firebase.firestore()
              .collection(collection)
              .doc(document)
              .set({
@@ -97,31 +67,31 @@ module.exports = {
                  SpecieCreationDate: Date(),
                  dataType: 'specie',
                  zooName: userData.zooName,
-             }) */
-
-             // ********************
-             // Ecriture du log
-             // ********************
-
-             .then(function () {
-                 firebase.firestore()
-                     .collection(userData.zooName + '-log')
-                     .doc("log-" + Date.now())
-                     .set({
-                         action: "create",
-                         dataType: 'specie',
-                         elementId: specieData.SpecieId,
-                         elementName: specieData.SpecieName,
-                         actionMadeById: userData.userId,
-                         actionMadeByName: userData.firstname,
-                         actionDate: Date(),
-                         actionTimestamp: Date.now(),
-                         zooName: userData.zooName
-                     })
-             })
-             .catch(function (error) {
-                 console.error("Error writing document: ", error);
-             }).then(function () {
+            })
+            
+            // ********************
+            // Ecriture du log
+            // ********************
+                     
+            .then(function () {
+                firebase.firestore()
+                    .collection(userData.zooName + '-log')
+                    .doc("log-" + Date.now())
+                    .set({
+                        action: "create",
+                        dataType: 'specie',
+                        elementId: specieData.SpecieId,
+                        elementName: specieData.SpecieName,
+                        actionMadeById: userData.userId,
+                        actionMadeByName: userData.firstname,
+                        actionDate: Date(),
+                        actionTimestamp: Date.now(),
+                        zooName: userData.zooName
+                    })     
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            }).then(function () {
                  swal({
                      title: "Good job!",
                      text: "L'espèce " + specieData.SpecieName + " a été ajoutée à votre Zoo",
@@ -131,116 +101,13 @@ module.exports = {
                      // Redirect the user
                      window.location.href = nav.akongoURL + 'speciesList';
                  })
-             })
-             .catch(function (error) {
-                 console.error("Error writing document: ", error);
-             });
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
 
 
-     },
-
-      editNewSpecieToDatabase2: function (specieData) {
-
-          // ********************
-          // Ajout dans firebase 
-          // ********************
-
-          let reference = (userData.zooName + '/speciesData/' + specieData.specieId);
-
-          firebase.database().ref(reference).update({
-              dataVersion: specieData.dataVersion + 1,
-              specieId: specieData.specieUID,
-              specieName: specieData.SpecieName,
-              specieLatinName: specieData.SpecieLatinName,
-              specieEnglishName: specieData.SpecieEnglishName,
-              specieClass: specieData.SpecieClass,
-              specieOrder: specieData.SpecieOrder,
-              specieFamilly: specieData.SpecieFamilly,
-              specieIUCNClassification: specieData.SpecieIUCNClassification,
-              specieDescription: specieData.SpecieDescription,
-              specieGestation: specieData.SpecieGestation,
-              specieWeight: specieData.SpecieWeight,
-              specieLifeExpectancy: specieData.SpecieLifeExpectancy,
-              specieFood: specieData.SpecieFood,
-              specieProfilePicture: specieData.SpeciePhotoProfil,
-              speciePhotos: specieData.SpeciePhotos,
-              specieCreatedBy: userData.userId,
-              specieCreationDate: Date(),
-              dataType: 'specie',
-              zooName: userData.zooName,
-          })
-
-          // ********************
-          // Ajout dans FireStore 
-          // ********************
-
-          /* let collection = (userData.zooName + '-species');
-          let document = specieData.SpecieId
-
-          firebase.firestore()
-              .collection(collection)
-              .doc(document)
-              .update({
-                  SpecieId: specieData.SpecieId,
-                  SpecieName: specieData.SpecieName,
-                  SpecieLatinName: specieData.SpecieLatinName,
-                  SpecieEnglishName: specieData.SpecieEnglishName,
-                  SpecieClass: specieData.SpecieClass,
-                  SpecieOrder: specieData.SpecieOrder,
-                  SpecieFamilly: specieData.SpecieFamilly,
-                  SpecieIUCNClassification: specieData.SpecieIUCNClassification,
-                  SpecieDescription: specieData.SpecieDescription,
-                  SpecieGestation: specieData.SpecieGestation,
-                  SpecieWeight: specieData.SpecieWeight,
-                  SpecieFood: specieData.SpecieFood,
-                  SpecieLifeExpectancy: specieData.SpecieLifeExpectancy,
-                  SpeciePhotoProfil: specieData.SpeciePhotoProfil,
-                  SpeciePhoto1: specieData.SpeciePhoto1,
-                  SpeciePhoto2: specieData.SpeciePhoto2,
-                  SpeciePhoto3: specieData.SpeciePhoto3,
-                  SpeciePhoto4: specieData.SpeciePhoto4,
-                  SpecieLastModificationBy: userData.userId,
-                  SpecieLastEditDate: Date()
-              }) */
-
-              // ********************
-              // Ecriture du log
-              // ********************
-              .then(function () {
-                  firebase.firestore()
-                      .collection(userData.zooName + '-log')
-                      .doc("log-" + Date.now())
-                      .set({
-                          action: "edit",
-                          dataType: 'specie',
-                          elementId: specieData.SpecieId,
-                          elementName: specieData.SpecieName,
-                          actionMadeById: userData.userId,
-                          actionMadeByName: userData.firstname,
-                          actionDate: Date(),
-                          actionTimestamp: Date.now(),
-                          zooName: userData.zooName
-                      })
-              })
-              .then(function () {
-                  swal({
-                      title: "Good job!",
-                      text: "L'espèce " + specieData.SpecieName + " a été correctement éditée",
-                      type: "success",
-                      showCancelButton: false
-                  }, function () {
-                      // Redirect the user
-                      window.location.href = nav.akongoURL + 'speciesList';
-                  })
-              })
-              .catch(function (error) {
-                  console.error("Error writing document: ", error);
-              });
-
-
-      },
-
-    
+    },
 
     editNewSpecieToDatabase: function (specieData) {
 
